@@ -1,0 +1,378 @@
+//-----------------------------------------------------------------------------------
+// 	Autor: Ramón Sánchez;
+// 	Para: RCD Resorts;
+// 	Ultima Modificación: 25/Noviembre/2015;
+//-----------------------------------------------------------------------------------
+//	Contenido: 
+//	Controles, Efectos y funciones dinámicas de la aplicación Asistencia RCD.
+//-----------------------------------------------------------------------------------
+//	Si algo te sirve, puedes copiarlo. 
+//-----------------------------------------------------------------------------------
+$(document).ready( function() {
+	var activado = true;
+	check_events(activado);	
+
+	$(window).blur(function(){
+		activado = false;
+		
+	});
+	$(window).focus(function(){
+		activado = true;
+		
+	});
+	//console.log(window);
+	var refresh_events = parseInt($('body').attr('data-refresh'));
+	setInterval(function(){		
+		check_events(activado);		
+	}, refresh_events);	
+
+	$('#collapse').click(function(){
+		var el = $(this);
+		var st = $(this).attr('data-status');
+		collapse_event_viewer(el, st);
+	});
+
+	$('.btn_lat').click(function() {
+		if($(this).attr('data-opened') != 1){
+			//open_frm($(this), '.btn_lat');
+		}//end if
+				
+	});
+
+	$('.asfrm').click(function(){
+		if($(this).attr('data-opened') != 1){
+			open_frm($(this), '.asfrm');
+		}//end if
+	});
+
+	$(document).on('click','.frm .btn_close', function(){
+		var frm = $(this).attr('data-frm');
+		var btn = $(this).attr('data-btn');
+		var pid = $(this).attr('data-pid');
+		var src = $(this).attr('data-js-src');
+
+		console.log(frm);
+		//if(frm == '')
+
+		kill_pid(pid, function(){
+			$(frm).remove();
+			$(btn).removeClass('deshabilitado');
+			$(btn).attr('data-opened', 0);
+			$("script[src='"+src+"']").remove();
+
+			//console.log(1);
+		});
+	});		
+
+	$(document).on('click','.frm', function(){
+		var max = 0;
+		var frm = $(this);
+		$('.frm').each(function(){
+			max = parseInt(max)+1;
+			$(this).css('z-index',0);
+			//console.log(max)
+		});
+		frm.css('z-index',parseInt(max)+1);
+	});
+
+
+	$(document).on('click','.event .btn', function(){
+		var _id = $(this).attr('data-id');
+		var _val = ($(this).attr('data-revisado') == 1 ? 0 : 1);
+		event_set_revisado(_id, _val , function(){
+			$('#'+_id).remove();
+		});
+	});
+
+	$(document).on('click','#status_wrapper .dad .head .ico', function(){
+		var stat = $(this).attr('data-status');
+		var cual = "#"+$(this).attr('data-id')+" .rows";
+		if (stat == 1){
+			$(this).attr('data-status',0);
+			$(this).children('i.fa').removeClass('fa-angle-down').addClass('fa-angle-right');
+			$(cual).slideUp(800);
+		}else{
+			$(this).attr('data-status',1);
+			$(this).children('i.fa').removeClass('fa-angle-right').addClass('fa-angle-down');
+			$(cual).slideDown(800);
+		}//end if
+		
+	});
+
+	$(document).on('keyup', '#status_wrapper .dad .head input.search', function(data){
+		var valu = $(this).val();
+		var cual = "#"+$(this).attr('data-id')+" .rows .event";
+		filtrar(cual,valu);
+		//console.log(data.key);
+	});
+
+	$('#status_wrapper .dad .head .btn').click(function(){
+		var _cual = "#"+$(this).attr('data-id') + " .rows";
+			
+		var _val = ($(_cual).attr('data-revisado') == 1 ? 0 : 1);
+		//console.log(_val);
+		event_set_revisado('all', _val , function(){
+			$(_cual).html('');	
+			check_events(activado);	
+		});		
+	});
+
+});
+
+function filtrar(cual,valu ){
+	$(cual).each(function(){
+		var act = $(this);
+		//console.log(act);
+		//console.log(act.attr('data-search').toLowerCase().indexOf(valu.toLowerCase()));
+		if(act.attr('data-search').toLowerCase().indexOf(valu.toLowerCase()) >= 0){
+			act.removeClass('oculto');
+		}else{
+			if(!act.hasClass('oculto')){
+				act.addClass('oculto');
+			}//end if
+			
+		}//end if
+		delete act;
+	});
+}//end function
+function event_set_revisado(_id,_val, callback){
+	if (_id == 'all'){
+		var req = $.ajax({
+				url: 'events.proc.php',
+				type: 'POST',
+				dataType: 'json',
+				data: {events: 'set_revisado_all'						
+						,value: _val}
+			});
+		req.done(function(data) {
+			if (callback && (data.status = 'ok')){ 
+				callback(data);
+			}else{
+				console.log(data);
+			}//end if
+		});
+		req.fail(function(data) {
+			console.log(data);
+			console.log("error");
+		});
+	}else{
+		var req = $.ajax({
+				url: 'events.proc.php',
+				type: 'POST',
+				dataType: 'json',
+				data: {events: 'set_revisado'
+						,id_event: _id
+						,value: _val}
+			});
+		req.done(function(data) {
+			if (callback && (data.status = 'ok')){ 
+				callback(data);
+			}else{
+				console.log(data);
+			}//end if
+		});
+		req.fail(function(data) {
+			console.log(data);
+			console.log("error");
+		});
+	}//end if
+}//end function
+
+function set_draggable(selector, cancel, contenedor, cursor){
+	var max = 0;
+	$('.frm').each(function(){
+		max = max++;
+		$(this).css('z-index',0);
+	});
+	$(selector).draggable({
+		cancel: cancel,
+		containment: contenedor,
+		cursor: cursor,
+		start: function(){$(this).css('z-index',max++);}
+	});	
+}//end function
+
+function open_frm(btn, tipo){
+	//var btn = $(this);
+	$(tipo).each(function() {
+		if($(this).attr('data-opened') != 1){
+			$(this).removeClass('deshabilitado');
+		}//end if
+	});
+	btn.addClass('deshabilitado');
+	btn.attr('data-opened', 1);
+
+	//$('#contenido').html('')
+	var frm = btn.attr('data-frm');
+	var frm_n = btn.attr('data-frm-n');
+	var _width = btn.attr('data-width');
+	var _height = btn.attr('data-height');
+	var src = btn.attr('data-js-src');
+	var user = btn.attr('data-user');
+
+
+	console.log(frm);
+
+	var request = $.ajax({
+		url: frm,
+		type: 'GET',
+		dataType: 'html'
+		//data: {param1: 'value1'},
+	});
+	request.done(function(data) {	
+		set_ejecutado(user,frm ,function(res){			
+			
+			$('#dashboard #contenido').append(data)
+			set_draggable('.frm', ".frm .cont", "#dashboard #contenido" , 'move');
+			set_width(frm_n, _width);
+			if (_height > 0) {
+				set_height(frm_n,_height);
+			}//end if
+			$(".btn_close[data-frm='"+frm_n+"']").attr("data-pid", res.pid);
+			$(".btn_close[data-frm='"+frm_n+"']").attr("data-js-src", src);
+		});
+		//console.log(_height);
+	});
+	request.fail(function(data) {
+		console.log(data);
+	});
+}//end function
+
+function set_width(selector, _width){
+	$(selector).width(_width)
+}//end function
+function set_height(selector, _height){
+	$(selector).height(_height)
+}//end function
+
+function set_ejecutado(_user, _frm, callback){
+	var req = $.ajax({
+		url: 'gui.ejecutados.proc.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {	set: 1,
+				frm_name: _frm.split('?')[0] ,
+				user_ejecuta: _user},
+	});
+	req.done(function(data) {
+		if (callback) callback(data);
+	});
+	req.fail(function(data) {
+		console.log(data);
+	});	
+}//end function
+
+function kill_pid(pid, callback){
+	var req = $.ajax({
+		url: 'gui.ejecutados.proc.php',
+		type: 'POST',
+		dataType: 'json',
+		data: {	kill: 1,
+				pid: pid},
+	});
+	req.done(function(data) {
+		if (callback) callback(data);
+	});
+	req.fail(function(data) {
+		console.log(data);
+	});	
+}//end function
+
+function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+        var s;
+        s = document.createElement('script');
+       	s.setAttribute("data-drop", "1");
+        s.src = src;
+        s.type = "text/javascript";
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+    });
+}//end function
+
+function collapse_event_viewer(el,st){
+	if(st == 'false') {
+		$('#content #frm_wrapper').css('width', 'calc(70%)');
+		$('#head #frm_wrapper').css('width', 'calc(70%)');
+		$('#status_wrapper #collapse .fa').removeClass('fa-caret-left').addClass('fa-caret-right');
+		$('#status_wrapper *').show();
+		$('#content #status_wrapper').css('width','30%');
+		$('#head #status_wrapper').css('width','30%');
+		$('#content #status_wrapper').css('overflow-y','auto')
+		//$('html').css('overflow-x','auto');
+		st = 'true';
+	}else{ 
+		$('#head #status_wrapper *').hide();
+		$('#content #status_wrapper *').hide();
+		$('#content #status_wrapper').css('overflow-y','hidden');
+		$('#content #status_wrapper').css('width','20');				
+		$('#head #status_wrapper').css('width','20');				
+		$('#head #frm_wrapper').css('width', 'calc(100% - 20px)');
+		$('#content #frm_wrapper').css('width', 'calc(100% - 20px)');				
+		
+		$('#head #status_wrapper #collapse').show();
+		$('#status_wrapper #collapse .fa').removeClass('fa-caret-right').addClass('fa-caret-left');
+		$('#head #status_wrapper #collapse *').show();				
+		st = 'false';
+	};
+	el.attr('data-status', st);
+
+}//end function
+
+
+
+function check_events(activado){
+
+	if (activado){
+		var req = $.ajax({
+			url: 'events.proc.php',
+			type: 'POST',
+			dataType: 'json',
+			data: {events: 'get'},
+		});
+		req.done(function(data) {
+			//console.log(1);
+			if($('#collapse').attr('data-status')=='true'){
+				$('#content #status_wrapper #vistos .rows').html('');
+				$('#content #status_wrapper #no_vistos .rows').html('');
+				//console.log(data.no_vistos.length);
+				$('#num_no_vistos').html(data.no_vistos.length);
+				$('#num_vistos').html(data.vistos.length);
+				$.each(data.vistos, function(index, div) {
+					var cual = '#content #status_wrapper #vistos .rows';
+					$(cual).append(div);				
+					var valu = $('#status_wrapper #vistos input.search').val();
+					if(valu.length > 0 && valu != undefined){
+						filtrar(cual+" .event",valu);
+					}//end if
+					delete cual;
+					delete value;
+				});
+				$.each(data.no_vistos, function(index, div) {
+					//$('#content #status_wrapper #no_vistos .rows').append(div);
+					var cual = '#content #status_wrapper #no_vistos .rows';
+					$(cual).append(div);				
+					var valu = $('#status_wrapper #no_vistos input.search').val();
+					if(valu.length > 0 && valu != undefined){
+						filtrar(cual+" .event",valu);
+					}//end if
+					delete cual;
+					delete value;
+				});
+				$('#content #status_wrapper #vistos').removeClass('oculto');
+				$('#content #status_wrapper #no_vistos').removeClass('oculto');
+				$('#content #status_wrapper #spinner').hide().addClass('oculto');
+			}//end if
+			//data = null;
+			delete data;
+			//console.log(data);
+			//console.log("success");
+		})
+		req.fail(function(data) {
+			console.log(data);
+			console.log("error");
+		});	
+	}//end if(active)
+	
+}//end function

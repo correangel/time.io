@@ -1,0 +1,156 @@
+/*----------------------------------
+-- Temas
+	----------------------------------*/
+.tema-gradred-part{
+	background: rgba(242,223,225,1);
+	background: -moz-linear-gradient(-45deg, rgba(242,223,225,1) 0%, rgba(139,151,242,1) 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(242,223,225,1)), color-stop(100%, rgba(139,151,242,1)));
+	background: -webkit-linear-gradient(-45deg, rgba(242,223,225,1) 0%, rgba(139,151,242,1) 100%);
+	background: -o-linear-gradient(-45deg, rgba(242,223,225,1) 0%, rgba(139,151,242,1) 100%);
+	background: -ms-linear-gradient(-45deg, rgba(242,223,225,1) 0%, rgba(139,151,242,1) 100%);
+	background: linear-gradient(135deg, rgba(242,223,225,1) 0%, rgba(139,151,242,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2dfe1', endColorstr='#8b97f2', GradientType=1 );
+}
+.tema-gradblue-part{
+
+	background: rgba(139,242,229,1);
+	background: -moz-linear-gradient(-45deg, rgba(139,242,229,1) 0%, rgba(139,151,242,1) 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(139,242,229,1)), color-stop(100%, rgba(139,151,242,1)));
+	background: -webkit-linear-gradient(-45deg, rgba(139,242,229,1) 0%, rgba(139,151,242,1) 100%);
+	background: -o-linear-gradient(-45deg, rgba(139,242,229,1) 0%, rgba(139,151,242,1) 100%);
+	background: -ms-linear-gradient(-45deg, rgba(139,242,229,1) 0%, rgba(139,151,242,1) 100%);
+	background: linear-gradient(135deg, rgba(139,242,229,1) 0%, rgba(139,151,242,1) 100%);
+
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8bf2e5', endColorstr='#8b97f2', GradientType=1 );
+
+}
+
+.tema-darkblue-part{
+	/*background: rgba(85,100,117,1);
+	background: -moz-linear-gradient(-45deg, rgba(85,100,117,1) 0%, rgba(53,62,73,1) 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(85,100,117,1)), color-stop(100%, rgba(53,62,73,1)));
+	background: -webkit-linear-gradient(-45deg, rgba(85,100,117,1) 0%, rgba(53,62,73,1) 100%);
+	background: -o-linear-gradient(-45deg, rgba(85,100,117,1) 0%, rgba(53,62,73,1) 100%);
+	background: -ms-linear-gradient(-45deg, rgba(85,100,117,1) 0%, rgba(53,62,73,1) 100%);
+	background: linear-gradient(135deg, rgba(85,100,117,1) 0%, rgba(53,62,73,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#556475', endColorstr='#353e49', GradientType=1 );
+	*/
+	background-color: #4a4e62;
+}
+.tema-darkblue-menu{
+	background-color: #272F38;
+}
+.tema-darkblue-menu-op{
+	background-color: #272F38;
+	opacity:.8;
+}
+.tema-darkblue-head{
+	background-color: white;
+	color:#49515b;
+}
+.tema-darkblue-brand{
+	background-color: #1f252b;
+}
+.tema-darkblue-forms{
+	background-color: #d6d8da;
+	color:#353e49;
+}
+
+.tema-wine-part{
+	background-color: #b61924;
+}
+.tema-wine-menu{
+	background-color: #a01620;
+}
+/*-----------------------------------------
+Cremas
+-----------------------------------------*/
+.tema01-bg01{
+	/*Claro*/
+	background-color: #F1F5EB;
+}
+.tema01-bg02{
+	/*Crema*/
+	background-color:#E6DDCF;
+}
+.tema01-bg03{
+	/*cafe Claro*/
+	background-color:#C2AB95;
+}
+.tema01-bg04{
+	/*Rojo*/
+	background-color:#9E474C;
+}
+.tema01-bg05{
+	/*Cafe Oscuro*/
+	background-color:#473A31;
+}
+.tema01-bg06{
+	/*Gris*/
+	background-color:#5E6363;
+}
+
+/*-----------------------------------------
+Azules
+-----------------------------------------*/
+.tema02-bg01{
+	/*Claro*/
+	background-color: #E8E6D7;
+}
+.tema02-bg02{
+	/*Crema*/
+	background-color:#CBBCA5;
+}
+.tema02-bg03{
+	/*cafe Claro*/
+	background-color:#152A6A;
+}
+.tema02-bg04{
+	/*Azul*/
+	background-color:#395D99;
+}
+.tema02-bg05{
+	/*Cafe Oscuro*/
+	background-color:#A2BED0;
+}
+.tema02-bg06{
+	/*Gris*/
+	background-color:#CEE0E2;
+}
+
+/*-----------------------------------------
+Azules
+-----------------------------------------*/
+.tema03-bg01{
+
+	background-color: #E8E6D7;
+}
+.tema03-bg02{
+
+	background-color:#CBBCA5;
+}
+.tema03-bg03{
+
+	background-color:#353E49;
+}
+.tema03-bg04{
+
+	background-color:#395D99;
+}
+.tema03-bg05{
+
+	background-color:#272F38;
+}
+.tema03-bg06{
+
+	background-color:#FFF;
+}
+
+.tema03-colorH{
+	color: white;
+	opacity: .3;
+}
+.tema03-colorH:hover{
+	color:#FF706C;
+	opacity: 1;
+}

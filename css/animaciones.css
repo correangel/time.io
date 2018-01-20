@@ -1,0 +1,72 @@
+/*
+------------------------------------------------------------
+  Autor: Ramón Sánchez;
+  Para: RCD Resorts;
+  Fecha: 20/Febrero/2014;
+------------------------------------------------------------
+
+  verde: rgb(134,184,0);
+  font: 12px "Consolas", monospace;
+
+------------------------------------------------------------
+*/
+
+
+/*------------------------animacion girar objeto-------------------------*/
+@keyframes girando {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+
+@-webkit-keyframes girando {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-moz-keyframes girando {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-ms-keyframes girando {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes girando {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+a.para_girar:hover .gira{
+	-webkit-animation: girando 2s infinite linear;
+	-moz-animation: girando 2s infinite linear;
+  -ms-animation: girando 2s infinite linear;
+	-o-animation: girando 2s infinite linear;
+	animation: girando 2s infinite linear;  
+}
+
+span.para_girar:hover .gira{
+  -webkit-animation: girando 2s infinite linear;
+  -moz-animation: girando 2s infinite linear;
+  -ms-animation: girando 2s infinite linear;
+  -o-animation: girando 2s infinite linear;
+  animation: girando 2s infinite linear;  
+}
+/*------------------------animacion girar objeto-------------------------*/
