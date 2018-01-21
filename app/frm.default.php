@@ -5,9 +5,8 @@
 	include_once '../includes/constantes.php';
 	include_once '../includes/class.mssql.php';
 	include_once '../includes/class.creates.php';
-	//include_once '../includes/class.menu.php';
-
-
+	//Test
+	
 	//Conexion a Base de Datos
 	$com = new com_mssql();
 	$cnn = $com->_conectar_win(HOST,DATA);
