@@ -44,25 +44,25 @@
 		<body>
 			<div id="wrapper" class="completo">
 
-				<div id="frm_login" class='frm_login boxshadow' data-url='<?php echo '/index.php'.(isset($_GET['solicitud'])? '?solicitud='.$_GET['solicitud']:''); ?>'>
+				<div id="frm_login" class='fn frm_login boxshadow–big' data-url='<?php echo '/index.php'.(isset($_GET['solicitud'])? '?solicitud='.$_GET['solicitud']:''); ?>'>
 					<div id="frm–logo" class='logo'>
-						<img id='time-io-logo' src="imagenes\time.io.logo.jpg" alt="">
+						<img id='time-io-logo' src="imagenes\time–io–login.jpg" alt="">
 					</div>
-					<div id="frm–data" class='data'>
+					<div id="frm–data" class='fn data'>
 						<!--<label for="tb_user">User:</label>!-->
-						<div id='inputs' class="bloque ">
+						<div id='inputs' class="fn bloque ">
 
-							<div class="bloque gpo">
+							<div class="fn bloque gpo">
 								<div class="fn ico enlinea floL"><i class='fa fa-1x fa-user '></i></div>
 								<input class="enlinea floL" type="text" id="tb_user" required>
 							</div>
-							<div class="bloque gpo">
+							<div class="fn bloque gpo">
 								<div class="fn ico enlinea floL"><i class='fa fa-1x fa-key '></i></div>
 								<input class="enlinea floL" type="password" id="tb_pass" required>
 							</div>
 						</div>
 
-						<button id="btn_login" class='bg-azul-login noerror'><i class="fa fa-1x fa-lock"></i> <span class='fn msg'>Login</span></button>
+						<button id="btn_login" class='fn bg-azul-login noerror'><i class="fa fa-1x fa-lock"></i> <span class='fn msg'>Login</span></button>
 
 						<div id="results" class='error oculto'></div>
 					</div>
