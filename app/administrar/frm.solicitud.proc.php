@@ -201,6 +201,7 @@
       $res['correo'] = '';
       $res['id_email'] = '';
       $res['msg'] = '';
+      $res['deptos'] = '';
       $params=array(array(&$id,SQLSRV_PARAM_IN)
                       ,array(&$res['code'],SQLSRV_PARAM_OUT)
                       ,array(&$res['emp'],SQLSRV_PARAM_OUT)
@@ -221,6 +222,21 @@
         sqlsrv_next_result($stmt);
         sqlsrv_free_stmt($stmt);
 
+        $query = "exec adm.proc_get_deptos_by_request @id = ?";
+        $params= array(array(&$id,SQLSRV_PARAM_IN));
+        $stmt = $com->_create_stmt($cnn,$query,$params);
+        $html = '';
+        if($stmt !== false){
+          while($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
+            $html.="<div id='".$row['id_departamento']."' data-code='".$row['_departamento_code']."'  class='fs option depto-selected bloque'>
+                <div class='txt fs floL enlinea'>".$row['_departamento']."</div>
+                <i class='fa fa-1x fa-trash-o'></i>
+            </div>";
+          }//end while
+          $res['deptos'] = $html;
+          sqlsrv_free_stmt($stmt);
+        }//end if
+        //$resp['html'] = $html;
         $resp['result'] = $res;
         $resp['status'] = 'ok';
         $resp['post'] = $_POST;

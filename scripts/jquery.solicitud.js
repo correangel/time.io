@@ -146,7 +146,7 @@ $(document).ready(function(){
       $('#departamento-rows .check').each(function(){
          _che = $(this);
          $("#cont-deptos.has-options #options #" + _che.parent().attr('id') +".depto-selected").remove();
-         _depto = $("<div id='"+_che.parent().attr('id')+"' class='fs option depto-selected bloque'><div class='txt fs floL enlinea'>"+_che.parent().attr('data-code') +' - ' +_che.parent().attr('data-name')+"</div><i class='fa fa-1x fa-trash-o'></i></div>")
+         _depto = $("<div id='"+_che.parent().attr('id')+"' class='fs option depto-selected bloque'><div class='txt fs floL enlinea'>"+_che.parent().attr('data-code') +' - ' +_che.parent().attr('data-name')+"</div><i class='fa fa-1x fa-trash-o'></i></div>");
         $('#cont-deptos.has-options #options').append(_depto);
       });
     }else{
@@ -164,7 +164,7 @@ $(document).ready(function(){
     var _che = $(this);
     if(_che.children('i.fa').hasClass('fa-square-o')){
       _che.children('i.fa').removeClass('fa-square-o').addClass('fa-check-square-o');
-      var _depto = $("<div id='"+_che.parent().attr('id')+"' class='fs option depto-selected bloque'><div class='txt fs floL enlinea'>"+_che.parent().attr('data-code') +' - ' +_che.parent().attr('data-name')+"</div><i class='fa fa-1x fa-trash-o'></i></div>")
+      var _depto = $("<div id='"+_che.parent().attr('id')+"' class='fs option depto-selected bloque'><div class='txt fs floL enlinea'>"+_che.parent().attr('data-code') +' - ' +_che.parent().attr('data-name')+"</div><i class='fa fa-1x fa-trash-o'></i></div>");
       $('#cont-deptos.has-options #options').append(_depto);
       //$('#departamento-rows .check i.fa.fa-square-o').removeClass('fa-square-o').addClass('fa-check-square-o');
       var e = parseInt($('#departamento-rows > .departamento-item').length);
@@ -482,6 +482,8 @@ $(document).ready(function(){
           _edi.find('#cont-dominios #txt input.integrado').attr('data-id', data.result.id_email);
           _edi.find('#cont-usuarios #txt input.integrado').attr('data-id', '');
           _edi.find('#cont-usuarios #txt input.integrado').val('');
+          _edi.find('#cont-deptos #options').html(data.result.deptos);
+          $('#cont-deptos-title #txt').html($('#cont-deptos.has-options #options .depto-selected').length + ' Departamentos Seleccionados');
 
           $('.capturas-candado.visible').fadeOut(300).removeClass('visible').addClass('oculto', function(){
             $('.capturas-completa.oculto').fadeIn(300).removeClass('oculto');
