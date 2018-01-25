@@ -77,7 +77,7 @@
 	                  $html.="<img id='employee-photo' class='o6' src='/imagenes/no_image_profile.jpg' />";
 	                $html.="</div>";
 									$html.="<div class='fn floL data enlinea'>";
-	                  $html.="<input id='_nombre' class='fs bloque elli' title='Colaborador'  disabled/>";
+	                  $html.="<input id='_nombre' data-emp='' class='fs bloque elli' title='Colaborador'  disabled/>";
 										$html.="<input id='_locacion' class='fs bloque elli' title='Locaci&oacute;n'  disabled/>";
 										$html.="<input id='_departamento' class='fs bloque elli' title='Departamento'  disabled/>";
 										$html.="<input id='_posicion' class='fs bloque elli' title='Posici&oacute;n'  disabled/>";
@@ -94,7 +94,7 @@
 									$html.="<div id='cont-roles' class='fs floL has-options contenedor enlinea closed'>";
 									 $html.="<div tabindex='0' id='cont-roles-title' class='fs title bloque' data-parent='#cont-roles'>";
 										 $html.="<div id='txt' class='fs floL enlinea' data-parent='#cont-roles'>
-															<input data-id='' type='text' class='fs integrado' data-parent='#cont-roles' />
+															<input id='id_role' data-id='' type='text' class='fs integrado' data-parent='#cont-roles' />
 														</div>";
 										 $html.="<div tabindex='0' id='ico' class='fn floL enlinea' data-parent='#cont-roles'><i class='fa fa-1x fa-ellipsis-h' data-parent='#cont-roles'></i></div>";
 									 $html.="</div>";
@@ -131,7 +131,7 @@
 									$html.="<div id='cont-dominios' class='fs floL has-options contenedor-50per enlinea closed'>";
 									 $html.="<div tabindex='0' id='cont-dominios-title' class='fs title bloque' data-parent='#cont-dominios'>";
 										 $html.="<div id='txt' class='fs floL enlinea' data-parent='#cont-dominios'>
-										 					<input data-id='' type='text' class='fs integrado' data-parent='#cont-dominios' />
+										 					<input id='id_email' data-id='' type='text' class='fs integrado' data-parent='#cont-dominios' />
 										 				</div>";
 										 $html.="<div tabindex='0' id='ico' class='fn floL enlinea' data-parent='#cont-dominios'><i class='fa fa-1x fa-ellipsis-h' data-parent='#cont-dominios'></i></div>";
 									 $html.="</div>";
@@ -155,7 +155,7 @@
 										$html.="<div tabindex='0' id='cont-usuarios-title' class='fs title bloque' data-parent='#cont-usuarios'>";
 
 											$html.="<div id='txt' class='fs floL enlinea' data-parent='#cont-usuarios'>
-																<input data-id='' type='text' class='fs integrado' data-parent='#cont-usuarios'/>
+																<input id='_username' data-id='' type='text' class='fs integrado' data-parent='#cont-usuarios'/>
 															</div>";
 											$html.="<div tabindex='0' id='ico' class='fn floL enlinea' data-parent='#cont-usuarios'><i class='fa fa-1x fa-ellipsis-h' data-parent='#cont-usuarios'></i></div>";
 										$html.="</div>";

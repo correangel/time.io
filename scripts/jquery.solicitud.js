@@ -227,7 +227,7 @@ $(document).ready(function(){
     var _dom = $('#tabs-sol-data #id_email').val();
     if (_dom === undefined || _dom ==='') {
       _solicitud_error_enviar(_btn,'Selecciona el Dominio de Correo...');
-      $('#tabs-sol-data #id_mail').focus();
+      $('#tabs-sol-data #id_email').focus();
       return false;
     }//enf if
     var _deptos = parseInt($('#cont-deptos #options .option.depto-selected').length);
@@ -510,6 +510,62 @@ $(document).ready(function(){
     //alert(_id);
   });
 
+  $(document).on('click', '#tabs-sol-data #btn-completa', function(){
+    //alert(1);
+    var _btn = $(this);
+    var _emp = $('#tabs-sol-data #_nombre').attr('data-emp');
+    if (_emp === undefined || _emp ==='') {
+      _solicitud_error_enviar(_btn,'Selecciona una solicitud pendiente...','fa-save');
+      //$('#tabs-sol-data #_alter_id').focus();
+      return false;
+    }//enf if
+
+    var _rol = $('#tabs-sol-data #id_role').attr('data-id');
+    if (_rol === undefined || _rol ==='') {
+      _solicitud_error_enviar(_btn,'Selecciona el Rol...','fa-save');
+      $('#tabs-sol-data #id_role').focus();
+      return false;
+    }//enf if
+
+    var _correo = $('#tabs-sol-data #_correo').val();
+    if (_correo === undefined || _correo ==='') {
+      _solicitud_error_enviar(_btn,'Captura el correo...','fa-save');
+      $('#tabs-sol-data #_correo').focus();
+      return false;
+    }//enf if
+    var _dom = $('#tabs-sol-data #id_email').val();
+    if (_dom === undefined || _dom ==='') {
+      _solicitud_error_enviar(_btn,'Selecciona el Dominio de Correo...','fa-save');
+      $('#tabs-sol-data #id_email').focus();
+      return false;
+    }//enf if
+
+    var _use = $('#tabs-sol-data #_username').val();
+    if (_use === undefined || _use ==='') {
+      _solicitud_error_enviar(_btn,'Selecciona el Usuario...','fa-save');
+      $('#tabs-sol-data #_username').focus();
+      return false;
+    }//enf if
+    var _deptos = parseInt($('#cont-deptos #options .option.depto-selected').length);
+    if (_deptos === undefined || _deptos ===0) {
+      _solicitud_error_enviar(_btn,'Selecciona los departamentos...','fa-save');
+      $('#tabs-sol-data #cont-departamentos-title').focus();
+      return false;
+    }//enf if
+
+    var _departamentos = "";
+    var _first = true;
+    $('#cont-deptos #options .option.depto-selected').each(function(){
+      //console.log(_first);
+      if(_first===true){
+        _departamentos+=$(this).attr('id');
+        _first = false;
+      }else{
+        _departamentos+=","+$(this).attr('id');
+      }//end if
+    });
+  });
+
 });//End ready document
 
 function _check_option(_target, callback){
@@ -548,10 +604,11 @@ function _check_option(_target, callback){
   }else return;//end if
 }//end function
 
-function _solicitud_error_enviar(_btn,_msg){
-  _solicitud_set_error('bg-verde-2','bg-rojo', 'fa-send-o','fa-exclamation-triangle',_msg,_btn, function(){
+function _solicitud_error_enviar(_btn,_msg, _ico){
+  _ico = _ico || 'fa-send-o';
+  _solicitud_set_error('bg-verde-2','bg-rojo', _ico,'fa-exclamation-triangle',_msg,_btn, function(){
     _btn.delay(3000).queue( function(next){
-      _solicitud_set_error('bg-rojo','bg-verde-2', 'fa-exclamation-triangle','fa-send-o','Enviar',_btn, function(){
+      _solicitud_set_error('bg-rojo','bg-verde-2', 'fa-exclamation-triangle',_ico,'Enviar',_btn, function(){
         _btn.addClass('noerror');
         delete _btn;
         return false;

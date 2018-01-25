@@ -88,8 +88,14 @@
 
 		//$prev = $com->_call_proc($cnn, 'get_param', 'prev');
 		//$llave =  $com->_call_proc($cnn, 'get_key', $member256);
-		$dominio = $com->_get_val($cnn, '_domain', 'cat.operator', '_username', $user,'nvarchar','1') ?: $com->_get_param($cnn, 'dominio_cliente');
-		$host = $dominio ?: $com->_get_param($cnn, 'ldap_host');
+		$dominio = $com->_get_val($cnn, '_domain', 'cat.operator', '_username', $user,'nvarchar','1');// ?: $com->_get_param($cnn, 'dominio_cliente');
+		$host = $com->_get_val($cnn
+													, '_host'
+													, 'adm.dominios'
+													, 'id_dominio'
+													, $dominio
+													, 'nvarchar'
+													, '1');
 
 		//echo $dominio;
 		//echo $host;
@@ -104,15 +110,36 @@
 		$port = 389;
 		$ad = $ldap->connect($host,$port);
 		if ($ldap->login($ad, $ad_user, $pass) == 1 ){
-			$grupo = $com->_get_param($cnn, 'ldap_grupo');
+			//$grupo = $com->_get_param($cnn, 'ldap_grupo');
+			$grupo = $com->_get_val($cnn
+														, '_grupo'
+														, 'adm.dominios'
+														, 'id_dominio'
+														, $dominio
+														, 'nvarchar'
+														, '1');
 			$lifetime = $com->_get_param($cnn, 'session_lifetime');
 			$name = $com->_get_val($cnn, '_name', 'cat.operator', '_username', $user,'nvarchar', '1');
 			$name .= " " . $com->_get_val($cnn, '_lastname', 'cat.operator', '_username', $user,'nvarchar','1');
 
 
 			if ( $grupo <> '' && $grupo <> 'undefined' ) {
-				$bdn= $com->_get_param($cnn, 'base_dn');
-				$ous= $com->_get_param($cnn, 'OU_grupos');
+				//$bdn= $com->_get_param($cnn, 'base_dn');
+				$bdn = $com->_get_val($cnn
+															, '_base_dn'
+															, 'adm.dominios'
+															, 'id_dominio'
+															, $dominio
+															, 'nvarchar'
+															, '1');
+				//$ous= $com->_get_param($cnn, 'OU_grupos');
+				$ous = $com->_get_val($cnn
+															, '_ou_grupo'
+															, 'adm.dominios'
+															, 'id_dominio'
+															, $dominio
+															, 'nvarchar'
+															, '1');
 				$output = $ldap->check_grupo($ad, $grupo,$bdn, $ous ,$user);
 				//$response_array['output'] = $output;
 				//$output =true;
