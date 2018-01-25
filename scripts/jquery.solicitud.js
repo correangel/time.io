@@ -482,6 +482,8 @@ $(document).ready(function(){
           _edi.find('#cont-dominios #txt input.integrado').attr('data-id', data.result.id_email);
           _edi.find('#cont-usuarios #txt input.integrado').attr('data-id', '');
           _edi.find('#cont-usuarios #txt input.integrado').val('');
+          _edi.find('#cont-ldap #txt input.integrado').attr('data-id', '');
+          _edi.find('#cont-ldap #txt input.integrado').val('');
           _edi.find('#cont-deptos #options').html(data.result.deptos);
           $('#cont-deptos-title #txt').html($('#cont-deptos.has-options #options .depto-selected').length + ' Departamentos Seleccionados');
 
@@ -539,7 +541,12 @@ $(document).ready(function(){
       $('#tabs-sol-data #id_email').focus();
       return false;
     }//enf if
-
+    var _lda = $('#tabs-sol-data #id_ldap').val();
+    if (_lda === undefined || _lda ==='') {
+      _solicitud_error_enviar(_btn,'Selecciona el Dominio LDAP...','fa-save');
+      $('#tabs-sol-data #id_ldap').focus();
+      return false;
+    }//enf if
     var _use = $('#tabs-sol-data #_username').val();
     if (_use === undefined || _use ==='') {
       _solicitud_error_enviar(_btn,'Selecciona el Usuario...','fa-save');
@@ -566,6 +573,7 @@ $(document).ready(function(){
     });
   });
 
+
 });//End ready document
 
 function _check_option(_target, callback){
@@ -586,6 +594,37 @@ function _check_option(_target, callback){
           _target.find('input.integrado').attr('data-id',_real_id);
           if(_target.find('input.integrado').hasClass('toupper')) _value = _value.toUpperCase();
           _target.find('input.integrado').val(_value);
+          if (_target.find('input.integrado').hasClass('change')){
+            var _afected = $(''+_target.find('input.integrado').attr('data–change'));
+            var _url = _afected.attr('data–url');
+            var _action = _afected.attr('data–action');
+            var _id = $(''+_afected.attr('data–source')).val();
+
+            //console.log(_afected);
+            var _params = {action:_action, id:_id};
+            var req = $.ajax({
+              url: _url,
+              type: 'POST',
+              dataType: 'json',
+              data: _params
+            });
+            req.done(function(data) {
+              if (data.status === 'ok'){
+                _afected.find('input.integrado').val('');
+                _afected.find('input.integrado').attr('data-id','');
+                _afected.find('#options').html(data.html);
+              }else{
+                _solicita_callback_not_ok(data);
+              }//end if
+
+              //console.log(data);
+
+            });
+            req.fail(function(data) {
+              _solicita_callback_not_ok(data);
+
+            });
+          }//end if
           return false;
         }//end if
 
@@ -606,9 +645,10 @@ function _check_option(_target, callback){
 
 function _solicitud_error_enviar(_btn,_msg, _ico){
   _ico = _ico || 'fa-send-o';
+  _ant = _btn.find('.msg').html();
   _solicitud_set_error('bg-verde-2','bg-rojo', _ico,'fa-exclamation-triangle',_msg,_btn, function(){
     _btn.delay(3000).queue( function(next){
-      _solicitud_set_error('bg-rojo','bg-verde-2', 'fa-exclamation-triangle',_ico,'Enviar',_btn, function(){
+      _solicitud_set_error('bg-rojo','bg-verde-2', 'fa-exclamation-triangle',_ico,_ant,_btn, function(){
         _btn.addClass('noerror');
         delete _btn;
         return false;

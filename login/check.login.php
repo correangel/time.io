@@ -107,7 +107,13 @@
 
 		//echo $user;
 		//Validaciones
-		$port = 389;
+		$port = $com->_get_val($cnn
+													, '_port'
+													, 'adm.dominios'
+													, 'id_dominio'
+													, $dominio
+													, 'nvarchar'
+													, '1');
 		$ad = $ldap->connect($host,$port);
 		if ($ldap->login($ad, $ad_user, $pass) == 1 ){
 			//$grupo = $com->_get_param($cnn, 'ldap_grupo');

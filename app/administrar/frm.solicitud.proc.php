@@ -5,6 +5,7 @@
 	include_once $_SERVER['DOCUMENT_ROOT']."/includes/constantes.php";
 	include_once $_SERVER['DOCUMENT_ROOT']."/includes/class.mssql.php";
 	include_once $_SERVER['DOCUMENT_ROOT']."/includes/class.creates.php";
+  include_once $_SERVER['DOCUMENT_ROOT']."/includes/class.ldap.php";
 
   $com = new com_mssql();
   $cnn = $com->_conectar_win(HOST,DATA);
@@ -172,6 +173,82 @@
         $resp['status'] = 'error';
         $resp['post'] = $_POST;
       }//end if
+    }elseif(isset($_POST['action'],$_POST['id'])&& $_POST['action'] === 'get::users::dominio'){
+      set_time_limit(30);
+  		//set_error_handler('error_hand', E_ALL);
+      $html='';
+      $dominio = $_POST['id'];
+      $user = $com->_get_val($cnn
+  													, '_bind_user'
+  													, 'adm.dominios'
+  													, 'id_dominio'
+  													, $dominio
+  													, 'nvarchar'
+  													, '1');//$com->_get_param($cnn, 'ldap_bind_user'); // param?
+      $pass = $com->_get_val($cnn
+  													, '_bind_pass'
+  													, 'adm.dominios'
+  													, 'id_dominio'
+  													, $dominio
+  													, 'nvarchar'
+  													, '1');//$com->_get_param($cnn, 'ldap_bind_pass'); // param?
+      //$com->_get_param($cnn, 'dominio_cliente');
+      //$host = $dominio ?: $com->_get_param($cnn, 'ldap_host');
+      $host = $com->_get_val($cnn
+  													, '_host'
+  													, 'adm.dominios'
+  													, 'id_dominio'
+  													, $dominio
+  													, 'nvarchar'
+  													, '1');
+      $ldap = new _ldap();
+
+      $ad_user= $user.'@'.$dominio;
+      $port = $com->_get_val($cnn
+  													, '_port'
+  													, 'adm.dominios'
+  													, 'id_dominio'
+  													, $dominio
+  													, 'nvarchar'
+  													, '1');
+      $ad = $ldap->connect($host,$port);
+      if ($ldap->login($ad, $ad_user, $pass) == 1 ){
+        //$grupo = $com->_get_param($cnn, 'ldap_grupo');
+        //$bdn= $com->_get_param($cnn, 'OU_grupos');
+        $grupo = $com->_get_val($cnn
+  														, '_grupo'
+  														, 'adm.dominios'
+  														, 'id_dominio'
+  														, $dominio
+  														, 'nvarchar'
+  														, '1');
+        $bdn = $com->_get_val($cnn
+  															, '_ou_grupo'
+  															, 'adm.dominios'
+  															, 'id_dominio'
+  															, $dominio
+  															, 'nvarchar'
+  															, '1');
+        $members = $ldap->_get_members($ad,$bdn, $grupo, true);
+        $members_string= $members['string'];
+
+        $query = 'exec cat.proc_get_available_users @users= ?';
+        $params = array(&$members_string);
+        if($stmt = $com->_create_stmt($cnn, $query, $params)){
+          while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+            $html.= "<div data-id='".$row['_username']."' class='fs option available-user bloque' data-parent='#cont-usuarios'>".$row['_username']."</div>";
+          }// end while
+
+          $resp['status'] = 'ok';
+          $resp['html'] = $html;
+          $resp['post'] = $_POST;
+        }else{
+          $resp['error'] = sqlsrv_errors();
+          $resp['status'] = 'error';
+          $resp['post'] = $_POST;
+
+        }//end if
+      }//end if
     }elseif(isset($_POST['action'], $_POST['id'])&& $_POST['action'] === 'get::data::request'){
       $query = 'exec adm.proc_get_data_request	 @id =?
                                             ,@code = ?
@@ -259,4 +336,16 @@
 
   $com->_desconectar($cnn);
   echo json_encode($resp);
+
+  function error_hand($errno){
+		if  ($errno == 2){
+
+      $response_array['status'] = 'error';
+			$response_array['error'] = 'binding';
+			$response_array['msg'] = 'Credenciales inv&aacute;lidas';
+			echo json_encode($response_array);
+		}else{
+			echo 'error';//$errmsg;
+		}//end if
+	}//end function
  ?>

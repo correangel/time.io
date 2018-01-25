@@ -148,10 +148,37 @@
 								 $html.="</div>";//end correo
 								$html.="</div>";
 
+								$html.="<div class='fn gpo-captura'>";//start dominios
+									$html.="<div class='fn floL label-ico enlinea'><i class='fa fa-1x fa-address-book'></i></div>";
+
+									$html.="<div id='cont-ldap' class='fs floL has-options contenedor enlinea closed'>";
+									 $html.="<div tabindex='0' id='cont-roles-title' class='fs title bloque' data-parent='#cont-ldap'>";
+										 $html.="<div id='txt' class='fs floL enlinea' data-parent='#cont-roles'>
+															<input id='id_ldap' data–change='#cont-usuarios' data-id='' type='text' class='fs integrado change' data-parent='#cont-ldap' />
+														</div>";
+										 $html.="<div tabindex='0' id='ico' class='fn floL enlinea' data-parent='#cont-roles'><i class='fa fa-1x fa-ellipsis-h' data-parent='#cont-ldap'></i></div>";
+									 $html.="</div>";
+									 $html.="<div id='options' class='fs select bloque thin-scroll oculto' data-parent='#cont-ldap'>";
+
+									  $query = 'exec adm.proc_get_dominios_ldap';
+										$params = array();
+										 if($stmt = $com->_create_stmt($cnn, $query, $params)){
+											 while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+												 $html.= "<div id='".$row['id_dominio']."' data-id='".$row['id_dominio']."' data-host='".$row['_host']."' class='fs option available-ldap bloque' data-parent='#cont-ldap'>".$row['id_dominio']."</div>";
+											 }// end while
+										 }//end if
+									 $html.="</div>";
+								 $html.="</div>";
+								$html.="</div>";//end roles
+
               // usuarios disponibles
 								$html.="<div class='fn gpo-captura'>";
 									$html.="<div class='fn floL label-ico enlinea'><i class='fa fa-1x fa-user'></i></div>";
-		              $html.="<div id='cont-usuarios' class='fs contenedor has-options enlinea closed'>";
+		              $html.="<div id='cont-usuarios'
+																data–action='get::users::dominio'
+																data–url='administrar/frm.solicitud.proc.php'
+																data–source='#cont-ldap #id_ldap'
+																class='fs contenedor has-options enlinea closed'>";
 										$html.="<div tabindex='0' id='cont-usuarios-title' class='fs title bloque' data-parent='#cont-usuarios'>";
 
 											$html.="<div id='txt' class='fs floL enlinea' data-parent='#cont-usuarios'>
@@ -163,7 +190,7 @@
 										//-------------------------------------------------------
 										// Consulta a Dominio, Miembros del Grupo
 										//-------------------------------------------------------
-											$user = $com->_get_param($cnn, 'ldap_bind_user'); // param?
+											/*$user = $com->_get_param($cnn, 'ldap_bind_user'); // param?
 											$pass = $com->_get_param($cnn, 'ldap_bind_pass'); // param?
 											$dominio = $com->_get_param($cnn, 'dominio_cliente');
 											$host = $dominio ?: $com->_get_param($cnn, 'ldap_host');
@@ -185,7 +212,7 @@
 														$html.= "<div data-id='".$row['_username']."' class='fs option available-user bloque' data-parent='#cont-usuarios'>".$row['_username']."</div>";
 													}// end while
 												}//end if
-											}//end if
+											}//end if*/
 										//-------------------------------------------------------
 										$html.="</div>";
 									$html.="</div>";
@@ -266,7 +293,7 @@
 
       $html.="</div>";//frm-navigator
 
-			$resp['members'] = $members;
+			//$resp['members'] = $members;
       $resp['html'] = $html;
       $resp['status'] = 'ok';
       $resp['msg'] = 'Usar html';
