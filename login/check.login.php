@@ -158,7 +158,10 @@
 						$response_array['id_operator'] = $id_operator;
 						$response_array['msg'] = 'Autenticado en el Grupo de Seguridad';
 						$response_array['user'] = $ad_user;
-						$response_array['userSindominio'] = str_replace("@AICOLLECTION.LOCAL","",strtoupper($ad_user));
+						$user = str_replace("@AICOLLECTION.LOCAL","",strtoupper($ad_user));
+						$user = str_replace("@UNICOHOTEL.LOCAL","",strtoupper($user));
+						$response_array['userSindominio'] =$user;
+
 						$response_array['grupo'] = $grupo;
 						echo json_encode($response_array);
 					}else{

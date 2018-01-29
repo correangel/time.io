@@ -5,14 +5,16 @@
 			header('Content-type: application/json');
 			include_once $_SERVER["DOCUMENT_ROOT"] ."/login/class.login.php";
 			include_once $_SERVER["DOCUMENT_ROOT"] ."/includes/constantes.php";
-
+			$user = $_POST['user'];
+			$user = str_replace("@AICOLLECTION.LOCAL","",strtoupper($user));
+			$user = str_replace("@UNICOHOTEL.LOCAL","",strtoupper($user));
 			$lifetime = $_POST['lifetime'];
 			$clogin = new _login();
 			$clogin->iniciar_sesion('TimeIO', $lifetime );
 			$_SESSION['id_operator'] = $_POST['id_operator'];
 			$_SESSION['user_ldap'] = $_POST['user'];
 			$_SESSION['user_name'] = $_POST['name'];
-			$_SESSION['user_sing'] = str_replace("@AICOLLECTION.LOCAL","",strtoupper($_POST['user']));
+			$_SESSION['user_sing'] = $user;
 
 			$response_array['cook'] = true;
 			//$response_array['user_ldap'] =  $_SESSION['user_ldap'];

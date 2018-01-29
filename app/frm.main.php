@@ -93,6 +93,7 @@
 					<div id="menu" class='particulas fn bloque ini-hide'>
 
 							<?php
+								//echo 'Error';
 								//echo $user_sing;
 								$create = new _creates();
 								$create->_menu($cnn, $com, strtolower($user_sing));

@@ -255,6 +255,7 @@
                 , $_POST['emp']//employee_id
                 , $_POST['use']//username
                 , $_POST['dom']//domain
+                , $_POST['cor']//domain
                 //, $_POST['nam']//name
                 //, $_POST['las']//lastname
                 , $_POST['rol']//id_role
@@ -266,6 +267,7 @@
     $emp = $_POST['emp'];
     $use = $_POST['use'];
     $dom = $_POST['dom'];
+    $cor = $_POST['cor'];
     //$nam = $_POST['nam'];
     //$las = $_POST['las'];
     $rol = $_POST['rol'];
@@ -280,6 +282,7 @@
                   ,array(&$dom,SQLSRV_PARAM_IN)
                   //,array(&$nam,SQLSRV_PARAM_IN)
                   //,array(&$las,SQLSRV_PARAM_IN)
+                  ,array(&$cor,SQLSRV_PARAM_IN)
                   ,array(&$rol,SQLSRV_PARAM_IN)
                   ,array(&$ope,SQLSRV_PARAM_IN)
                   ,array(&$dep,SQLSRV_PARAM_IN)
@@ -290,6 +293,7 @@
                     ,@employee_id = ?
                     ,@username = ?
                     ,@domain = ?
+                    ,@correo = ?
                     ,@id_role = ?
                     ,@do_ope = ?
                     ,@deptos = ?

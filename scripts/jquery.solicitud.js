@@ -573,6 +573,7 @@ $(document).ready(function(){
     });
     var _ope = $('.frm').data('ope');
     var _id = $('input#id_request').val();
+    var _cor = _correo+_dom;
     var _params = {
       action: 'save::data::operator'
       ,id : _id
@@ -580,14 +581,22 @@ $(document).ready(function(){
       ,use : _use
       ,dom : _lda
       ,rol : _rol
+      ,cor : _cor
       ,ope : _ope
       ,dep : _departamentos
     };
     _solicitud_proc(_params, function(data){
       //∫console.log(data);
-      if(data.satus === 'ok'){
-        console.log($('#frm-solicitudes').find("#"+data.id));
+      if(data.status === 'ok'){
+        console.log(data);
         $('#frm-solicitudes').find("#"+data.id).fadeOut(300);
+        var nav = $('.frm');
+        var id = nav.attr('data-nav');
+        nav.fadeOut(300, function(){
+          nav.remove();
+          $('#'+id).attr('data-open',0).removeClass('active');
+          delete nav;
+        });
       }else{
         _solicita_callback_not_ok(data);
       }//end if

@@ -58,6 +58,13 @@ class _creates{
 			sqlsrv_free_stmt( $stmt);
 		}else{
 			echo 'Error al crear Menu!';
+			if( ($errors = sqlsrv_errors() ) != null) {
+        foreach( $errors as $error ) {
+            echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+            echo "code: ".$error[ 'code']."<br />";
+            echo "message: ".$error[ 'message']."<br />";
+        }
+    	}
 		}//end if
 	}//end class
 	//-------------------------------------------------------------------------------
