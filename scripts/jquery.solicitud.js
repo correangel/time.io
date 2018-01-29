@@ -571,6 +571,27 @@ $(document).ready(function(){
         _departamentos+=","+$(this).attr('id');
       }//end if
     });
+    var _ope = $('.frm').data('ope');
+    var _id = $('input#id_request').val();
+    var _params = {
+      action: 'save::data::operator'
+      ,id : _id
+      ,emp : _emp
+      ,use : _use
+      ,dom : _lda
+      ,rol : _rol
+      ,ope : _ope
+      ,dep : _departamentos
+    };
+    _solicitud_proc(_params, function(data){
+      //∫console.log(data);
+      if(data.satus === 'ok'){
+        console.log($('#frm-solicitudes').find("#"+data.id));
+        $('#frm-solicitudes').find("#"+data.id).fadeOut(300);
+      }else{
+        _solicita_callback_not_ok(data);
+      }//end if
+    });
   });
 
 

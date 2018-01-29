@@ -249,6 +249,70 @@
 
         }//end if
       }//end if
+
+    }elseif(isset($_POST['action']
+                , $_POST['id']
+                , $_POST['emp']//employee_id
+                , $_POST['use']//username
+                , $_POST['dom']//domain
+                //, $_POST['nam']//name
+                //, $_POST['las']//lastname
+                , $_POST['rol']//id_role
+                , $_POST['ope']//do_ope
+                , $_POST['dep'])//do_ope
+                && $_POST['action'] === 'save::data::operator'){
+    //------------------------------
+    $id = $_POST['id'];
+    $emp = $_POST['emp'];
+    $use = $_POST['use'];
+    $dom = $_POST['dom'];
+    //$nam = $_POST['nam'];
+    //$las = $_POST['las'];
+    $rol = $_POST['rol'];
+    $ope = $_POST['ope'];
+    $dep = $_POST['dep'];
+    $res = 0;
+    $msg = '';
+    //------------------------------
+    $params= array(array(&$id,SQLSRV_PARAM_IN)
+                  ,array(&$emp,SQLSRV_PARAM_IN)
+                  ,array(&$use,SQLSRV_PARAM_IN)
+                  ,array(&$dom,SQLSRV_PARAM_IN)
+                  //,array(&$nam,SQLSRV_PARAM_IN)
+                  //,array(&$las,SQLSRV_PARAM_IN)
+                  ,array(&$rol,SQLSRV_PARAM_IN)
+                  ,array(&$ope,SQLSRV_PARAM_IN)
+                  ,array(&$dep,SQLSRV_PARAM_IN)
+                  ,array(&$res,SQLSRV_PARAM_OUT)
+                  ,array(&$msg,SQLSRV_PARAM_OUT));
+    $query = 'exec [adm].[proc_add_operator_domain_solicitud]
+                    @solicitud = ?
+                    ,@employee_id = ?
+                    ,@username = ?
+                    ,@domain = ?
+                    ,@id_role = ?
+                    ,@do_ope = ?
+                    ,@deptos = ?
+                    ,@result = ?
+                    ,@msg = ? ';
+    $stmt= sqlsrv_query($cnn, $query, $params);
+    if( $stmt !== false ) {
+      sqlsrv_next_result($stmt);
+      sqlsrv_free_stmt($stmt);
+      $resp['id'] = $id;
+      $resp['res'] = $res;
+      $resp['msg'] = $msg;
+      $resp['status'] = 'ok';
+      $resp['post'] = $_POST;
+
+    }else{
+
+      $resp['error'] = sqlsrv_errors();
+      $resp['status'] = 'error';
+      $resp['post'] = $_POST;
+    }//end if
+
+
     }elseif(isset($_POST['action'], $_POST['id'])&& $_POST['action'] === 'get::data::request'){
       $query = 'exec adm.proc_get_data_request	 @id =?
                                             ,@code = ?
