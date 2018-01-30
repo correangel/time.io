@@ -196,7 +196,11 @@
 															</div>
 															<div class='fs input enlinea'><input id='filter-input' name='filter-input' placeholder='Buscar:' type='text' class='fs bloque' /></div>
 														</div>
-									<div id='rows-body' class='fm bloque paginar'>";
+									<div id='rows-body-cargando' class='fn oculto'>
+										<i class='fa fa-2x fa-cog fa-spin'></i>
+									</div>
+									<div id='rows-body' class='modo-checadas fm bloque paginar'>";
+
 											$query = 'exec tra.proc_create_lista_by_ope @ope = ?';
 											$params = array(&$id_operator);
 											$stmt = $com->_create_stmt($cnn, $query, $params);

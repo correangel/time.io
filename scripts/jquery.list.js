@@ -215,7 +215,7 @@ $(document).ready(function() {
 		ind = null;*/
 	});
 
-	$(document).on('keyup', '.frm-employees > #frm-table > #rows-body > .empl > .cell.dia',function(e){
+	$(document).on('keyup', '.frm-employees > #frm-table > #rows-body.modo-checadas > .empl > .cell.dia',function(e){
 		//console.log(1);
 		var act = $(this);
 		var row = parseInt(act.parent().attr('data-id'));
@@ -446,10 +446,21 @@ $(document).ready(function() {
 	$(document).on('mouseleave','#frm-pagination-controls', function(){
 		$('#frm-pagination-controls').addClass('oculto');
 	});
-
+	$(document).on('click','#frm-tabs #btn-horas-extra.active', function(){
+		//var _btn = $(this);
+		//
+		//_btn.removeClass('active').addClass('unactive');
+		//_btn.find('i.fa').removeClass('fa-clock').addClass('fa-reply');
+	});
 	$(document).on('click','#frm-tabs #btn-horas-extra.unactive', function(){
 		var _btn = $(this);
+
 		_btn.removeClass('unactive').addClass('active');
+		$('#rows-body').hide();
+		$('#dia-cont').hide();
+		_btn.find('i.fa').removeClass('fa-clock').addClass('fa-reply');
+		$('#rows-body-cargando').show();
+		$('#rows-body-cargando').removeClass('oculto').addClass('visible');
 
 		var _dep = $('#set-departamento').attr('data-departamento');
 		var _per = $('#set-periodo').attr('data-periodo');
@@ -461,53 +472,130 @@ $(document).ready(function() {
 				page:_page, dep:_dep, per:_per, dias:_dias
 		};
 		_jlista_post_proc( _params, function(data){
-			if (data.status==='ok' && data.html != undefined){
-				$('#rows-body').fadeOut(300, function(){
-					$('#rows-body').html('');
-					$('#rows-body').html(data.html).fadeIn(300);
-					//$('#rows-head').html(data.columnas).fadeIn(300);
-					//$('#rows-head').attr('data-dias-periodo',data.dias);
+			//console.log(data.html);
+			if(data.status === "ok" && data.html === undefined){
+				alert('Los colaboradores de este departamento no generan horas extras...');
+
+				//console.log($('#rows-body-cargando.visible'));
+				$('#rows-body-cargando.visible').fadeOut(150, function (){
+					$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+					_btn.removeClass('active').addClass('unactive');
+					_btn.find('i.fa').removeClass('fa-reply').addClass('fa-clock');
+					$('#dia-cont').show();
+					$('#rows-body').fadeIn(150);
+
 				});
+				return false;
+			}//end if
+			if (data.status === "ok" && data.html != undefined){
+				$('#rows-body-cargando').fadeOut(300, function (){
+					$('#rows-body').html('');
+					$('#rows-body').removeClass('modo-checadas').addClass('modo-horas-extras');
+					$('#rows-body').html(data.html).fadeIn(300);
+					$('#dia-cont').show();
+				});
+
+
 				_ctl.attr('data-actual', _page);
 				$('#frm-pagination-lab').html(_page  +"/" + data.pages );
-			}else
-				_lista_callback_not_ok(data);
+				_btn = null;
+				return false;
+			}//end if
+			_btn.removeClass('active').addClass('unactive');
+			_lista_callback_not_ok(data);
+			return false;
 		});
 	});
-	
+
 	$(document).on('click','#frm-tabs #btn-refresh-lista', function(){
-		var _dad = $('#frm-pagination-controls');
-		var _ope = _dad.attr('data-ope');
-		var _dep = $('#set-departamento').attr('data-departamento');
-		var _per = $('#set-periodo').attr('data-periodo');
-		var _page = 1;
-		var _dias = $('#rows-head').attr('data-dias-periodo');
-		var _pages = parseInt(_dad.attr('data-pages'));
-		_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
-			if (data.status =='ok' && data.html != undefined){
-				$('#rows-body').fadeOut(300, function(){
-					$('#rows-body').html('');
-					$('#rows-body').html(data.html).fadeIn(300);
-					$('#rows-head').html(data.columnas).fadeIn(300);
-					$('#rows-head').attr('data-dias-periodo',data.dias);
-				});
-				_dad.attr('data-actual', _page);
-				$('#frm-pagination-lab').html(_page  +"/" + _pages );
-			}else{
+
+
+		if ($('#rows-body').hasClass('modo-checadas')){
+			var _dad = $('#frm-pagination-controls');
+			var _ope = _dad.attr('data-ope');
+			var _dep = $('#set-departamento').attr('data-departamento');
+			var _per = $('#set-periodo').attr('data-periodo');
+			var _page = 1;
+			var _dias = $('#rows-head').attr('data-dias-periodo');
+			var _pages = parseInt(_dad.attr('data-pages'));
+
+			_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
+				if (data.status =='ok' && data.html != undefined){
+					$('#rows-body').fadeOut(300, function(){
+						$('#rows-body').html('');
+						$('#rows-body').html(data.html).fadeIn(300);
+						$('#rows-head').html(data.columnas).fadeIn(300);
+						$('#rows-head').attr('data-dias-periodo',data.dias);
+					});
+					_dad.attr('data-actual', _page);
+					$('#frm-pagination-lab').html(_page  +"/" + _pages );
+				}else{
+					_lista_callback_not_ok(data);
+				}//end if
+			});
+			return false;
+		}//end if
+		if ($('#rows-body').hasClass('modo-horas-extras')){
+			var _btn = $('#frm-tabs #btn-horas-extra');
+			//$('#rows-body').hide();
+			//_btn.removeClass('unactive').addClass('active');
+			var _dep = $('#set-departamento').attr('data-departamento');
+			var _per = $('#set-periodo').attr('data-periodo');
+			var _page = 1;
+			var _dias = $('#rows-head').attr('data-dias-periodo');
+			var _ctl = $('#frm-pagination-controls');
+			var _params = {
+					action:'lista:horas:extras',
+					page:_page, dep:_dep, per:_per, dias:_dias
+			};
+			_jlista_post_proc( _params, function(data){
+				//console.log(data.html);
+				if(data.status === "ok" && data.html === undefined){
+					alert('Los colaboradores de este departamento no generan horas extras...');
+					_btn.removeClass('active').addClass('unactive');
+					return false;
+				}//end if
+				if (data.status === "ok" && data.msg != "No rows..."  && data.html != undefined){
+					$('#rows-body.modo-horas-extras').fadeOut(300, function(){
+						$('#rows-body').html('');
+						//$('#rows-body').removeClass('modo-checadas').addClass('modo-horas-extras');
+						$('#rows-body').html(data.html).fadeIn(300);
+						//$('#rows-head').html(data.columnas).fadeIn(300);
+						//$('#rows-head').attr('data-dias-periodo',data.dias);
+					});
+					_ctl.attr('data-actual', _page);
+					$('#frm-pagination-lab').html(_page  +"/" + data.pages );
+					_btn = null;
+					return false;
+				}//end if
+				_btn.removeClass('active').addClass('unactive');
 				_lista_callback_not_ok(data);
-			}//end if
-		});
+				return false;
+			});
+		}//end if
 	});
 	$(document).on('click', '#frm-pagination-controls .page-ctrl ', function(e){
 		e.preventDefault();
+
+
+
 		var _action = $(this).attr('data-action');
 		var _dad = $('#frm-pagination-controls');
 
 		var _actual = parseInt(_dad.attr('data-actual'));
-		var _pages =parseInt(_dad.attr('data-pages'));
+		var _pages = parseInt(_dad.attr('data-pages'));
 
-		if ((parseInt(_actual) >= parseInt(_pages))&& (_action ==='next' || _action ==='last')) return;
-		if ((parseInt(_actual) <= 1) && (_action ==='past' || _action ==='first')) return;
+		if ((parseInt(_actual) >= parseInt(_pages))&& (_action ==='next' || _action ==='last')) return false;
+		if ((parseInt(_actual) <= 1) && (_action ==='past' || _action ==='first')) return false;
+
+		//-------------------------------------------
+		// transicion para cargas lentas
+		//-------------------------------------------
+		$('#rows-body').hide();
+		$('#dia-cont').hide();
+		$('#rows-body-cargando').show();
+		$('#rows-body-cargando').removeClass('oculto').addClass('visible');
+		//-------------------------------------------
 
 		var _ope = _dad.attr('data-ope');
 		var _dep = $('#set-departamento').attr('data-departamento');
@@ -519,7 +607,9 @@ $(document).ready(function() {
 				_page = 1;
 				_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
 					if (data.status =='ok'){
-						$('#rows-body').fadeOut(300, function(){
+						$('#rows-body-cargando.visible').fadeOut(150, function (){
+							$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+							$('#dia-cont').show();
 							$('#rows-body').html('');
 							$('#rows-body').html(data.html).fadeIn(300);
 							$('#rows-head').html(data.columnas).fadeIn(300);
@@ -536,7 +626,9 @@ $(document).ready(function() {
 				_page = parseInt(_actual)-1;
 				_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
 					if (data.status =='ok'){
-						$('#rows-body').fadeOut(300, function(){
+						$('#rows-body-cargando.visible').fadeOut(150, function (){
+							$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+							$('#dia-cont').show();
 							$('#rows-body').html('');
 							$('#rows-body').html(data.html).fadeIn(300);
 							$('#rows-head').html(data.columnas).fadeIn(300);
@@ -553,7 +645,9 @@ $(document).ready(function() {
 				_page = parseInt(_actual)+1;
 				_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
 					if (data.status =='ok'){
-						$('#rows-body').fadeOut(300, function(){
+						$('#rows-body-cargando.visible').fadeOut(150, function (){
+							$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+							$('#dia-cont').show();
 							$('#rows-body').html('');
 							$('#rows-body').html(data.html).fadeIn(300);
 							$('#rows-head').html(data.columnas).fadeIn(300);
@@ -570,7 +664,9 @@ $(document).ready(function() {
 				_page = parseInt(_pages);
 				_get_lista_page(_ope, _page, _dep, _per, _dias, function(data){
 					if (data.status =='ok'){
-						$('#rows-body').fadeOut(300, function(){
+						$('#rows-body-cargando.visible').fadeOut(150, function (){
+							$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+							$('#dia-cont').show();
 							$('#rows-body').html('');
 							$('#rows-body').html(data.html).fadeIn(300);
 							$('#rows-head').html(data.columnas).fadeIn(300);
@@ -636,6 +732,15 @@ $(document).ready(function() {
 
 
 	$(document).on("click", '#frm-set-departamento .jstree-anchor',function () {
+		//-------------------------------------------
+		// transicion para cargas lentas
+		//-------------------------------------------
+		$('#rows-body').hide();
+		$('#dia-cont').hide();
+		$('#rows-body-cargando').show();
+		$('#rows-body-cargando').removeClass('oculto').addClass('visible');
+		//-------------------------------------------
+
 	  var _dep = $(this).attr('id').replace(/_anchor/g,'');
 		var _dad = $('#frm-set-departamento');
 		var _ope = _dad.attr('data-ope');
@@ -646,7 +751,9 @@ $(document).ready(function() {
 		_get_lista_page(_ope, _page, _dep, _per, _dias, function(data){
 			if (data.status =='ok' && data.html != undefined){
 				//console.log(data.html);
-				$('#rows-body').fadeOut(300, function(){
+				$('#rows-body-cargando.visible').fadeOut(150, function (){
+					$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+					$('#dia-cont').show();
 					$('#rows-body').html('');
 					$('#rows-body').html(data.html).fadeIn(300);
 					$('#rows-head').html(data.columnas).fadeIn(300);
@@ -660,6 +767,7 @@ $(document).ready(function() {
 						_set_focus(_row);
 					});
 				});
+
 				_dad.attr('data-actual', _page);
 				if (data.pages != undefined ){
 					if (data.pages > 1) {
@@ -774,7 +882,7 @@ function _lista_callback_not_ok(data){
     //console.log(data);
   }else{
     console.log(data);
-		return;
+		return false;
   }// end if
 }//end function
 function _jlista_post_proc( _params,callback){
