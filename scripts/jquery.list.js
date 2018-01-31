@@ -930,6 +930,7 @@ $(document).ready(function() {
 		}//end if
 		if(_item.hasClass('opened')){
 			_item.removeClass('opened').addClass('closed');
+			$('div.frm #rows-head #list-filter-cont #filter-inp-cont input#filter-input').val('').change();
 			_item = null;
 			return false;
 		}//end if
