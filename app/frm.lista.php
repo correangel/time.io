@@ -149,10 +149,21 @@
 											}//end while
 							$html.="<div id='frm-table' class='fs istab floL enlinea visible'>
 												<div id='rows-head' data-dias-periodo='$c' class='fs bloque'>";
-											$html.= "<div id='code' class='floL fs colm enlinea id'><span class='fs eti'>Codigo:</span> <!--<i class=' fa fa-1x fa-filter'></i>!--></div>
-															<div id='name' class='floL fs colm enlinea name'><span class='fs eti'>Nombre: </span><!--<i class=' fa fa-1x fa-filter'></i>!--></div>
-															<div id='posi' data-count='$c' class='floL fs colm enlinea elli ".($c > 15? 'last16': 'last')."'><span class='fs eti'>Posicion: </span><!--<i class=' fa fa-1x fa-filter'></i>!--></div>
-															<div id='work' class='floL fs colm enlinea work'><span class='fs eti'>W: </span><!--<i class=' fa fa-1x fa-filter'></i>!--></div>";
+											$html.= "<div id='list-filter-cont' class='floL fs hide closed cur-poi'>
+																	<div id='filter-ico-cont' class='fs floL enlinea'><i class='fa fa-1x fa-filter' ></i></div>
+																	<div id='filter-inp-cont' class='fs floL enlinea'>
+																		<input id='filter-input' type='text' class='fs'
+																		 			 data-source='#rows-body'	/>
+																	</div>
+															</div>";
+											$html.= "<div id='code' class='floL fs colm enlinea id'>
+																<span class='fs eti'>C&oacute;digo</span>
+															</div>
+															<div id='name' class='floL fs colm enlinea name'>
+																<span class='fs eti'>Nombre</span>
+															</div>
+															<div id='posi' data-count='$c' class='floL fs colm enlinea elli ".($c > 15? 'last16': 'last')."'><span class='fs eti'>Posici&oacute;n </span><!--<i class=' fa fa-1x fa-filter'></i>!--></div>
+															<div id='work' class='floL fs colm enlinea work'><span class='fs eti'>W: </span></div>";
 											$c=0;
 
 											foreach ($rows as $row => $value) {
@@ -252,6 +263,9 @@
 													$html.="	<div id='".$value['id_lista']."' data-id='$i'
 																data-periodo='".$value['id_periodo']."'
 																data-employee='".$value['id_employee']."'
+																data-_alter_id='".$value['_alter_id']."'
+																data-code='".$value['_posicion_name']."'
+																data-name='".$value['_nombres']." ". $value['_apellido_paterno']." ". $value['_apellido_materno'] ."'
 																class='fm bloque empl row'>
 															<div class='floL fm cell enlinea elli id'>".$value['_alter_id']."</div>
 															<div class='floL fm cell enlinea elli name'>".$value['_nombres']." ". $value['_apellido_paterno']." ". $value['_apellido_materno'] ."</div>

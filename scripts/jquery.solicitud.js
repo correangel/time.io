@@ -119,6 +119,7 @@ $(document).ready(function(){
     //console.log(_str.length);
     if (_str.length == 0) {
       $(_sou + ' .for-filtra.oculto').removeClass('oculto');
+      _inp = null;
       return false;
     }//end if
     $(_sou + ' .for-filtra').addClass('oculto');
