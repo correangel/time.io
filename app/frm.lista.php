@@ -99,7 +99,12 @@
 
 									<div id='set-periodo' data-actual='$id_per' data-title='Seleccionar periodo, Actual: $per, Año: $year, Dias: $days' data-periodo='$id_per' data-year='$year' data-panel='#frm-set-periodo' class='fs tab panel bloque waves-effect unactive '>$year_per</div>";
 
-					$html.="<div id='set-departamento' data-departamento='$dep' data-ope='$id_operator' data-title='Seleccionar departamentos' data-panel='#frm-set-departamento'  class='fn tab panel bloque waves-effect unactive '>
+					$html.="<div id='set-departamento'
+												data-departamento='$dep'
+												data-ope='$id_operator'
+												data-title='Seleccionar departamentos'
+												data-panel='#frm-set-departamento'
+												class='fn tab panel bloque waves-effect unactive '>
 										<i class='fa fa-1x fa-tags'></i>
 									</div>
 									<div id='btn-refresh-lista' data-title='Actualizar lista de Asistencia' data-tab='frm-refresh' class='fn tab  bloque waves-effect  '>
@@ -108,6 +113,13 @@
 									<div id='btn-horas-extra' data-title='Horas Extras' data-tab='frm-horas-extra' class='fn tab  bloque waves-effect  unactive'>
 										<i class='fa fa-1x fa-clock-o'></i>
 									</div>
+									<div 	id='btn-info' data-title='Info Ausentismos'
+												data-title='Info Ausentismos'
+												data-panel='#frm-info'
+												class='fn tab panel bloque waves-effect unactive '>
+										<i class='fa fa-1x fa-info'></i>
+									</div>
+
 									<!--<div id='frm-filter' data-title='Filtrar Lista de Asistencia' data-tab='frm-filter' class='fn tab panel bloque waves-effect '>
 										<i class='fa fa-1x fa-filter'></i>
 									</div>!-->
@@ -195,7 +207,28 @@
 														$html .="</select>
 															</div>
 															<div class='fs input enlinea'><input id='filter-input' name='filter-input' placeholder='Buscar:' type='text' class='fs bloque' /></div>
-														</div>
+														</div>";
+									$html .="<div id='frm-info' class='fn frm-set boxshadow borde-negro oculto'>";
+										$html .="<div class='fn sel-box-title'>
+															<div class='fm enlinea floL text'> Info Ausentismos</div>
+															<div data-btn='#btn-info' data-who='#frm-info' class='fm enlinea floL close cur-poi'><i class='fa fa-1x fa-times'></i></div>
+														</div>";
+										$query="select
+														_letra
+														,_descripcion
+													from cat.ausentismos
+													order by _letra asc;";
+										$params=array();
+										if($stmt = sqlsrv_query($cnn, $query, $params)){
+											while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+												$html.="<div class='fn info-item'>
+														<div class='_letra fn enlinea'> ".$row['_letra']."</div>
+														<div class='_desc fn enlinea'>".$row['_descripcion']."</div>
+													</div>";
+											}//end while
+										}//end if;
+
+									$html .="</div>
 									<div id='rows-body-cargando' class='fn oculto'>
 										<i class='fa fa-2x fa-cog fa-spin'></i>
 									</div>

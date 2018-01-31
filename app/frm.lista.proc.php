@@ -184,11 +184,17 @@
               $html.="<div id='letra-causas' class='fn'><select id='sel-causa' class='fs'>";
               $html.="<option data-comentarios='0' class='fs' selected></option>";
               while ($row = sqlsrv_fetch_array($stmt , SQLSRV_FETCH_ASSOC)) {
-                $html.="<option value='".$row['id_causa']."' data-comentarios='".$row['_comentarios']."' class='fs'>".$row['_causa']."</option>";
+                $html.="<option value='".$row['id_causa']."'
+                                data-comentarios='".$row['_comentarios']."'
+                                data-requiere-fecha='".$row['_requiere_fecha']."'
+                                class='fs'>".$row['_causa']."</option>";
               }//end if
               $html.="</select></div>";
               $html.="<div id='letra-causas-comentario' class='fn oculto'>";
                 $html.= "<textarea id='causa-comentarios' class='fs' placeholder='Comentarios'></textarea>";
+              $html.="</div>";
+              $html.="<div id='letra-causas-fecha' class='fn oculto'>";
+                $html.= "<input id='causa-fecha' class='fs' type='date' min='01/01/2017' max='30/01/2018'/>"; //min='".(strlen($row['_min_fecha']))."' max='".(strlen($row['_max_fecha']))."'/>";
               $html.="</div>";
             $html.="</div>";
             $resp['html'] = $html;
@@ -303,6 +309,7 @@
                           	,@ope = ?
                           	,@cau = ".(isset($_POST['cau'])?'?':'null')."
                             ,@coment = ".(isset($_POST['coment'])?'?':'null')."
+                            ,@fec = ".(isset($_POST['fec'])?'?':'null')."
                           	,@color = ?
                           	,@result = ?
                           	,@msg = ?";
@@ -319,6 +326,10 @@
               if (isset($_POST['coment'])){
                 $coment = $_POST['coment'];
                 array_push($params, array(&$coment, SQLSRV_PARAM_IN));
+              }//end if
+              if (isset($_POST['fec'])){
+                $fec = $_POST['fec'];
+                array_push($params, array(&$fec, SQLSRV_PARAM_IN));
               }//end if
               array_push($params, array(&$color, SQLSRV_PARAM_OUT));
               array_push($params, array(&$result, SQLSRV_PARAM_OUT));

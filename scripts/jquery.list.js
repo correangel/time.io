@@ -280,7 +280,7 @@ $(document).ready(function() {
 					_jlista_post_proc(_params, function(data){
 						if (data.status ==='ok'){
 							if(data.result === 1){
-								//console.log(data);
+								console.log(data);
 								var _dialog;
 						    var _option = {
 						        autoOpen: false,
@@ -298,21 +298,31 @@ $(document).ready(function() {
 											'Aceptar': function() {
 												var _valid = true;
 												var _need_com = $('#sel-causa').children('option:selected').attr('data-comentarios');
+												var _need_fec = $('#sel-causa').children('option:selected').attr('data-requiere-fecha');
 												var _cau = $('select#sel-causa').val();
 												var _com = $('#causa-comentarios').val();
-												//console.log(_cau);
+												var _fec = $('#causa-fecha').val();
+												//--------------------------------------
+												// Descomentar para validar test
+												//--------------------------------------
+												//console.log(_fec); return false;
+												//--------------------------------------
 												if(_cau === undefined || _cau == 0 || _cau == '' ){
 													_valid = false;
 												}//end if
 												if (_need_com == 1 && _com.length == 0 ){
 													_valid = false;
 												}//end if
+												if (_need_fec == 1 && _fec.length == 0 ){
+													_valid = false;
+												}//end if
+
 
 												if(_valid === true){
 													var _per = $('#set-periodo').attr('data-periodo');
 													var _emp = _cell.attr('data-employee');
 
-													if(_need_com == 1){
+													if(_need_com == 1 && _need_fec == 0){
 														var _params = { action: 'insert::letra'
 																					, letra: _letra
 																					, emp: _emp
@@ -320,7 +330,27 @@ $(document).ready(function() {
 																					, cn:  _cn
 																					, cau: _cau
 																					, coment: _com};
-													}else{
+													}//end if
+													if(_need_com == 0 && _need_fec == 1){
+														var _params = { action: 'insert::letra'
+																					, letra: _letra
+																					, emp: _emp
+																					, per: _per
+																					, cn:  _cn
+																					, cau: _cau
+																					, fec: _fec};
+													}//end if
+													if(_need_com == 1 && _need_fec == 1){
+														var _params = { action: 'insert::letra'
+																					, letra: _letra
+																					, emp: _emp
+																					, per: _per
+																					, cn:  _cn
+																					, cau: _cau
+																					, coment: _com
+																					, fec: _fec};
+													}//end if
+													if(_need_com == 0 && _need_fec == 0){
 														var _params = { action: 'insert::letra'
 																					, letra: _letra
 																					, emp: _emp
@@ -349,6 +379,7 @@ $(document).ready(function() {
 												}else{
 													if (_cau === '') $('#sel-causa').css('border-color','crimson');
 													if (_com === '') $('#causa-comentarios').css('border-color','crimson');
+													if (_fec === '') $('#causa-fecha').css('border-color','crimson');
 												}//end if
 						          }//end Aceptar
 						        },
@@ -399,12 +430,22 @@ $(document).ready(function() {
 	});
 
 	$(document).on('change','select#sel-causa', function(){
+		var _sel = $(this);
+		var _opt = _sel.children('option:selected');
+		console.log(_opt);
+		//console.log(.attr('data-requiere-fecha'));
 		//console.log($(this).children('option:selected').data('comentarios'));
-		if($(this).children('option:selected').data('comentarios') === 1){
+		if(_opt.attr('data-comentarios') == 1){
 			//console.log($('#letra-causas-comentario'));
 			$('#letra-causas-comentario').slideDown(300).removeClass('oculto');
 		}else{
 			$('#letra-causas-comentario').slideUp(300).addClass('oculto');
+		}//end if
+		if(_opt.attr('data-requiere-fecha') == 1){
+
+			$('#letra-causas-fecha').slideDown(300).removeClass('oculto');
+		}else{
+			$('#letra-causas-fecha').slideUp(300).addClass('oculto');
 		}//end if
 	});
 
@@ -693,6 +734,7 @@ $(document).ready(function() {
 		});
 	});
 	$(document).on('click', '#frm-tabs .tab.panel.unactive', function(){
+		//console.log('Esto no funciona...');
 		var _btn = $(this);
 		var _who = _btn.data('panel');
 		var _ant = $('#frm-tabs .tab.panel.active').data('panel');
@@ -717,6 +759,9 @@ $(document).ready(function() {
 							}//end if
 						});
 						break;
+						case '#btn-info':
+							console.log(1);
+							break;
 						//------------------------------------------------------------
 						case '#frm-set-periodo':
 
