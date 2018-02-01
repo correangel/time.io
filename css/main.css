@@ -2393,10 +2393,13 @@ div.frm #frm-tabs .input:hover span{
   width: calc(100% - 5px);
 }
 .frm-employees #frm-table #frm-set-departamento .set-departamento-arbol{
-  padding-left: 10px;
-  padding-bottom: 10px;
-  padding-right: 10px;
-  background-color: white;
+    padding-left: 10px;
+    max-height: 400px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    background-color: white;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 .frm-employees #frm-table .sel-box-title{
   height: 30px;
