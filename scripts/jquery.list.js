@@ -25,9 +25,6 @@ $(document).ready(function() {
 
 	$(document).on('click', '#frm-set-periodo .set-options .periodo-option', function(){
 		//console.log(1);
-
-
-
 		$('#rows-body').hide();
 		$('#dia-cont').hide();
 		$('#rows-body-cargando').show();
@@ -921,17 +918,21 @@ $(document).ready(function() {
 		$(this).removeClass('show').addClass('hide');
 	});
 	$(document).on('click', 'div.frm #rows-head #list-filter-cont.show #filter-ico-cont', function(){
-		var _item = $('div.frm #rows-head #list-filter-cont');
+    var _ico = $(this);
+    var _item = $('div.frm #rows-head #list-filter-cont');
 		if(_item.hasClass('closed')){
 			_item.removeClass('closed').addClass('opened');
+      _ico.children('i.fa').removeClass('fa-filter').addClass('fa-angle-left');
 			$('div.frm #rows-head #list-filter-cont #filter-inp-cont input#filter-input').focus();
 			_item = null;
 			return false;
 		}//end if
 		if(_item.hasClass('opened')){
 			_item.removeClass('opened').addClass('closed');
+      _ico.children('i.fa').removeClass('fa-angle-left').addClass('fa-filter');
 			$('div.frm #rows-head #list-filter-cont #filter-inp-cont input#filter-input').val('');
-			$('div.frm #rows-head #list-filter-cont #filter-inp-cont input#filter-input').trigger('change');
+      $('#rows-body .empl.row.oculto').removeClass('oculto');
+
 			_item = null;
 			return false;
 		}//end if

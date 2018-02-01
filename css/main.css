@@ -853,7 +853,8 @@ div.frm #rows-head #list-filter-cont{
   transition: all .3s ease-in-out;
 }
 div.frm #rows-head #list-filter-cont.show.opened{
-  width: calc(70% - 495px - 160px);
+  width: 200px;
+
 }
 div.frm #rows-head #list-filter-cont.show.closed{
   width: 34px;
@@ -868,6 +869,9 @@ div.frm #rows-head #list-filter-cont.show #filter-ico-cont {
   line-height: 34px;
   text-align: center;
   vertical-align: middle;
+}
+div.frm #rows-head #list-filter-cont.show #filter-ico-cont:hover{
+  background-color: #586aec;
 }
 div.frm #rows-head #list-filter-cont.show #filter-ico-cont {
   display: inline-block;

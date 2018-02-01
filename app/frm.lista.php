@@ -150,7 +150,7 @@
 							$html.="<div id='frm-table' class='fs istab floL enlinea visible'>
 												<div id='rows-head' data-dias-periodo='$c' class='fs bloque'>";
 											$html.= "<div id='list-filter-cont' class='floL fs hide closed cur-poi'>
-																	<div id='filter-ico-cont' class='fs floL enlinea'><i class='fa fa-1x fa-filter' ></i></div>
+																	<div id='filter-ico-cont' class='fs floL enlinea waves-effect'><i class='fa fa-1x fa-filter' ></i></div>
 																	<div id='filter-inp-cont' class='fs floL enlinea'>
 																		<input id='filter-input' type='text' class='fs'
 																		 			 data-source='#rows-body'	/>
