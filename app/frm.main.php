@@ -43,13 +43,13 @@
 	<html>
 		<head>
 			<title>Time.io - Main</title>
-			<link rel="shortcut icon" href="/favicon.ico?v=<?php echo md5_file('../favicon.ico');?>" />
-			<link rel="icon" href="/favicon.ico?v=<?php echo md5_file('../favicon.ico');?>" />
+			<link rel="shortcut icon" href="/favicon.ico?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/favicon.ico');?>" />
+			<link rel="icon" href="/favicon.ico?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/favicon.ico');?>" />
 			<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/animaciones.css" />
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/jquery-ui.css">
-			<link rel="stylesheet" type="text/css" media="screen" href="/css/particles.css"/>
-			<link rel="stylesheet" type="text/css" media="screen" href="/css/main.css"/>
+			<link rel="stylesheet" type="text/css" media="screen" href="/css/particles.css?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/css/particles.css');?>"/>
+			<link rel="stylesheet" type="text/css" media="screen" href="/css/main.css?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/css/main.css');?>"/>
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/style.colores.css">
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/style.buttons.css">
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/waves.css">
@@ -59,15 +59,16 @@
 			<script src="/scripts/jquery.min.js"></script>
 			<script src="/scripts/particles.min.js"></script>
 			<script src="/scripts/jquery-ui.js"></script>
-
-			<script src="/scripts/jquery.main.js"></script>
-			<script src="/scripts/materialize.min.js"></script>
-			<script src="/scripts/jquery.list.js"></script>
-			<script src="/scripts/jquery.usuarios.js"></script>
-			<script src="/scripts/jquery.interfaces.js"></script>
-			<script src="/scripts/jquery.posiciones.js"></script>
-			<script src="/scripts/jquery.solicitud.js"></script>
 			<script src="/scripts/jstree.min.js"></script>
+			<script src="/scripts/materialize.min.js"></script>
+
+			<script src="/scripts/jquery.main.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.main.js');?>"></script>
+			<script src="/scripts/jquery.list.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.list.js');?>"></script>
+			<script src="/scripts/jquery.usuarios.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.usuarios.js');?>"></script>
+			<script src="/scripts/jquery.interfaces.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.interfaces.js');?>"></script>
+			<script src="/scripts/jquery.posiciones.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.posiciones.js');?>"></script>
+			<script src="/scripts/jquery.solicitud.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.solicitud.js');?>"></script>
+
 
 		</head>
 		<body class='main oculto' data-lifetime='<?php echo $lifetime * 60000; ?>'>

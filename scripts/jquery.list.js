@@ -90,6 +90,8 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', 'div.frm #rows-head .colm-', function(){
+		console.log(1);
+		
 		var _col = $(this);
 		//console.log(_col.attr('id'));
 		var _id = _col.attr('id');
@@ -668,8 +670,6 @@ $(document).ready(function() {
 	});
 	$(document).on('click', '#frm-pagination-controls .page-ctrl ', function(e){
 		e.preventDefault();
-
-
 
 		var _action = $(this).attr('data-action');
 		var _dad = $('#frm-pagination-controls');
