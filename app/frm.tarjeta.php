@@ -82,8 +82,68 @@
                       data-op='".$id_operator."'
                       data-nav='".$id_navigator."'
                       data-table='".boolval($tabla)."'
-                      class='frm frm-employees fn boxshadow mar10 oculto'>";
-			    $html.= "<div id='frm-tabs' class='fn floL enlinea '>";
+                      class='frm add-has-options frm-tarjeta fn boxshadow mar10 oculto'>";
+			    $html.= "<div id='frm-cont-tarjeta' class='fn  bloque'>";
+            $html.= "<div id='tarjeta-select' class='fn  bloque boxshadow'>";
+              $html.= "<div id='select-pic' class='fn enlinea floL'>";
+                $html.= "<img id='pic-col' src='/imagenes/no_image_profile.jpg' />";
+              $html.= "</div>";
+              $html.= "<div id='select-opt' class='fn enlinea floL'>";
+                $html.= "<div class='gpo fn bloque'>";
+                  $html.= "<div class='ico fn enlinea floL'>
+                            <i class='fa fa-1x fa-hashtag'></i>
+                          </div>";
+                  $html.= "<div class='inp fn enlinea floL'>
+                            <input id='_alter_id' data-emp='' class='fn enlinea floL'/>
+														<button id='buscar-emp' class='fn tn-buscar enlinea floL waves-effect'> <i class='fa fa-1x fa-search' ></i></button>
+                          </div>";
+                $html.= "</div>";
+                $html.= "<div class='gpo fn bloque'>";
+                  $html.= "<div class='ico fn enlinea floL'>
+                            <i class='fa fa-1x fa-calendar'></i>
+                          </div>";
+                  $html.= "<div class='inp fn enlinea floL'>";
+										$html.="<div id='cont-periodo' class='fn floL has-options contenedor enlinea closed'>";
+											$html.="<div tabindex='0' id='cont-roles-title' class='fn title bloque' data-parent='#cont-periodo'>";
+											 $html.="<div id='txt' class='fn floL enlinea' data-parent='#cont-periodo'>
+																<input id='id-per' data-id='' type='text' class='toupper fn integrado' data-parent='#cont-periodo' />
+															</div>";
+											 $html.="<div tabindex='0' id='ico' class='fn floL enlinea' data-parent='#cont-periodo'><i class='fa fa-1x fa-ellipsis-h' data-parent='#cont-periodo'></i></div>";
+											$html.="</div>";
+											$html.="<div id='options' class='fn select bloque thin-scroll oculto' data-parent='#cont-periodo'>";
+
+											$query = 'exec cat.proc_list_periodos';
+											$params = array();
+											 if($stmt = $com->_create_stmt($cnn, $query, $params)){
+												 while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+													 $html.= "<div data-id='".$row['id_periodo']."'
+													 								class='fn option bloque'
+																					data-ini='".$row['_ini']."'
+																					data-fin='".$row['_fin']."'
+																					data-label='".$row['_label']."'
+																					data-parent='#cont-periodo'>".$row['_label']." - ".$row['_ini']." - ".$row['_fin']."</div>";
+												 }// end while
+											 }//end if
+											$html.="</div>";
+										$html.="</div>";
+
+                  $html.= "</div>";
+                $html.= "</div>";
+              $html.= "</div>";
+            $html.= "</div>";
+            $html.= "<div id='tarjeta-data' class='fn bloque'>";
+							$html.= "<div id='tarjeta-data-tabs' class='fn enlinea'>";
+
+							$html.= "</div>";
+							$html.= "<div id='tarjeta-data-rows' class='fn enlinea'>";
+								$html.= "<div id='data-rows-head' class='fn bloque'>";
+
+								$html.= "</div>";
+								$html.= "<div id='data-rows-body' class='fn bloque boxshadow'>";
+
+								$html.= "</div>";
+							$html.= "</div>";
+            $html.= "</div>";
           $html.= "</div>";
         $html.= "</div>";
         //------------------------------------------------------------------
