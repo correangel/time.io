@@ -153,7 +153,7 @@
                         <td>".$row['_letra']."</td>
                         <td>".$row['_entrada']."</td>
                         <td>".$row['_salida']."</td>
-                        <td>".$row['_jornada']."</td>
+                        <td>".(gmdate('H:i', floor(($row['_jornada']/60) * 3600)))."</td>
                       </tr>";
           $resp['asis_rows'].= "<div class='fn row'>
                                   ".$ocultos."
@@ -163,7 +163,7 @@
                                   <div style='width:calc(8% - 10px);' class='fs cell-min enlinea floL to-excel'>".$row['_letra']."</div>
                                   <div style='width:calc(25% - 10px);' class='fs cell-min enlinea floL to-excel'>".$row['_entrada']."</div>
                                   <div style='width:calc(25% - 10px);' class='fs cell-min enlinea floL to-excel'>".$row['_salida']."</div>
-                                  <div style='width:calc(10% - 10px);' class='fs cell-min enlinea floL to-excel'>".$row['_jornada']."</div>
+                                  <div style='width:calc(10% - 10px);' class='fs cell-min enlinea floL to-excel'>".(gmdate('H:i', floor(($row['_jornada']/60) * 3600)))."</div>
                                 </div>";
         }//end while
         $tablas.= "</tbody></table>";
@@ -276,13 +276,13 @@
                         ".$ocultos_tabla."
                         <td>".$row['_entrada']."</td>
                         <td>".$row['_salida']."</td>
-                        <td>".$row['_jornada']."</td>
+                        <td>".(gmdate('H:i', floor(($row['_jornada']/60) * 3600)))."</td>
                       </tr>";
           $resp['jorn_rows'].= "<div class='fn row'>
                                   ".$ocultos."
                                   <div style='width:calc(40% - 40px);' class='fn cell floL enlinea to-excel'>".$row['_entrada']."</div>
                                   <div style='width:calc(40% - 40px);' class='fn cell floL enlinea to-excel'>".$row['_salida']."</div>
-                                  <div style='width:calc(20% - 40px);' class='fn cell floL enlinea to-excel'>".$row['_jornada']."</div>
+                                  <div style='width:calc(20% - 40px);' class='fn cell floL enlinea to-excel'>".(gmdate('H:i', floor(($row['_jornada']/60) * 3600)))."</div>
                                 </div>";
         }//end while
         $tablas.= "</tbody></table>";
