@@ -91,7 +91,7 @@ $(document).ready(function() {
 
 	$(document).on('click', 'div.frm #rows-head .colm-', function(){
 		console.log(1);
-		
+
 		var _col = $(this);
 		//console.log(_col.attr('id'));
 		var _id = _col.attr('id');
@@ -290,7 +290,7 @@ $(document).ready(function() {
 					_jlista_post_proc(_params, function(data){
 						if (data.status ==='ok'){
 							if(data.result === 1){
-								console.log(data);
+								//console.log(data);
 								var _dialog;
 						    var _option = {
 						        autoOpen: false,
@@ -442,7 +442,7 @@ $(document).ready(function() {
 	$(document).on('change','select#sel-causa', function(){
 		var _sel = $(this);
 		var _opt = _sel.children('option:selected');
-		console.log(_opt);
+		//console.log(_opt);
 		//console.log(.attr('data-requiere-fecha'));
 		//console.log($(this).children('option:selected').data('comentarios'));
 		if(_opt.attr('data-comentarios') == 1){

@@ -63,6 +63,10 @@
 			<script src="/scripts/jquery-ui.js"></script>
 			<script src="/scripts/jstree.min.js"></script>
 			<script src="/scripts/materialize.min.js"></script>
+			<script src="/scripts/libs/jszip.js"></script>
+			<script src="/scripts/libs/excel-gen.js"></script>
+			<script src="/scripts/libs/FileSaver.min.js"></script>
+			<script src="/scripts/libs/jspdf.min.js"></script>
 
 			<script src="/scripts/jquery.main.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.main.js');?>"></script>
 			<script src="/scripts/jquery.list.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.list.js');?>"></script>

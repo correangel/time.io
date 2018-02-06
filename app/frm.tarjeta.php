@@ -79,25 +79,15 @@
 			if(intval($permisos) > 0){
         //------------------------------------------------------------------
         $html.= "<div id='frm-$id_navigator'
-                      data-op='".$id_operator."'
+                      data-ope='".$id_operator."'
                       data-nav='".$id_navigator."'
                       data-table='".boolval($tabla)."'
                       class='frm add-has-options frm-tarjeta fn boxshadow mar10 oculto'>";
 			    $html.= "<div id='frm-cont-tarjeta' class='fn  bloque'>";
             $html.= "<div id='tarjeta-select' class='fn  bloque boxshadow'>";
-              $html.= "<div id='select-pic' class='fn enlinea floL'>";
-                $html.= "<img id='pic-col' src='/imagenes/no_image_profile.jpg' />";
-              $html.= "</div>";
+
               $html.= "<div id='select-opt' class='fn enlinea floL'>";
-                $html.= "<div class='gpo fn bloque'>";
-                  $html.= "<div class='ico fn enlinea floL'>
-                            <i class='fa fa-1x fa-hashtag'></i>
-                          </div>";
-                  $html.= "<div class='inp fn enlinea floL'>
-                            <input id='_alter_id' data-emp='' class='fn enlinea floL'/>
-														<button id='buscar-emp' class='fn tn-buscar enlinea floL waves-effect'> <i class='fa fa-1x fa-search' ></i></button>
-                          </div>";
-                $html.= "</div>";
+
                 $html.= "<div class='gpo fn bloque'>";
                   $html.= "<div class='ico fn enlinea floL'>
                             <i class='fa fa-1x fa-calendar'></i>
@@ -112,7 +102,7 @@
 											$html.="</div>";
 											$html.="<div id='options' class='fn select bloque thin-scroll oculto' data-parent='#cont-periodo'>";
 
-											$query = 'exec cat.proc_list_periodos';
+											$query = 'exec cat.proc_get_list_periodos_actuales';
 											$params = array();
 											 if($stmt = $com->_create_stmt($cnn, $query, $params)){
 												 while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
@@ -129,21 +119,99 @@
 
                   $html.= "</div>";
                 $html.= "</div>";
-              $html.= "</div>";
-            $html.= "</div>";
-            $html.= "<div id='tarjeta-data' class='fn bloque'>";
-							$html.= "<div id='tarjeta-data-tabs' class='fn enlinea'>";
+								$html.= "<div class='gpo fn bloque'>";
+                  $html.= "<div class='ico fn enlinea floL'>
+                            <i class='fa fa-1x fa-hashtag'></i>
+                          </div>";
+                  $html.= "<div class='inp fn enlinea floL'>
+                            <input id='_alter_id' data-emp='' class='fn enlinea floL'/>
+														<button id='buscar-emp' class='fn btn-buscar enlinea floL waves-effect'> <i class='fa fa-1x fa-search' ></i></button>
 
+
+														<button id='btn-run' class='fn btn-run enlinea floL waves-effect unactive'> <i class='fa enlinea fa-1x fa-bolt' ></i> <span class='enlinea fs'>Generar</span></button>
+														<div id='win-buscar-emp' class='window fn oculto boxshadow'>
+															<div class='win-title fn bloque'>
+																<div class='inp-cont fn enlinea floL'>
+																	<input id='inp-filter' data-source='#win-rows-body' type='text' class='fn' disabled>
+																</div>
+																<div id='btn-close' data-target='#win-buscar-emp' class='ico-cont fn enlinea floL'>
+																	<i class='fa fa-1x fa-times'></i>
+																</div>
+															</div>
+															<div class='win-data fn bloque'>
+																<div class='fn tar-cargando bloque visible' >
+																	<i class='fa fa-2x fa-cog fa-spin'></i>
+																</div>
+																<div id='win-rows-body' class='fn bloque oculto thin-scroll' >
+																</div>
+															</div>
+														</div>
+
+													</div>";
+                $html.= "</div>";
+              $html.= "</div>";//select-opt
+							$html.= "<div id='select-pic' class='fn enlinea floL'>";
+                $html.= "<img id='pic-col' src='/imagenes/no_image_profile.jpg' />";
+              $html.= "</div>";//select-pic
+							$html.= "<div id='select-datos' class='fn enlinea floL'>";
+								$html.= "<div class='datos-box fn enlinea floL'>";
+									$html.= "<input id='_name' value='Nombre:' title='Nombre' type='text' class='fs bloque' disabled/>";
+									$html.= "<input id='_ingreso' value='Ingreso:' title='Fecha de Ingreso' type='text' class='fs bloque' disabled/>";
+									$html.= "<input id='_locacion' value='Locaci&oacute;n:' title='Locaci&oacute;' type='text' class='fs bloque' disabled/>";
+								$html.= "</div>";//datos-box
+								$html.= "<div class='datos-box fn enlinea floL'>";
+									$html.= "<input id='_departamento' value='Dep:' title='Departamento' type='text' class='fs bloque' disabled/>";
+									$html.= "<input id='_posicion' value='Pos:' title='Posici&oacute;n' type='text' class='fs bloque' disabled/>";
+									$html.= "<input id='_clase' value='Clase:' title='Clasificaci&oacute;n' type='text' class='fs bloque' disabled/>";
+	              $html.= "</div>";//datos-box
+              $html.= "</div>";//select-datos
+            $html.= "</div>";//tarjeta select
+            $html.= "<div id='tarjeta-data' class='fn bloque oculto'>";
+							$html.= "<div id='tarjeta-data-tabs' class='fn enlinea floL'>";
+							$html.= "<div id='tab-asistencia' data-target-head='#tab-asis-head' data-target-rows='#tab-asis-rows' class='eti-tab  fn bloque active'>";
+								$html.= "<div class='ico fn enlinea floL'><i class='fa fa-1x fa-angle-right'></i></div>";
+								$html.= "<div class='txt fn enlinea floL'>Asistencia</div>";
+								$html.= "<div id='btn-exc' data-target='tabla-asis' title='Excel' class='waves-effect fil fn enlinea floL'><i class='fa fa-1x fa-file-excel-o'></i></div>";
+								$html.= "<div id='btn-pdf' data-target='pdf-asis' title='PDF' class='waves-effect fil fn enlinea floL'><i class='fa fa-1x fa-file-pdf-o'></i></div>";
 							$html.= "</div>";
-							$html.= "<div id='tarjeta-data-rows' class='fn enlinea'>";
+								$html.= "<div id='tab-checadas' data-target-head='#tab-chec-head' data-target-rows='#tab-chec-rows' class='eti-tab t fn bloque unactive'>";
+									$html.= "<div class='ico fn enlinea floL'><i class='fa fa-1x fa-angle-right'></i></div>";
+									$html.= "<div class='txt fn enlinea floL'>Checadas</div>";
+									$html.= "<div id='btn-exc' data-target='tabla-chec' title='Excel' class='waves-effect fil fn enlinea floL'><i class='fa fa-1x fa-file-excel-o'></i></div>";
+									$html.= "<div id='btn-pdf' data-target='pdf-chec' title='PDF' class='waves-effect fil fn enlinea floL'><i class='fa fa-1x fa-file-pdf-o'></i></div>";
+								$html.= "</div>";
+								$html.= "<div id='tab-jornadas' data-target-head='#tab-jorn-head' data-target-rows='#tab-jorn-rows' class='eti-tab  fn bloque unactive'>";
+									$html.= "<div class='ico fn enlinea floL'><i class='fa fa-1x fa-angle-right'></i></div>";
+									$html.= "<div class='txt fn enlinea floL'>Jornadas</div>";
+									$html.= "<div id='btn-exc' data-target='tabla-jorn' title='Excel' class='waves-effect fil fn enlinea floL'><i class='fa fa-1x fa-file-excel-o'></i></div>";
+									$html.= "<div id='btn-pdf' data-target='pdf-jorn' title='PDF' class='waves-effect fil fn enlinea floL'><i class='fa fa-1x fa-file-pdf-o'></i></div>";
+								$html.= "</div>";
+								$html.= "<div id='tab-horas' data-target-head='#tab-hora-head' data-target-rows='#tab-hora-rows' class='eti-tab  fn bloque unactive'>";
+									$html.= "<div class='ico fn enlinea floL'><i class='fa fa-1x fa-angle-right'></i></div>";
+									$html.= "<div class='txt fn enlinea floL'>Horas Extra</div>";
+									$html.= "<div id='btn-exc' data-target='tabla-hora' title='Excel' class='waves-effect fil fn enlinea floL'><i class='fa fa-1x fa-file-excel-o'></i></div>";
+									$html.= "<div id='btn-pdf' data-target='pdf-hora' title='PDF' class='waves-effect fil fn enlinea floL'><i class='fa fa-1x fa-file-pdf-o'></i></div>";
+								$html.= "</div>";
+							$html.= "</div>";
+							$html.= "<div id='tarjeta-data-rows' class='fn enlinea floL'>";
 								$html.= "<div id='data-rows-head' class='fn bloque'>";
-
+									$html.= "<div id='tab-asis-head' class='eti-tab-head fn bloque visible'></div>";
+									$html.= "<div id='tab-chec-head' class='eti-tab-head fn bloque oculto'></div>";
+									$html.= "<div id='tab-jorn-head' class='eti-tab-head fn bloque oculto'></div>";
+									$html.= "<div id='tab-hora-head' class='eti-tab-head fn bloque oculto'></div>";
 								$html.= "</div>";
 								$html.= "<div id='data-rows-body' class='fn bloque boxshadow'>";
+									$html.= "<div id='tab-asis-rows' class='eti-tab-rows fn bloque visible'></div>";
+									$html.= "<div id='tab-chec-rows' class='eti-tab-rows fn bloque oculto'></div>";
+									$html.= "<div id='tab-jorn-rows' class='eti-tab-rows fn bloque oculto'></div>";
+									$html.= "<div id='tab-hora-rows' class='eti-tab-rows fn bloque oculto'></div>";
+								$html.= "</div>";
+
+								$html.= "<div id='tablas-ocultas-for-docs' class='oculto'>";
 
 								$html.= "</div>";
 							$html.= "</div>";
-            $html.= "</div>";
+            $html.= "</div>";//tarjeta-data
           $html.= "</div>";
         $html.= "</div>";
         //------------------------------------------------------------------

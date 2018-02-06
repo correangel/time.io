@@ -412,56 +412,56 @@
               <div class='floL fm cell enlinea elli id'>".$value['_alter_id']."</div>
               <div class='floL fm cell enlinea elli name'>".$value['_nombres']." ". $value['_apellido_paterno']." ". $value['_apellido_materno'] ."</div>
               <div class='floL fm cell enlinea elli ".($c > 15? 'last16': 'last')."'>".$value['_posicion_name']."</div>
-              <div tabindex='1' class='der floL fm cell dia enlinea work waves-effect'><span class='fm tran-bez-5s border-interno'>". $value['_horas'] ."</span></div>
-              <div tabindex='2' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c01'))."'
+              <div tabindex='1' class='der floL fm cell dia enlinea work waves-effect'><span class='fm tran-bez-5s border-interno'>". $value['_pagadas'] ."</span></div>
+              <div tabindex='2' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p01'))."'
                                  data-cn='_c01'
-                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea'><span class='fm tran-bez-5s border-interno'>". (intval($value['_c01'])>0?intval($value['_c01']):'-') ."</span></div>
-              <div tabindex='3' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c02'))."'
+                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea'><span class='fm tran-bez-5s border-interno'>". (intval($value['_p01'])>0?intval($value['_p01']):'-') ."</span></div>
+              <div tabindex='3' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p02'))."'
                                  data-cn='_c02'
-                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea'><span class='fm tran-bez-5s border-interno'>". (intval($value['_c02'])>0?intval($value['_c02']):'-') ."</span></div>
-              <div tabindex='4' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c03'))."'
+                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea'><span class='fm tran-bez-5s border-interno'>". (intval($value['_p02'])>0?intval($value['_p02']):'-') ."</span></div>
+              <div tabindex='4' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p03'))."'
                                  data-cn='_c03'
-                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea'><span class='fm tran-bez-5s border-interno'>". (intval($value['_c03'])>0?intval($value['_c03']):'-') ."</span></div>
-              <div tabindex='5' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c04'))."'
+                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea'><span class='fm tran-bez-5s border-interno'>". (intval($value['_p03'])>0?intval($value['_p03']):'-') ."</span></div>
+              <div tabindex='5' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p04'))."'
                                  data-cn='_c04'
-                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c04'])>0?intval($value['_c04']):'-') ."</span></div>
-              <div tabindex='6' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c05'))."'
+                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p04'])>0?intval($value['_p04']):'-') ."</span></div>
+              <div tabindex='6' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p05'))."'
                                  data-cn='_c05'
-                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c05'])>0?intval($value['_c05']):'-') ."</span></div>
-              <div tabindex='7' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c06'))."'
+                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p05'])>0?intval($value['_p05']):'-') ."</span></div>
+              <div tabindex='7' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p06'))."'
                                  data-cn='_c06'
-                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c06'])>0?intval($value['_c06']):'-') ."</span></div>
-              <div tabindex='8' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c07'))."'
+                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p06'])>0?intval($value['_p06']):'-') ."</span></div>
+              <div tabindex='8' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p07'))."'
                                  data-cn='_c07'
-                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c07'])>0?intval($value['_c07']):'-') ."</span></div>
-              <div tabindex='9' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c08'))."'
+                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p07'])>0?intval($value['_p07']):'-') ."</span></div>
+              <div tabindex='9' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p08'))."'
                                  data-cn='_c08'
-                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c08'])>0?intval($value['_c08']):'-') ."</span></div>
-              <div tabindex='10'title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c09'))."'
+                                 data-employee='".$value['id_employee']."' class='der floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p08'])>0?intval($value['_p08']):'-') ."</span></div>
+              <div tabindex='10'title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p09'))."'
                                  data-cn='_c09'
-                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c09'])>0?intval($value['_c09']):'-') ."</span></div>
-              <div tabindex='11' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c10'))."'
+                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p09'])>0?intval($value['_p09']):'-') ."</span></div>
+              <div tabindex='11' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p10'))."'
                                  data-cn='_c10'
-                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c10'])>0?intval($value['_c10']):'-') ."</span></div>
-              <div tabindex='12' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c11'))."'
+                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p10'])>0?intval($value['_p10']):'-') ."</span></div>
+              <div tabindex='12' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p11'))."'
                                  data-cn='_c11'
-                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c11'])>0?intval($value['_c11']):'-') ."</span></div>
-              <div tabindex='13' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c12'))."'
+                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p11'])>0?intval($value['_p11']):'-') ."</span></div>
+              <div tabindex='13' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p12'))."'
                                   data-cn='_c12'
-                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c12'])>0?intval($value['_c12']):'-') ."</span></div>
-              <div tabindex='14' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c13'))."'
+                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p12'])>0?intval($value['_p12']):'-') ."</span></div>
+              <div tabindex='14' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p13'))."'
                                  data-cn='_c13'
-                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c13'])>0?intval($value['_c13']):'-') ."</span></div>
-              <div tabindex='15' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c14'))."'
+                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p13'])>0?intval($value['_p13']):'-') ."</span></div>
+              <div tabindex='15' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p14'))."'
                                  data-cn='_c14'
-                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c14'])>0?intval($value['_c14']):'-') ."</span></div>
-              <div tabindex='16' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c15'))."'
+                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p14'])>0?intval($value['_p14']):'-') ."</span></div>
+              <div tabindex='16' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p15'))."'
                                  data-cn='_c15'
-                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c15'])>0?intval($value['_c15']):'-') ."</span></div>";
+                                 data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p15'])>0?intval($value['_p15']):'-') ."</span></div>";
               if($c === 16){
-                  $html.="<div tabindex='17' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_c15'))."'
+                  $html.="<div tabindex='17' title='".($create->_get_title($cnn,$com,$value['id_periodo'],$value['id_employee'],'_p15'))."'
                                      data-cn='_c16'
-                                     data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_c16'])>0?intval($value['_c16']):'-') ."</span></div>";
+                                     data-employee='".$value['id_employee']."' class='izq floL fm cell dia waves-effect enlinea '><span class='fm tran-bez-5s border-interno'>". (intval($value['_p16'])>0?intval($value['_p16']):'-') ."</span></div>";
               }//end if
             $html.="</div>";
           }//end while
