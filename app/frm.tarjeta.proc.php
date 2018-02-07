@@ -24,7 +24,7 @@
       if($stmt = $com->_create_stmt($cnn, $query, $params)){
         while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
           $html.="<div id='".$row['employee_id']."'
-                       class='row fs bloque for-fildiva'
+                       class='row fs bloque for-filtra'
                        data-alter='".$row['_alter_id']."'
                        data-name='".$row['_nombre']."'
                        data-departamento='".$row['_departamento_name']."'

@@ -1,11 +1,9 @@
 $(document).ready(function(){
   $(document).on('click', '.frm-tarjeta button#btn-run.unactive',function(e){
     //----------------------------------------------
+    var _btn = $(this);
     if(_is_not_tarjeta())return false;
     //----------------------------------------------
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
 
     var _inp = $('.frm-tarjeta #select-opt #_alter_id')
     var _alter = _inp.val();
@@ -13,8 +11,11 @@ $(document).ready(function(){
     if (_alter.length == 0 ) return false;
     _set_employee_by_enter(_alter, function(){
 
-      var _btn = $(this);
+
       if(_btn.hasClass('active'))return false;
+      _btn.removeClass('unactive').addClass('active');
+      _btn.children('i.fa').removeClass('fa-bolt').addClass('fa-spinner fa-pulse');
+
       if ($('.frm-tarjeta #tarjeta-data').hasClass('visible')){
         $('.frm-tarjeta #tarjeta-data').fadeOut(300).removeClass('visible').addClass('oculto');
       }//end if
@@ -31,8 +32,7 @@ $(document).ready(function(){
         return false;
       }//end if
 
-      _btn.removeClass('unactive').addClass('active');
-      _btn.children('i.fa').removeClass('fa-bolt').addClass(' fa-cog fa-spin');
+
 
       var _emp = $('.frm-tarjeta #select-opt #_alter_id').attr('data-id');
       var _per = $('.frm-tarjeta #select-opt #id-per').attr('data-id');
@@ -44,7 +44,7 @@ $(document).ready(function(){
           if(data.status === 'ok'){
             $('.frm-tarjeta #tarjeta-data').fadeIn(300).removeClass('oculto').addClass('visible');
             _btn.removeClass('active').addClass('unactive');
-            _btn.children('i.fa').removeClass('fa-cog fa-spin').addClass('fa-bolt');
+            _btn.children('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-bolt');
 
             var _target_head = $('.frm-tarjeta #tarjeta-data-rows #data-rows-head');
             var _target_body = $('.frm-tarjeta #tarjeta-data-rows #data-rows-body');
@@ -129,11 +129,11 @@ $(document).ready(function(){
     //----------------------------------------------
     if(_is_not_tarjeta())return false;
     //----------------------------------------------
-    //console.log(e.which);
+
     var _inp = $(this);
     switch (e.which) {
       case 13:
-
+        return false;
         break;
       default:
         _filtra_employee(_inp);
@@ -148,6 +148,7 @@ $(document).ready(function(){
     e.preventDefault();
     var _row = $(this);
     _set_employee(_row);
+      $('.frm-tarjeta #tarjeta-data').fadeOut(300).removeClass('visible').addClass('oculto');
   });
 
   $(document).on('keyup', '.frm-tarjeta #select-opt #_alter_id', function(e){
@@ -166,10 +167,27 @@ $(document).ready(function(){
       default:
         if(_inp.hasClass('error')){
           _inp.removeClass('error').val('');
+
+          $('.frm-tarjeta #select-opt #_alter_id').attr('data-id', '');
+          $('.frm-tarjeta #select-datos #_name').val("Nombre: " );
+          $('.frm-tarjeta #select-datos #_ingreso').val("Ingreso: ");
+          $('.frm-tarjeta #select-datos #_locacion').val("Locación: ");
+          $('.frm-tarjeta #select-datos #_departamento').val("Dep: ");
+          $('.frm-tarjeta #select-datos #_posicion').val("Pos: ");
+          $('.frm-tarjeta #select-datos #_clase').val("Clase: ");
+          $('.frm-tarjeta #tarjeta-data').fadeOut(300).removeClass('visible').addClass('oculto');
           return false;
         }//end if
         if(_inp.hasClass('correct')){
           _inp.removeClass('correct');
+          $('.frm-tarjeta #select-opt #_alter_id').attr('data-id', '');
+          $('.frm-tarjeta #select-datos #_name').val("Nombre: " );
+          $('.frm-tarjeta #select-datos #_ingreso').val("Ingreso: ");
+          $('.frm-tarjeta #select-datos #_locacion').val("Locación: ");
+          $('.frm-tarjeta #select-datos #_departamento').val("Dep: ");
+          $('.frm-tarjeta #select-datos #_posicion').val("Pos: ");
+          $('.frm-tarjeta #select-datos #_clase').val("Clase: ");
+          $('.frm-tarjeta #tarjeta-data').fadeOut(300).removeClass('visible').addClass('oculto');
           return false;
         }//end if
       }//end switch
@@ -314,7 +332,7 @@ function _procedure_error(data){
 }//end function
 
 function _filtra_employee(_inp){
-  //console.log(1);
+  console.log(1);
   //var _inp = $(this);
   var _str = _inp.val();
   var _sou = _inp.attr('data-source');
