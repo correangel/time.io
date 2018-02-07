@@ -8,7 +8,7 @@
 $(document).ready( function() {
 	$('.main.oculto').fadeIn(500, function(){	});
 
-	
+
 	if ($('#particulas').length > 0) {
 		particlesJS.load('particulas', '/scripts/particles-light.json');
 	}//end if
@@ -183,6 +183,7 @@ $(document).ready( function() {
 		}//endif
 	});
 	$(document).on('click',"#sidebar #menu div[data-open='0']", function(e){
+		//console.log(1);
 		var act = $(this);
 		open_frm(act);
 	});
@@ -220,7 +221,18 @@ $(document).ready( function() {
 });//end ready
 //----------------------------------------------------------------------------------------------------------------------
 function open_frm(act){
+
 	var _url = act.attr('data-url');
+
+	if (act.hasClass('child-item')) {
+		var _ico = act.parent().parent().find('.dad-icon i.fa');
+		var _ico_class = act.attr('data-icon');
+	}else{
+		var _ico = act.find('.sin-icon i.fa');
+		var _ico_class = act.attr('data-icon');
+	}//end if
+
+	_ico.removeClass(_ico_class).addClass('fa-spinner fa-pulse');
 	$("#sidebar #menu div[data-open='1'].active").removeClass('active');
 	$("#sidebar #menu div[data-open='1']").attr('data-open', 0);
 	$('body script').remove();
@@ -237,6 +249,8 @@ function open_frm(act){
 		,function(result){ /*done*/
 			if(result.status == 'ok'){
 				dest.html(result.html);
+
+				_ico.removeClass('fa-spinner fa-pulse').addClass(_ico_class);
 				ajustar_widths(function(){
 					$('div.frm.oculto #frm-tabs').hide();
 					$('div.frm.oculto #frm-table').hide();
@@ -259,8 +273,10 @@ function open_frm(act){
 				}else{
 					if(result.responseText != undefined && result.responseText != '' ){
 						dest.html(result.responseText);
+						_ico.removeClass('fa-spinner fa-pulse').addClass(_ico_class);
 					}else{
 						console.log(result);
+						_ico.removeClass('fa-spinner fa-pulse').addClass(_ico_class);
 					}//end if;
 
 				}// end if

@@ -17,6 +17,7 @@ class _creates{
 		      				class='nav-item waves-effect nav-single fn bloque'
 		      				data-url='".$row['_url']."'
 		      				title='".$row['_title']."'
+									data-icon='".$row['_item_icon']."'
 		      				data-open='0'>
 							<div class='sin-icon fm enlinea'><i class='fa fa-1x ".$row['_item_icon']."'></i></div>
 							<div class='sin-title fm enlinea hide'>".$row['_item_name']."</div>
@@ -48,7 +49,8 @@ class _creates{
 								class='child-item fm bloque'
 								data-url='".$row['_url']."'
 		      					title='".$row['_title']."'
-		      					data-open='0'>".$row['_item_name']."</div>";
+		      					data-open='0'
+										data-icon='".$row['_item_icon']."'>".$row['_item_name']."</div>";
 		      		$last_child = true;
 				}//end if
 			}//end while

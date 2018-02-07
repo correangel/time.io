@@ -442,6 +442,10 @@ $(document).ready(function() {
 						          }//end Aceptar
 						        },
 						        close: function(){
+											_cell.children('i').remove();
+											_cell.removeClass('procesando');
+											_cell.children('span').html(_valor_anterior);
+											_cell.children('span').show();
 											_dialog.dialog('destroy').remove();
 						          _dialog = 0;
 											_dialog = null;

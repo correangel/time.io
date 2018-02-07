@@ -3,10 +3,10 @@
 	header('Content-type: application/json');
 	header('Content-type: text/html; charset=UTF-8');
 	//echo dirname(__FILE__);
-	include_once $_SERVER['DOCUMENT_ROOT']."/login/class.login.php";
-	include_once $_SERVER['DOCUMENT_ROOT']."/includes/constantes.php";
-	include_once $_SERVER['DOCUMENT_ROOT']."/includes/class.mssql.php";
-	include_once $_SERVER['DOCUMENT_ROOT']."/includes/class.creates.php";
+  include_once $_SERVER['DOCUMENT_ROOT']."/login/class.login.php";
+  include_once $_SERVER['DOCUMENT_ROOT']."/includes/constantes.php";
+  include_once $_SERVER['DOCUMENT_ROOT']."/includes/class.mssql.php";
+  include_once $_SERVER['DOCUMENT_ROOT']."/includes/class.creates.php";
 	$com = new com_mssql();
 	$cnn = $com->_conectar_win(HOST,DATA);
 
