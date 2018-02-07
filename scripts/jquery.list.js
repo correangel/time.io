@@ -230,6 +230,11 @@ $(document).ready(function() {
 		var act = $(this);
 		var row = parseInt(act.parent().attr('data-id'));
 		var ind = parseInt(act.attr('tabindex'));
+
+		if($('.frm-employees > #frm-table > #rows-body.modo-checadas > .empl > .cell.dia.procesando').length >0){
+			console.log('procesando');
+			return false;
+		}//end if
 		//console.log(e.which);
 		switch(e.which){
 			case 37: //left
@@ -244,12 +249,18 @@ $(document).ready(function() {
 			case 40: //down
 				move_cell_dia(row+1, ind);
 				break;
-			case 32:
+			//case 32:
 			case 46:
 			case 8:
 				var _cell = act;
+				var _valor_anterior = _cell.children('span').html();
+				var _pulse = $("<i class='fa fa-1x fa-spinner fa-pulse'></i>");
+				_cell.children('span').hide();
+				_cell.append(_pulse);
+
 				var _cn = _cell.attr('data-cn');
 				if (_cn !== undefined){
+					_cell.addClass('procesando');
 					var _letra = String.fromCharCode(e.which);
 					var _per = $('#set-periodo').attr('data-periodo');
 					//console.log(_per);
@@ -262,26 +273,48 @@ $(document).ready(function() {
 					_jlista_post_proc(_params, function(data){
 						if (data.status === 'ok') {
 							if(data.result === 1){
+								_cell.children('i').remove();
 								_cell.children('span').html(data.letra);
+								_cell.children('span').show();
 								var _color = _cell.attr('data-color');
 								_cell.attr('data-color', data.color);
 								_cell.removeClass(_color).addClass(data.color);
 								var _row = $('#rows-body .empl.row.selected');
 								_set_focus(_row ,1);
+								_cell.children('i').remove();
+								_cell.removeClass('procesando');
 							}else{
+								_cell.children('i').remove();
+								_cell.removeClass('procesando');
+								_cell.children('span').html(_valor_anterior);
+								_cell.children('span').show();
 								console.log(data.msg);
 							}//end if
 						}else{
+							_cell.children('i').remove();
+							_cell.removeClass('procesando');
+							_cell.children('span').html(_valor_anterior);
+							_cell.children('span').show();
 							_lista_callback_not_ok(data);
 						}//end if
+
 					});
 				}else return;
 				break;
 
 			default:
 				var _cell = act;
+				//----------------------------------
+				//transition _letra
+				//----------------------------------
+				var _valor_anterior = _cell.children('span').html();
+				var _pulse = $("<i class='fa fa-1x fa-spinner fa-pulse'></i>");
+				_cell.children('span').hide();
+				_cell.append(_pulse);
+				//----------------------------------
 				var _cn = _cell.attr('data-cn');
 				if (_cn !== undefined){
+					_cell.addClass('procesando');
 					var _letra = String.fromCharCode(e.which);
 					var _per = $('#set-periodo').attr('data-periodo');
 					var _params = { action: 'causa::letra'
@@ -373,15 +406,26 @@ $(document).ready(function() {
 														if (data.status === 'ok') {
 															if(data.result === 1){
 																_cell.children('span').html(data.letra);
+																_cell.children('i').remove();
+																_cell.children('span').show();
 																var _color = _cell.attr('data-color');
 																_cell.attr('data-color', data.color);
 																_cell.removeClass(_color).addClass(data.color);
 																var _row = $('#rows-body .empl.row.selected');
 																_set_focus(_row,1);
+																_cell.removeClass('procesando');
 															}else{
+																_cell.children('i').remove();
+																_cell.removeClass('procesando');
+																_cell.children('span').html(_valor_anterior);
+																_cell.children('span').show();
 																console.log(data.msg);
 															}//end if
 														}else{
+															_cell.children('i').remove();
+															_cell.removeClass('procesando');
+															_cell.children('span').html(_valor_anterior);
+															_cell.children('span').show();
 															_lista_callback_not_ok(data);
 														}//end if
 													});
@@ -413,20 +457,35 @@ $(document).ready(function() {
 									if (data.status === 'ok') {
 										if(data.result === 1){
 											_cell.children('span').html(data.letra);
+											_cell.children('i').remove();
+											_cell.children('span').show();
 											var _color = _cell.attr('data-color');
 											_cell.attr('data-color', data.color);
 											_cell.removeClass(_color).addClass(data.color);
 											var _row = $('#rows-body .empl.row.selected');
 											_set_focus(_row,1);
+											_cell.removeClass('procesando');
 										}else{
+											_cell.children('i').remove();
+											_cell.removeClass('procesando');
+											_cell.children('span').html(_valor_anterior);
+											_cell.children('span').show();
 											console.log(data.msg);
 										}//end if
 									}else{
+										_cell.children('i').remove();
+										_cell.removeClass('procesando');
+										_cell.children('span').html(_valor_anterior);
+										_cell.children('span').show();
 										_lista_callback_not_ok(data);
 									}//end if
 								});
 							}//end if
 						}else{
+							_cell.children('i').remove();
+							_cell.removeClass('procesando');
+							_cell.children('span').html(_valor_anterior);
+							_cell.children('span').show();
 							_lista_callback_not_ok(data);
 						}//end if
 					});
