@@ -1078,7 +1078,8 @@ div.frm #rows-body .cell.dia:focus{
   width:33px;
   height: 33px;
   color:white;
-  background-color: #1973b6;
+  *background-color: #1973b6;
+  background-color: #586aec;
 }
 
 div.frm #dia-wrapper{

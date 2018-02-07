@@ -337,6 +337,10 @@ $(document).ready(function() {
 						        buttons: {
 						          'Cancelar': function() {
 						            _dialog.dialog( 'close');
+												_cell.children('i').remove();
+												_cell.removeClass('procesando');
+												_cell.children('span').html(_valor_anterior);
+												_cell.children('span').show();
 						          },
 											'Aceptar': function() {
 												var _valid = true;
