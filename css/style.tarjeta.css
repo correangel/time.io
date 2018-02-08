@@ -395,10 +395,10 @@ input{
   text-shadow: 2px 2px 2px rgba(200, 200, 200, .8);
 }
 .frm-tarjeta #tarjeta-data-rows #data-rows-head .eti-tab-head .head .cell{
-  padding-left: 10px;
+  padding-left: 40px;
 }
 .frm-tarjeta #tarjeta-data-rows #data-rows-body .eti-tab-rows .row .cell{
-  padding-left: 10px;
+  padding-left: 40px;
 }
 .frm-tarjeta #tarjeta-data-rows #data-rows-head .eti-tab-head .head .cell-min{
   padding-left: 10px;

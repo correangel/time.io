@@ -8,7 +8,10 @@ $(document).ready(function(){
     var _inp = $('.frm-tarjeta #select-opt #_alter_id')
     var _alter = _inp.val();
     //console.log(_alter);
-    if (_alter.length == 0 ) return false;
+    if (_alter.length == 0 ){
+      $('.frm-tarjeta #select-opt #_alter_id').focus();
+      return false;
+    }
     _set_employee_by_enter(_alter, function(){
 
 
@@ -23,11 +26,15 @@ $(document).ready(function(){
       if($('.frm-tarjeta #select-opt #id-per').val() === '') {
         $('.frm-tarjeta #select-opt #id-per').focus();
         $('.frm-tarjeta #select-opt #id-per').trigger('click');
+        _btn.removeClass('active').addClass('unactive');
+        _btn.children('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-bolt');
         _btn = null;
         return false;
       }//end if
       if(!$('.frm-tarjeta #select-opt #_alter_id').hasClass('correct')) {
         $('.frm-tarjeta #select-opt #_alter_id').focus();
+        _btn.removeClass('active').addClass('unactive');
+        _btn.children('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-bolt');
         _btn = null;
         return false;
       }//end if
@@ -166,7 +173,9 @@ $(document).ready(function(){
         break;
       default:
         if(_inp.hasClass('error')){
-          _inp.removeClass('error').val('');
+
+          var _char = e.key;
+          _inp.removeClass('error').val(_char);
 
           $('.frm-tarjeta #select-opt #_alter_id').attr('data-id', '');
           $('.frm-tarjeta #select-datos #_name').val("Nombre: " );
@@ -272,11 +281,10 @@ function _set_employee_by_enter(_alter, _callback){
       });
 
     }else{if(data.status==='error' && data.result===0 ){
-      _load_img('error', $('#select-pic #pic-col'), function(){
-        $('.frm-tarjeta #select-opt #_alter_id').removeClass('correct').addClass('error');
-        $('.frm-tarjeta #select-opt #_alter_id').val(data.msg);
-        if (_callback) _callback();
-      });
+      _load_img('error', $('#select-pic #pic-col'));
+      $('.frm-tarjeta #select-opt #_alter_id').removeClass('correct').addClass('error');
+      $('.frm-tarjeta #select-opt #_alter_id').val(data.msg);
+      if (_callback) _callback();
     }else _procedure_error(data);}
   });
 
