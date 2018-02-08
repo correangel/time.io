@@ -148,7 +148,7 @@ $(document).ready(function(){
     e.preventDefault();
     var _row = $(this);
     _set_employee(_row);
-      $('.frm-tarjeta #tarjeta-data').fadeOut(300).removeClass('visible').addClass('oculto');
+    $('.frm-tarjeta #tarjeta-data').fadeOut(300).removeClass('visible').addClass('oculto');
   });
 
   $(document).on('keyup', '.frm-tarjeta #select-opt #_alter_id', function(e){
@@ -258,49 +258,55 @@ function _set_employee_by_enter(_alter, _callback){
                 ,alter:_alter};
   _procedure(_params, function(data){
     if (data.status==='ok' && data.result===1 ) {
+      _load_img(data.row.employee_id, $('#select-pic #pic-col'), function(){
+        $('.frm-tarjeta #select-opt #_alter_id').val(data.row._alter_id);
+        $('.frm-tarjeta #select-opt #_alter_id').attr('data-id', data.row.employee_id);
+        $('.frm-tarjeta #select-datos #_name').val("Nombre: " + data.row._nombre);
+        $('.frm-tarjeta #select-datos #_ingreso').val("Ingreso: "+data.row._hire_date);
+        $('.frm-tarjeta #select-datos #_locacion').val("Locación: "+data.row._locacion_code);
+        $('.frm-tarjeta #select-datos #_departamento').val("Dep: "+data.row._departamento_code + " - " + data.row._departamento_name);
+        $('.frm-tarjeta #select-datos #_posicion').val("Pos: "+data.row._posicion_code +  " - " + data.row._posicion_name);
+        $('.frm-tarjeta #select-datos #_clase').val("Clase: "+data.row._clase);
+        $('.frm-tarjeta #select-opt #_alter_id').removeClass('error').addClass('correct');
+        if (_callback) _callback();
+      });
 
-      $('.frm-tarjeta #select-opt #_alter_id').val(data.row._alter_id);
-      $('.frm-tarjeta #select-opt #_alter_id').attr('data-id', data.row.employee_id);
-      $('.frm-tarjeta #select-datos #_name').val("Nombre: " + data.row._nombre);
-      $('.frm-tarjeta #select-datos #_ingreso').val("Ingreso: "+data.row._hire_date);
-      $('.frm-tarjeta #select-datos #_locacion').val("Locación: "+data.row._locacion_code);
-      $('.frm-tarjeta #select-datos #_departamento').val("Dep: "+data.row._departamento_code + " - " + data.row._departamento_name);
-      $('.frm-tarjeta #select-datos #_posicion').val("Pos: "+data.row._posicion_code +  " - " + data.row._posicion_name);
-      $('.frm-tarjeta #select-datos #_clase').val("Clase: "+data.row._clase);
-      $('.frm-tarjeta #select-opt #_alter_id').removeClass('error').addClass('correct');
-      if (_callback) _callback();
     }else{if(data.status==='error' && data.result===0 ){
-      $('.frm-tarjeta #select-opt #_alter_id').removeClass('correct').addClass('error');
-      $('.frm-tarjeta #select-opt #_alter_id').val(data.msg);
-      if (_callback) _callback();
+      _load_img('error', $('#select-pic #pic-col'), function(){
+        $('.frm-tarjeta #select-opt #_alter_id').removeClass('correct').addClass('error');
+        $('.frm-tarjeta #select-opt #_alter_id').val(data.msg);
+        if (_callback) _callback();
+      });
     }else _procedure_error(data);}
   });
 
 
 }//end if
 function _set_employee(_row){
-  var data_alter = _row.attr('data-alter');
-  var data_name = _row.attr('data-name');
-  var data_departamento = _row.attr('data-departamento');
-  var data_departamento_code = _row.attr('data-departamento-code');
-  var data_posicion = _row.attr('data-posicion');
-  var data_posicion_code = _row.attr('data-posicion-code');
-  var data_locacion_code = _row.attr('data-locacion-code');
-  var data_clase = _row.attr('data-clase');
-  var data_hire = _row.attr('data-hire');
-  var _id = _row.attr('id');
-  $('.frm-tarjeta #select-opt #_alter_id').val(data_alter);
-  $('.frm-tarjeta #select-opt #_alter_id').attr('data-id', _id);
-  $('.frm-tarjeta #select-datos #_name').val("Nombre: " + data_name);
-  $('.frm-tarjeta #select-datos #_ingreso').val("Ingreso: "+data_hire);
-  $('.frm-tarjeta #select-datos #_locacion').val("Locación: "+data_locacion_code);
-  $('.frm-tarjeta #select-datos #_departamento').val("Dep: "+data_departamento_code + " - " + data_departamento);
-  $('.frm-tarjeta #select-datos #_posicion').val("Pos: "+data_posicion_code +  " - " + data_posicion);
-  $('.frm-tarjeta #select-datos #_clase').val("Clase: "+data_clase);
-  $('div#win-buscar-emp #win-rows-body .for-filtra.oculto').removeClass('oculto');
-  $('div#win-buscar-emp input#inp-filter').val('');
-  $('div#win-buscar-emp').removeClass('visible').addClass('oculto');
-  $('.frm-tarjeta #select-opt #_alter_id').removeClass('error').addClass('correct');
+  _load_img(_row.attr('id'), $('#select-pic #pic-col'), function(){
+    var data_alter = _row.attr('data-alter');
+    var data_name = _row.attr('data-name');
+    var data_departamento = _row.attr('data-departamento');
+    var data_departamento_code = _row.attr('data-departamento-code');
+    var data_posicion = _row.attr('data-posicion');
+    var data_posicion_code = _row.attr('data-posicion-code');
+    var data_locacion_code = _row.attr('data-locacion-code');
+    var data_clase = _row.attr('data-clase');
+    var data_hire = _row.attr('data-hire');
+    var _id = _row.attr('id');
+    $('.frm-tarjeta #select-opt #_alter_id').val(data_alter);
+    $('.frm-tarjeta #select-opt #_alter_id').attr('data-id', _id);
+    $('.frm-tarjeta #select-datos #_name').val("Nombre: " + data_name);
+    $('.frm-tarjeta #select-datos #_ingreso').val("Ingreso: "+data_hire);
+    $('.frm-tarjeta #select-datos #_locacion').val("Locación: "+data_locacion_code);
+    $('.frm-tarjeta #select-datos #_departamento').val("Dep: "+data_departamento_code + " - " + data_departamento);
+    $('.frm-tarjeta #select-datos #_posicion').val("Pos: "+data_posicion_code +  " - " + data_posicion);
+    $('.frm-tarjeta #select-datos #_clase').val("Clase: "+data_clase);
+    $('div#win-buscar-emp #win-rows-body .for-filtra.oculto').removeClass('oculto');
+    $('div#win-buscar-emp input#inp-filter').val('');
+    $('div#win-buscar-emp').removeClass('visible').addClass('oculto');
+    $('.frm-tarjeta #select-opt #_alter_id').removeClass('error').addClass('correct');
+  });
 };
 
 function _procedure( _params, _callback) {
@@ -408,3 +414,31 @@ function _generate_pdf(_source,_filename) {
         pdf.save(_filename+'.pdf');
     }, margins);
 }
+
+function _load_img(_id,_dest, callback){
+  //console.log(0);
+  if(_id === 'error'){
+    //console.log(1);
+    _url = 'https://asistenciarcd.aicollection.local:444/imagenes/no_image_profile.jpg';
+    var _img = new Image();
+    _img.src = _url;
+    _img.onload = function(){
+      _dest.attr('src', _url).load();
+    }//end function
+
+  }else{
+    //console.log(2);
+    var _url = 'https://asistenciarcd.aicollection.local:444/app/proc.photo?id=';
+  	_url = _url + _id;
+    var _img = new Image();
+    _img.src = _url;
+    _img.onload = function(){
+      _dest.attr('src', _url).load();
+    }//end function
+    _img.onerror = function(){
+      _url = 'https://asistenciarcd.aicollection.local:444/imagenes/no_image_profile.jpg';
+      _dest.attr('src', _url).load();
+    }//end function
+    if (callback) callback();
+  }//end if
+}//end function
