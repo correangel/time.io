@@ -63,6 +63,7 @@
       $resp['hora_head'] = '';
       //---------------------------------
       $tablas='';
+      $pdfs='';
       $resp['post'] = $_POST;
       $query = "exec tra.proc_get_info_employee_for_tarjeta @per = ?, @emp = ? ";
       $params= array(array(&$per, SQLSRV_PARAM_IN)
@@ -79,6 +80,37 @@
                       <td>".$row['_posicion_name']."</td>
                       <td>".$row['_departamento_code']."</td>
                       <td>".$row['_departamento_name']."</td>";
+
+        $header_pdf="<div style='border: none;
+                                 background-color:lightgray;
+                                 width: calc(100% - 50px);
+                                 margin-left: 25px;'>
+                        <div style='border: none;
+                                    background-color:lightgray;
+                                    width: calc(100% - 50px);
+                                    margin-left: 25px;'>
+                          <div style='width: 100%;'>
+                            <div style='width: 25%;'>Periodo:</div>
+                            <div style='width: 25%;'>".$row['_periodo']."</div>
+                            <div style='width: 25%;'>Codigo:</td>
+                            <div style='width: 25%;'>".$row['_alter_id']."</div>
+                          </div>
+                          <div>
+                            <div>Nombre:</div>
+                            <div>".$row['_nombre']."</div>
+                            <div>Ingreso:</div>
+                            <div>".$row['_hire_date']."</div>
+                          </div>
+                          <div>
+                            <div>".$row['_clase']."</div>
+                            <div>".$row['_posicion_code']."</div>
+                            <div>".$row['_posicion_name']."</div>
+                            <div>".$row['_departamento_code']."</div>
+                            <div>".$row['_departamento_name']."</div>
+                          </div>
+                        </div>
+                      </div>";
+
 
           $ocultos = "<div class='fn oculto enlinea to-excel'>".$row['_periodo']."</div>
                       <div class='fn oculto enlinea to-excel'>".$row['_alter_id']."</div>
@@ -105,6 +137,8 @@
       $params= array(array(&$per, SQLSRV_PARAM_IN)
                     ,array(&$emp, SQLSRV_PARAM_IN));
       if($stmt = $com->_create_stmt($cnn, $query, $params)){
+
+        $pdfs .= "<div id='pdf-asis'>" . $header_pdf. "</div>";
         $tablas.= "<table id='tabla-asis'>
                     <thead><tr>
                       <th>Periodo</th>
@@ -295,6 +329,7 @@
         return;
       }//endif
       $resp['tablas'] = $tablas;
+      $resp['pdfs'] = $pdfs;
       $resp['status'] = 'ok';
     }elseif(isset($_POST['action'],$_POST['ope'],$_POST['alter'])&&$_POST['action']==='get::employee::by::enter'){
         $query='exec cat.proc_get_employees_by_ope_by_alter @ope = ?, @alter = ? , @result= ?, @msg = ?';

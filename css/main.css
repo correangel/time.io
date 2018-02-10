@@ -844,6 +844,7 @@ div.frm-employees #btn-dia:hover{
 
 
 div.frm #rows-head #list-filter-cont{
+  z-index: 9;
   position: fixed;
   *width: calc(70% - 495px - 160px);
   height: 34px;
@@ -919,8 +920,8 @@ div.frm #rows-head .colm{
 div.frm #rows-head .colm i.fa{
   color: black;
   font-size: 12px;
-  position: absolute;
-  opacity: 0;
+  margin-left: 4px;
+  opacity: .4;
   transition: all .5s ease-in-out;
 }
 div.frm #rows-head .colm:hover{
@@ -929,7 +930,7 @@ div.frm #rows-head .colm:hover{
   text-decoration-style: dotted;
 }
 div.frm #rows-head .colm:hover i.fa{
-  opacity: 8;
+  opacity: .8;
 }
 
 div.frm #rows-head{

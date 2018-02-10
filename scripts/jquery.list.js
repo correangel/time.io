@@ -89,46 +89,32 @@ $(document).ready(function() {
 		}//end if
 	});
 
-	$(document).on('click', 'div.frm #rows-head .colm-', function(){
-		console.log(1);
+	$(document).on('click', '.frm-lista #rows-head .colm', function(){
+		//console.log(1);
 
-		var _col = $(this);
-		//console.log(_col.attr('id'));
-		var _id = _col.attr('id');
-		$('#filter .label select option').attr('selected',false);
-		var _tab = $('#frm-filter.tab.panel');
+		var _colm = $(this);
+		var _orden_tip = _colm.attr('data-orden-tip');
+		var _orden_dir = _colm.attr('data-orden-dir');
+		var _orden_sou = _colm.attr('data-orden-sou');
+		var _divs = $('.frm-lista #rows-body .empl.row');
+		var _dest = '.frm-lista #rows-body';
+		//console.log(_orden_dir);
+		_ordenar_divs(_divs, _orden_tip, _orden_dir, _orden_sou, _dest, function(){
+			$('.frm-lista #rows-head .colm i.fa.removable').remove();
+			var _i_asc = $("<i class='fa removable fa-1x fa-angle-down'></i>");
+			var _i_desc = $("<i class='fa removable fa-1x fa-angle-up'></i>");
+			if(_orden_dir === 'asc'){
+				_colm.append(_i_asc);
+				_colm.attr('data-orden-dir', 'desc');
+			}else{
+				_colm.append(_i_desc);
+				_colm.attr('data-orden-dir', 'asc');
+			}//end if
+		});
 
-		switch (_id) {
-			case 'code':
-				$("#filter .label select#filter-colm").val('code').change();
-				break;
-			case 'name':
-				$("#filter .label select#filter-colm").val('name').change();
-				break;
-			case 'posi':
-				$("#filter .label select#filter-colm").val('posi').change();
-				break;
-			case 'work':
-				$("#filter .label select#filter-colm").val('work').change();
-				break;
-			case 'dias':
-				var _htm = _col.children('.eti').html();
-				//console.log(_htm);
-				$("#filter .label select#filter-colm").val($.trim(_htm)).change();
-
-				break;
-			default:
-				return;
-		}//end switch
-		if(! _tab.hasClass('active')){
-			$('#filter').addClass('visible').removeClass('oculto');
-			_tab.addClass('active');
-			_tab.trigger('mouseleave');
-			//console.log(1);
-			$('#filter .input #filter-input').val('');
-			$('#filter .input #filter-input').focus();
-		}//end if
 	});
+
+
 
 	$(document).on('click', '#rows-body .empl.row', function(){
 		var _row = $(this);
@@ -1300,3 +1286,51 @@ function _get_checadas(_page){
 	});
 	return false;
 }
+
+function _ordenar_divs($divs, _orden_tip, _orden_dir,_orden_sou, _dest,_callback){
+	//console.log(_divs.length);
+	if($divs.length < 2) return false;
+	//----------------------------------------
+	//$divs = _divs;
+	if (_orden_tip === 'alfabetico'  && _orden_dir === 'asc'){
+		var _divs_ordenados = $divs.sort(function (a, b) {
+				if ($(a).find("div.cell."+_orden_sou).text() > $(b).find("div.cell."+_orden_sou).text()) return 1;
+				if ($(a).find("div.cell."+_orden_sou).text() < $(b).find("div.cell."+_orden_sou).text()) return -1;
+				if ($(a).find("div.cell."+_orden_sou).text() === $(b).find("div.cell."+_orden_sou).text()) return 0;
+    });
+    $(_dest).html(_divs_ordenados);
+		if (_callback) _callback();
+		return false;
+	}//end if
+	if (_orden_tip === 'alfabetico' && _orden_dir === 'desc'){
+		var _divs_ordenados = $divs.sort(function (a, b) {
+				if ($(a).find("div.cell."+_orden_sou).text() < $(b).find("div.cell."+_orden_sou).text()) return 1;
+				if ($(a).find("div.cell."+_orden_sou).text() > $(b).find("div.cell."+_orden_sou).text()) return -1;
+				if ($(a).find("div.cell."+_orden_sou).text() === $(b).find("div.cell."+_orden_sou).text()) return 0;
+		});
+		$(_dest).html(_divs_ordenados);
+		if (_callback) _callback();
+		return false;
+	}//end if
+
+	if (_orden_tip === 'numerico'  && _orden_dir === 'asc'){
+		var _divs_ordenados = $divs.sort(function (a, b) {
+				if (parseInt($(a).find("div.cell."+_orden_sou).text()) > parseInt($(b).find("div.cell."+_orden_sou).text())) return 1;
+				if (parseInt($(a).find("div.cell."+_orden_sou).text()) < parseInt($(b).find("div.cell."+_orden_sou).text())) return -1;
+				if (parseInt($(a).find("div.cell."+_orden_sou).text()) === parseInt($(b).find("div.cell."+_orden_sou).text())) return 0;
+    });
+    $(_dest).html(_divs_ordenados);
+		if (_callback) _callback();
+		return false;
+	}//end if
+	if (_orden_tip === 'numerico' && _orden_dir === 'desc'){
+		var _divs_ordenados = $divs.sort(function (a, b) {
+				if (parseInt($(a).find("div.cell."+_orden_sou).text()) < parseInt($(b).find("div.cell."+_orden_sou).text())) return 1;
+				if (parseInt($(a).find("div.cell."+_orden_sou).text()) > parseInt($(b).find("div.cell."+_orden_sou).text())) return -1;
+				if (parseInt($(a).find("div.cell."+_orden_sou).text()) === parseInt($(b).find("div.cell."+_orden_sou).text())) return 0;
+		});
+		$(_dest).html(_divs_ordenados);
+		if (_callback) _callback();
+		return false;
+	}//end if
+}//end function

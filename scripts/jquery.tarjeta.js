@@ -74,7 +74,8 @@ $(document).ready(function(){
             $('#tarjeta-data-tabs #tab-jornadas #btn-pdf').attr('data-filename', data.emp_data._periodo +'-'+ data.emp_data._alter_id +'-Jornadas');
             $('#tarjeta-data-tabs #tab-horas #btn-pdf').attr('data-filename', data.emp_data._periodo +'-'+ data.emp_data._alter_id +'-Horas');
 
-            $('.frm-tarjeta #tablas-ocultas-for-docs').html(data.tablas);
+            $('.frm-tarjeta #tablas-ocultas-for-docs').html(data.tablas + data.pdfs);
+
             _btn = null;
             return false;
           }else {
@@ -257,7 +258,8 @@ $(document).ready(function(){
       if($("#"+_target).length===0) return false;
 
       var _filename = _btn.attr('data-filename');
-      _generate_pdf($("#"+_target),_filename)
+      //∫console.log($("#"+_target)[0]);
+      _generate_pdf($("#"+_target)[0],_filename)
     });
 });
 function _set_employee_by_enter(_alter, _callback){
@@ -392,7 +394,7 @@ function _is_not_tarjeta(){
 
 function _generate_pdf(_source,_filename) {
     var pdf = new jsPDF('p', 'pt', 'letter');
-    _source = _source[0];
+    //_source = _source;
     specialElementHandlers = {
         // element with id of "bypass" - jQuery style selector
         '#bypassme': function (element, renderer) {
