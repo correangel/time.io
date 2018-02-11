@@ -43,10 +43,12 @@
         $resp['post'] = $_POST;
         sqlsrv_free_stmt($stmt);
       }else{
-        $resp['status'] = 'error';
-        $resp['error'] = sqlsrv_errors();
-        $resp['msg'] = 'error sql...';
-        $resp['post'] = $_POST;
+
+          $resp['status'] = 'error';
+          $resp['error'] = sqlsrv_errors();
+          $resp['msg'] = 'error sql...';
+          $resp['post'] = $_POST;
+      
       };
     }elseif(isset($_POST['action'],$_POST['emp'],$_POST['per'])&&$_POST['action']==='get::data::asistencia'){
       $emp = $_POST['emp'];
@@ -124,11 +126,16 @@
         }//end while
         sqlsrv_free_stmt($stmt);
       }else{
-        $resp['error'] = sqlsrv_errors();
-        $resp['status'] = 'error';
-        $com->_desconectar($cnn);
-        echo json_encode($resp);
-        return;
+        if(sqlsrv_errors()){
+          $resp['status'] = 'error';
+          $resp['error'] = sqlsrv_errors();
+          $resp['msg'] = 'error sql...';
+          $resp['post'] = $_POST;
+          $com->_desconectar($cnn);
+          echo json_encode($resp);
+          return;
+        }//end if
+
       }//end if
       //---------------
       //Asistencia
@@ -203,11 +210,16 @@
         $tablas.= "</tbody></table>";
         sqlsrv_free_stmt($stmt);
       }else{
-        $resp['error'] = sqlsrv_errors();
-        $resp['status'] = 'error';
-        $com->_desconectar($cnn);
-        echo json_encode($resp);
-        return;
+        if(sqlsrv_errors()){
+          $resp['status'] = 'error';
+          $resp['error'] = sqlsrv_errors();
+          $resp['msg'] = 'error sql...';
+          $resp['post'] = $_POST;
+          $com->_desconectar($cnn);
+          echo json_encode($resp);
+          return;
+        }//end if
+
       }//end if
 
       //---------------
@@ -263,11 +275,16 @@
         $tablas.= "</tbody></table>";
         sqlsrv_free_stmt($stmt);
       }else{
-        $resp['error'] = sqlsrv_errors();
-        $resp['status'] = 'error';
-        $com->_desconectar($cnn);
-        echo json_encode($resp);
-        return;
+         if(sqlsrv_errors()){
+            $resp['status'] = 'error';
+            $resp['error'] = sqlsrv_errors();
+            $resp['msg'] = 'error sql...';
+            $resp['post'] = $_POST;
+            $com->_desconectar($cnn);
+            echo json_encode($resp);
+            return;
+          }//end if
+
       }//end if
 
       $query = "exec [tra].[proc_get_jornadas_by_employee_tarjeta] @per = ?, @emp = ?";
@@ -322,11 +339,16 @@
         $tablas.= "</tbody></table>";
         sqlsrv_free_stmt($stmt);
       }else{
-        $resp['error'] = sqlsrv_errors();
-        $resp['status'] = 'error';
-        $com->_desconectar($cnn);
-        echo json_encode($resp);
-        return;
+        if(sqlsrv_errors()){
+          $resp['status'] = 'error';
+          $resp['error'] = sqlsrv_errors();
+          $resp['msg'] = 'error sql...';
+          $resp['post'] = $_POST;
+          $com->_desconectar($cnn);
+          echo json_encode($resp);
+          return;
+        }//end if
+
       }//endif
       $resp['tablas'] = $tablas;
       $resp['pdfs'] = $pdfs;

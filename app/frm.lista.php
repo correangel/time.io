@@ -113,6 +113,9 @@
 									<div id='btn-horas-extra' data-title='Horas Extras' data-tab='frm-horas-extra' class='fn tab  bloque waves-effect  unactive'>
 										<i class='fa fa-1x fa-clock-o'></i>
 									</div>
+									<div id='btn-buscar' data-title='Buscar Colaborador' data-panel='frm-buscar' class='fn tab bloque waves-effect unactive'>
+										<i class='fa fa-1x fa-search'></i>
+									</div>
 									<div 	id='btn-info' data-title='Info Ausentismos'
 												data-title='Info Ausentismos'
 												data-panel='#frm-info'
@@ -120,9 +123,6 @@
 										<i class='fa fa-1x fa-info'></i>
 									</div>
 
-									<!--<div id='frm-filter' data-title='Filtrar Lista de Asistencia' data-tab='frm-filter' class='fn tab panel bloque waves-effect '>
-										<i class='fa fa-1x fa-filter'></i>
-									</div>!-->
 
 									<div id='frm-pagination' data-actual='1' data-pages='$pages' class='fn tab panel bottom bloque waves-effect ".($pages> 1? 'pages':'')." '>
 										<div id='frm-pagination-lab' class='fs bloque waves-effect'>1/$pages</div>
@@ -224,6 +224,15 @@
 															</div>
 															<div class='fs input enlinea'><input id='filter-input' name='filter-input' placeholder='Buscar:' type='text' class='fs bloque' /></div>
 														</div>";
+									$html .="<div id='frm-buscar' class='fn frm-set boxshadow borde-negro oculto'>";
+										//aqui
+										$html .="
+															<div class='fm enlinea floL text'><input id='inp-buscar' class='fn'/></div>
+															<div id='btn-exec' data-btn='#btn-exec'  class='fn btn bg-buscar-btn enlinea floL cur-poi'><i class='fa fa-1x fa-bolt'></i></div>
+															<div data-btn='#btn-buscar' data-who='#frm-buscar' class='fn btn bg-buscar-btn enlinea floL close cur-poi'><i class='fa fa-1x fa-times'></i></div>
+														";
+
+									$html .="</div>";
 									$html .="<div id='frm-info' class='fn frm-set boxshadow borde-negro oculto'>";
 										$html .="<div class='fn sel-box-title'>
 															<div class='fm enlinea floL text'> Info Ausentismos</div>

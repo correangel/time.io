@@ -739,23 +739,64 @@ $(document).ready(function() {
 		}//end switch
 	});
 
-	$(document).on('click','.frm-employees .sel-box-title .close', function(){
+	$(document).on('click','.frm-employees .sel-box-title .close, .frm-employees #frm-buscar .close', function(){
 		var _who = $(this).data('who');
 		var _btn = $(this).data('btn');
 		$(_who).fadeOut(300, function(){
 			$(_btn).removeClass('active').addClass('unactive');
 		});
 	});
-	$(document).on('click', '#frm-tabs .tab.panel.unactive', function(){
-		//console.log('Esto no funciona...');
+	$(document).on('click', '#frm-tabs #btn-buscar.tab.unactive', function(){
+		//console.log(2);
 		var _btn = $(this);
-		var _who = _btn.data('panel');
+		var _buscar = $('.frm-employees #frm-buscar.frm-set');
+		_buscar.find('input#inp-buscar').val('');
+		$('.frm-employees .frm-set.visible').fadeOut(300);
+		$('#frm-tabs .tab.panel.active').removeClass('active').addClass('unactive');
+		_btn.removeClass('unactive').addClass('active');
+		_buscar.fadeIn(300).removeClass('oculto').addClass('visible');
+		_buscar.find('input#inp-buscar').focus();
+
+	});
+	$(document).on('click','.frm-lista #frm-buscar #btn-exec',function(){
+		var _alter = $('.frm-lista #frm-buscar #inp-buscar').val();
+		if(_alter.length >0){
+			var _ope = $('.frm-lista').attr('data-op');
+			var _per = $('#set-periodo').attr('data-periodo');
+			var _dias = $('#rows-head').attr('data-dias-periodo');
+			_get_lista_by_employee(_alter, _per,_ope,_dias);
+		}else{
+			return false;
+		}//end if
+	});
+	$(document).on('keyup','.frm-lista #frm-buscar #inp-buscar',function(e){
+		if(e.which != 13) return false;
+		var _alter = $('.frm-lista #frm-buscar #inp-buscar').val();
+		if(_alter.length >0){
+			var _ope = $('.frm-lista').attr('data-op');
+			var _per = $('#set-periodo').attr('data-periodo');
+			var _dias = $('#rows-head').attr('data-dias-periodo');
+			_get_lista_by_employee(_alter, _per,_ope, _dias);
+		}else{
+			return false;
+		}//end if
+	});
+
+	$(document).on('click', '#frm-tabs .tab.panel.unactive', function(){
+		//console.log(1);
+		var _btn = $(this);
+		var _who = _btn.attr('data-panel');
 		var _ant = $('#frm-tabs .tab.panel.active').data('panel');
 		if (_ant === undefined) _ant = '#frm-set-periodo';
+		//en caso de que ventan abuscar este abierta
+		$('.frm-employees #frm-buscar.frm-set.visible').fadeOut(300);
+		$('.frm-employees #frm-tabs #btn-buscar.tab.active').removeClass('active').addClass('unactive');
+		//----------
 		$(_ant).fadeOut(300, function(){
 			$('#frm-tabs .tab.panel.active').removeClass('active').addClass('unactive');
 			_btn.removeClass('unactive').addClass('active');
 			$(_who).fadeIn(300 , function(){
+				$(_who).removeClass('oculto').addClass('visible');
 				switch (_who) {
 					//------------------------------------------------------------
 					case '#frm-set-departamento':
@@ -773,12 +814,13 @@ $(document).ready(function() {
 						});
 						break;
 						case '#btn-info':
-							console.log(1);
+							//console.log(1);
 							break;
 						//------------------------------------------------------------
 						case '#frm-set-periodo':
-
+							//console.log(1);
 							break;
+
 					default:
 						return;
 				}//end if;
@@ -1247,6 +1289,37 @@ function _get_horas_extras(_btn,_page){
 			return false;
 		}//end if
 		_btn.removeClass('active').addClass('unactive');
+		_lista_callback_not_ok(data);
+		return false;
+	});
+}
+
+function _get_lista_by_employee(_emp, _per, _ope, _dias){
+
+	$('#rows-body').hide();
+	$('#dia-cont').hide();
+	$('#rows-body-cargando').show();
+	$('#rows-body-cargando').removeClass('oculto').addClass('visible');
+	var _page = 1;
+	var _ctl = $('#frm-pagination-controls');
+	var _params = {
+			action:'get::lista::employee',
+			emp:_emp, per:_per, ope:_ope, dias:_dias
+	};
+	_jlista_post_proc( _params, function(data){
+		if (data.status === "ok" && data.html != undefined){
+			$('#rows-body-cargando.visible').fadeOut(150, function (){
+				$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+				$('#dia-cont').show();
+				$('#rows-body').html('');
+				//if($('#rows-body').hasClass('modo-checadas')) $('#rows-body').removeClass('modo-checadas').addClass('modo-horas-extras');
+				$('#rows-body').html(data.html).fadeIn(300);
+				$('#dia-cont').show();
+			});
+			_ctl.attr('data-actual', _page);
+			$('#frm-pagination-lab').html(_page  +"/" + data.pages );
+			return false;
+		}//end if
 		_lista_callback_not_ok(data);
 		return false;
 	});
