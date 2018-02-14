@@ -1,7 +1,99 @@
 $(document).ready(function() {
 	var _shift = false;
 
+	$(document).on('keyup','#rows-body.modo-horas-extras .empl.row .cell.dia',function(e){
+		//console.log(e.which);
+		var tecla = e.which
+		//if (e.which > 57 || e.which < 47 || e.which === 8) return false;
 
+		switch (tecla) {
+			case 46:
+			case 47:
+			case 48:
+			case 49:
+			case 50:
+			case 51:
+			case 52:
+			case 53:
+			case 54:
+			case 55:
+			case 56:
+			case 57:
+			case 8:
+				var _cell = $(this);
+				var _dad = _cell.parent();
+				var _ope = $('.frm-lista').attr('data-op');
+				var _cn = _cell.attr('data-cn');
+				var _per = _dad.attr('data-periodo');
+				var _emp = _dad.attr('data-employee');
+				var _val = 0;
+				if (tecla === 46 || tecla === 8) _val = 0; else	_val = parseInt(e.key);
+
+				//console.log(e);
+				var _valor_anterior = _cell.children('span.border-interno').html();
+				var _pulse = $("<i class='fa fa-1x fa-spinner fa-pulse'></i>");
+				_cell.children('span.border-interno').hide();
+				_cell.append(_pulse);
+
+				var _params ={
+					action: 'insert::lista::horas-extras'
+					,emp: _emp
+					,per: _per
+					,ope: _ope
+					,cn: _cn
+					,val: _val
+				};
+
+				_jlista_post_proc(_params, function(data){
+					//console.log(data);
+					if(data.status === "ok" && data.res === 1){
+
+						_cell.find('span.border-interno').html(((data.post.val === "0")?"-":data.post.val));
+
+						_cell.parent().find('.cell.dia.work span.border-interno').html(data.pagadas);
+					}//end if
+					if(data.status === "ok" && data.res === 0){
+						//alert(data.msg);
+						var _dialog;
+						var _option = {
+								autoOpen: false,
+								resizable: false,
+								height: 'auto',
+								maxHeight: 175,
+								width: 300,
+								modal: true,
+								show: { effect: 'drop', direction: 'up' },
+								hide: { effect: 'drop', direction: 'up' },
+								buttons: {
+									'Aceptar': function() {
+										_dialog.dialog( 'close');
+							}},close: function(){
+								_dialog.dialog('destroy').remove();
+								_dialog = 0;
+								_dialog = null;
+							}};
+							var _div = "<div title='Mov. no permitido' class='fn'>";
+										_div+= "<i style='width: 60px; text-align:center; height: 40px; line-height:40px; vertical-align:middle;' class='enlinea rojo floL fa fa-2x fa-exclamation-triangle'></i>";
+										_div+= "<div style='height: 40px; line-height:40px; vertical-align:middle;' class='enlinea floL fn'>"+data.msg+"</div>";
+									_div+= "</div>";
+							var $div = $(_div);
+							_dialog = $div.dialog(_option);
+							_dialog.dialog('open');
+					}//
+					if(data.status === "error"){
+						_lista_callback_not_ok(data);
+					}//end if
+					_cell.children('i.fa').remove();
+					_cell.find('span.border-interno').show();
+				});
+
+				break;
+			default:
+
+				return false;
+		}//end switch
+
+	});
 
 	$(document).on('click', '.data-item .head .tab.inactive', function(){
 		var _tab = $(this);
@@ -44,10 +136,18 @@ $(document).ready(function() {
 		}//end if
 		_btn.html(_val);
 		_btn.attr('data-periodo', _per);
-
 		_btn.removeClass('active').addClass('unactive');
 
-		var _pag = $('#frm-pagination-controls');
+		if ($('.frm-lista #rows-body').hasClass('modo-checadas')){
+			_get_checadas(1);
+			return false;
+		}//end if
+
+		if ($('.frm-lista #rows-body').hasClass('modo-horas-extras')){
+			_get_horas_extras($('#btn-horas-extras'),1);
+			return false;
+		}//end if
+		/*var _pag = $('#frm-pagination-controls');
 		var _ope = _pag.attr('data-ope');
 		var _dep = $('#set-departamento').attr('data-departamento');
 		var _per = $('#set-periodo').attr('data-periodo');
@@ -56,7 +156,8 @@ $(document).ready(function() {
 		var _pages = parseInt(_pag.attr('data-pages'));
 		_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
 			if (data.status =='ok' && data.html != undefined){
-
+				$('#rows-body-error.visible').fadeOut(150);
+				$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 				$('#rows-body-cargando.visible').fadeOut(150, function (){
 					$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 					$('#dia-cont').show();
@@ -73,6 +174,7 @@ $(document).ready(function() {
 		});
 		_dad = null;
 		_sel = null;
+		*/
 	});
 
 	$(document).on('click', '#frm-filter.tab.panel',function(){
@@ -142,7 +244,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$(window).resize(function(event) {
+	/*$(window).resize(function(event) {
 		//var _i = parseInt($(".empl div.cell.dia[focused='true']").attr('tabindex'));
 		//var _r = parseInt($(".empl div.cell.dia[focused='true']").parent().attr('id'));
 
@@ -155,7 +257,7 @@ $(document).ready(function() {
 			_dia_pos($(".empl div.cell.dia.focused",null, _side));
 		}//end if
 
-	});
+	});*/
 
 	//console.log(1);
 	$(document).on('mouseup',function(e){
@@ -165,10 +267,26 @@ $(document).ready(function() {
     	}//end if
 
 	});
-	$(document).on('focus', ' .frm-employees #rows-body .empl .cell.dia',function(e){
-		//e.preventDefault();
+	$(document).on('mousewheel', '.frm-lista #rows-body',function(){
+		$('.frm-lista #rows-body .cell-tooltip').remove();
+	});
+	$(document).on('scroll', '.frm-lista #rows-body',function(){
+		$('.frm-lista #rows-body .cell-tooltip').remove();
+	});
+
+
+
+	$(document).on('focusout', '.frm-lista #rows-body .empl .cell.dia',function(){
+			//console.log($('.frm-lista #rows-body .cell-tooltip'));
+			if($('.frm-lista #rows-body .empl .cell.dia:focus').length < 1)
+				$('.frm-lista #rows-body .cell-tooltip').remove();
+	});
+	$(document).on('focus', '.frm-employees #rows-body .empl .cell.dia',function(e){
+		e.preventDefault();
 		//console.log(1);
 		var _cell = $(this);
+		_show_tooltip(_cell);
+
 		var _cn = _cell.attr('data-cn');
 		if (_cn !== undefined){
 			var _per = $('#set-periodo').attr('data-periodo');
@@ -555,6 +673,7 @@ $(document).ready(function() {
 	$(document).on('mouseleave','#frm-pagination-controls', function(){
 		$('#frm-pagination-controls').addClass('oculto');
 	});
+
 	$(document).on('click','#frm-tabs #btn-horas-extra.active', function(){
 		var _btn = $(this);
 
@@ -576,6 +695,8 @@ $(document).ready(function() {
 
 		_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
 			if (data.status =='ok' && data.html != undefined){
+				$('#rows-body-error.visible').fadeOut(150);
+				$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 				$('#rows-body-cargando.visible').fadeOut(150, function (){
 					$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 					$('#dia-cont').show();
@@ -649,6 +770,8 @@ $(document).ready(function() {
 				}//endif
 				_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
 					if (data.status =='ok'){
+						$('#rows-body-error.visible').fadeOut(150);
+						$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 						$('#rows-body-cargando.visible').fadeOut(150, function (){
 							$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 							$('#dia-cont').show();
@@ -672,6 +795,8 @@ $(document).ready(function() {
 				}//endif
 				_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
 					if (data.status =='ok'){
+						$('#rows-body-error.visible').fadeOut(150);
+						$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 						$('#rows-body-cargando.visible').fadeOut(150, function (){
 							$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 							$('#dia-cont').show();
@@ -695,6 +820,8 @@ $(document).ready(function() {
 				}//endif
 				_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
 					if (data.status =='ok'){
+						$('#rows-body-error.visible').fadeOut(150);
+						$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 						$('#rows-body-cargando.visible').fadeOut(150, function (){
 							$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 							$('#dia-cont').show();
@@ -718,6 +845,8 @@ $(document).ready(function() {
 				}//endif
 				_get_lista_page(_ope, _page, _dep, _per, _dias, function(data){
 					if (data.status =='ok'){
+						$('#rows-body-error.visible').fadeOut(150);
+						$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 						$('#rows-body-cargando.visible').fadeOut(150, function (){
 							$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 							$('#dia-cont').show();
@@ -764,7 +893,14 @@ $(document).ready(function() {
 			var _ope = $('.frm-lista').attr('data-op');
 			var _per = $('#set-periodo').attr('data-periodo');
 			var _dias = $('#rows-head').attr('data-dias-periodo');
-			_get_lista_by_employee(_alter, _per,_ope,_dias);
+			if($('.frm-lista #rows-body').hasClass('modo-checadas')){
+				_get_lista_by_employee(_alter, _per,_ope,_dias);
+				return false;
+		  }//end if
+			if($('.frm-lista #rows-body').hasClass('modo-horas-extras')){
+				_get_horas_by_employee(_alter, _per,_ope,_dias);
+				return false;
+		  }//end if
 		}else{
 			return false;
 		}//end if
@@ -776,7 +912,14 @@ $(document).ready(function() {
 			var _ope = $('.frm-lista').attr('data-op');
 			var _per = $('#set-periodo').attr('data-periodo');
 			var _dias = $('#rows-head').attr('data-dias-periodo');
-			_get_lista_by_employee(_alter, _per,_ope, _dias);
+			if($('.frm-lista #rows-body').hasClass('modo-checadas')){
+				_get_lista_by_employee(_alter, _per,_ope,_dias);
+				return false;
+		  }//end if
+			if($('.frm-lista #rows-body').hasClass('modo-horas-extras')){
+				_get_horas_by_employee(_alter, _per,_ope,_dias);
+				return false;
+			}
 		}else{
 			return false;
 		}//end if
@@ -851,6 +994,8 @@ $(document).ready(function() {
 		_get_lista_page(_ope, _page, _dep, _per, _dias, function(data){
 			if (data.status =='ok' && data.html != undefined){
 				//console.log(data.html);
+				$('#rows-body-error.visible').fadeOut(150);
+				$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 				$('#rows-body-cargando.visible').fadeOut(150, function (){
 					$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 					$('#dia-cont').show();
@@ -941,6 +1086,38 @@ $(document).ready(function() {
 			return false;
 		}//end if
 	});
+	$(document).on('mouseleave','.frm-lista .data-item.ausentismos',function(){
+		$('.frm-lista .data-item.ausentismos .g .le-causa.visible').removeClass('visible').addClass('oculto');
+		$('.frm-lista .data-item.ausentismos .g .has-causa.oculto').removeClass('oculto').addClass('visible');
+	});
+	$(document).on('click','.frm-lista .data-item.ausentismos .g .has-causa.visible',function(){
+		var _g = $(this).parent();
+		var _v= $(this);
+
+		$('.frm-lista .data-item.ausentismos .g .has-causa.oculto').removeClass('oculto').addClass('visible');
+		$('.frm-lista .data-item.ausentismos .g .le-causa.visible').removeClass('visible').addClass('oculto');
+		_v.removeClass('visible').addClass('oculto');
+		_g.find('.le-causa').removeClass('oculto').addClass('visible');
+	});
+	$(document).on('click','.frm-lista .data-item.ausentismos .g .le-causa.visible',function(){
+		var _g = $(this).parent();
+		var _v= $(this);
+
+		$('.frm-lista .data-item.ausentismos .g .le-causa.visible').removeClass('visible').addClass('oculto');
+		_v.removeClass('visible').addClass('oculto');
+		_g.find('.has-causa').removeClass('oculto').addClass('visible');
+
+	});
+
+	$(document).on('mouseover', '.frm-lista #rows-body .cell-tooltip', function(){
+		var _tooltip = $(this);
+		_move_tooltip(_tooltip);
+	});
+	$(document).on('scroll', '.frm-lista #rows-body', function(){
+		//$('.frm-lista #rows-body .cell-tooltip')
+		//$('.frm-lista #rows-body .cell-tooltip').remove();
+	});
+
 
 	//-------------------------------------------------------
 	//fin de Ready DOCUMENT
@@ -1262,6 +1439,8 @@ function _get_horas_extras(_btn,_page){
 			alert('Los colaboradores de este departamento no generan horas extras...');
 
 			//console.log($('#rows-body-cargando.visible'));
+			$('#rows-body-error.visible').fadeOut(150);
+			$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 			$('#rows-body-cargando.visible').fadeOut(150, function (){
 				$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 				_btn.removeClass('active').addClass('unactive');
@@ -1273,6 +1452,8 @@ function _get_horas_extras(_btn,_page){
 			return false;
 		}//end if
 		if (data.status === "ok" && data.html != undefined){
+			$('#rows-body-error.visible').fadeOut(150);
+			$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 			$('#rows-body-cargando.visible').fadeOut(150, function (){
 				$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 				$('#dia-cont').show();
@@ -1308,6 +1489,8 @@ function _get_lista_by_employee(_emp, _per, _ope, _dias){
 	};
 	_jlista_post_proc( _params, function(data){
 		if (data.status === "ok" && data.html != undefined){
+			$('#rows-body-error.visible').fadeOut(150);
+			$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 			$('#rows-body-cargando.visible').fadeOut(150, function (){
 				$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 				$('#dia-cont').show();
@@ -1315,12 +1498,67 @@ function _get_lista_by_employee(_emp, _per, _ope, _dias){
 				//if($('#rows-body').hasClass('modo-checadas')) $('#rows-body').removeClass('modo-checadas').addClass('modo-horas-extras');
 				$('#rows-body').html(data.html).fadeIn(300);
 				$('#dia-cont').show();
+				_ctl.attr('data-actual', _page);
+				$('#frm-pagination-lab').html(_page  +"/" + data.pages );
+				return false;
 			});
-			_ctl.attr('data-actual', _page);
-			$('#frm-pagination-lab').html(_page  +"/" + data.pages );
+
+		}//end if
+		if(data.status === "error"){
+			$('#rows-body-cargando.visible').fadeOut(150);
+			$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+			$('#rows-body-error.oculto').fadeIn(150);
+			$('#rows-body-error.oculto').removeClass('oculto').addClass('visible');
+			_lista_callback_not_ok(data);
+				return false;
+
+
+		}//end if
+
+	});
+}
+
+function _get_horas_by_employee(_emp, _per, _ope, _dias){
+
+	$('#rows-body').hide();
+	$('#dia-cont').hide();
+	$('#rows-body-cargando').show();
+	$('#rows-body-cargando').removeClass('oculto').addClass('visible');
+	var _page = 1;
+	var _ctl = $('#frm-pagination-controls');
+	var _params = {
+			action:'get::horas::employee',
+			emp:_emp, per:_per, ope:_ope, dias:_dias
+	};
+	_jlista_post_proc( _params, function(data){
+		//console.log(data);
+		if (data.status === "ok" && data.html != undefined){
+			$('#rows-body-error.visible').fadeOut(150);
+			$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
+			$('#rows-body-cargando.visible').fadeOut(150, function (){
+				$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+				$('#dia-cont').show();
+				$('#rows-body').html('');
+				//if($('#rows-body').hasClass('modo-checadas')) $('#rows-body').removeClass('modo-checadas').addClass('modo-horas-extras');
+				$('#rows-body').html(data.html).fadeIn(300);
+				$('#dia-cont').show();
+				_ctl.attr('data-actual', _page);
+				$('#frm-pagination-lab').html(_page  +"/" + data.pages );
+				return false;
+			});
+
+		}//end if
+		if(data.status === "error"){
+			$('#rows-body-cargando.visible').fadeOut(150);
+			$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
+			$('#rows-body-error.oculto').fadeIn(150);
+			$('#rows-body-error.oculto').removeClass('oculto').addClass('visible');
+			_lista_callback_not_ok(data);
 			return false;
 		}//end if
-		_lista_callback_not_ok(data);
+		if(data.status == undefined){
+			_lista_callback_not_ok(data);
+	  }
 		return false;
 	});
 }
@@ -1343,6 +1581,8 @@ function _get_checadas(_page){
 
 	_get_lista_page(_ope, _page, _dep, _per,_dias, function(data){
 		if (data.status =='ok' && data.html != undefined){
+			$('#rows-body-error.visible').fadeOut(150);
+			$('#rows-body-error.visible').removeClass('visible').addClass('oculto');
 			$('#rows-body-cargando.visible').fadeOut(150, function (){
 				$('#rows-body-cargando.visible').removeClass('visible').addClass('oculto');
 				$('#dia-cont').show();
@@ -1404,6 +1644,56 @@ function _ordenar_divs($divs, _orden_tip, _orden_dir,_orden_sou, _dest,_callback
 		});
 		$(_dest).html(_divs_ordenados);
 		if (_callback) _callback();
+		return false;
+	}//end if
+}//end function
+
+
+function _show_tooltip(_cell){
+	$('.frm-lista #rows-body .cell-tooltip').remove();
+	if (_cell.hasClass('work')) return false;
+	var _per = _cell.parent().attr('data-periodo');
+	var _emp = _cell.parent().attr('data-employee');
+	var _cn = _cell.attr('data-cn');
+	var _top = _cell.offset().top;
+	var _left = _cell.offset().left;
+	var _params = {
+		action: 'get::lista::tooltip'
+		,per: _per
+		,emp: _emp
+		,cn: _cn
+	};
+	_jlista_post_proc(_params, function(data){
+		if(data.status === 'ok'){
+			var _tooltip = $(data.html);
+			//console.log(_tooltip);
+			$('.frm-lista #rows-body .cell-tooltip').remove();
+			$('.frm-lista #rows-body').append(_tooltip);
+			//console.log(_tooltip.width());
+			_tooltip.offset({top: (_top + 35), left: (_left - _tooltip.width() + 37)});
+			//_tooltip.show();
+		}else{
+			console.log(data);
+		}
+	})//end call function
+
+}//end function
+
+function _move_tooltip(_tooltip){
+	if(_tooltip.hasClass('abajo')){
+		_tooltip.removeClass('abajo').addClass('arriba');
+		_tooltip.find('.flecha-cont-up.visible').removeClass('visible').addClass('oculto');
+		_tooltip.find('.flecha-cont-down.oculto').removeClass('oculto').addClass('visible');
+		var _top = $('.frm-employees #rows-body .empl .cell.dia:focus').offset().top;
+		_tooltip.offset({top: (_top - 35)});
+		return false;
+	}//end if
+	if(_tooltip.hasClass('arriba')){
+		_tooltip.removeClass('arriba').addClass('abajo');
+		_tooltip.find('.flecha-cont-down.visible').removeClass('visible').addClass('oculto');
+		_tooltip.find('.flecha-cont-up.oculto').removeClass('oculto').addClass('visible');
+		var _top = $('.frm-employees #rows-body .empl .cell.dia:focus').offset().top;
+		_tooltip.offset({top: (_top + 35)});
 		return false;
 	}//end if
 }//end function

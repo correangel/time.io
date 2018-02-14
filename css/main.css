@@ -12,8 +12,8 @@ body {
  font-size: 1em;
 
   font-weight: 300;
-  overflow-y: hidden;
-  overflow-x: hidden;
+  overflow-y: auto;
+  overflow-x: auto;
   *---background: #333333 url('/imagenes/whitey.png') repeat;
 }
 
@@ -817,6 +817,12 @@ div.frm #frm-tabs .tab:hover,
 div.frm #frm-tools .tab:hover{
   background-color: rgba(40,40,40,.2);
 }
+
+div.frm #frm-tabs #btn-horas-extra.tab.active{
+  background-color: crimson;
+  border-right: 1px solid white;
+  color: white;
+}
 div.frm #frm-tabs .tab.active,
 div.frm #frm-tools .tab.active{
   background-color: rgba(40,40,40,.2);
@@ -937,16 +943,19 @@ div.frm #rows-head{
   background-color: rgba(80,80,80,1);
   width: calc(100% - 8px);
 }
+div.frm #rows-body-error,
 div.frm #rows-body-cargando{
   max-width: calc(100%);
   min-width: calc(100% - 8px);
   margin-top: 34px;
+  overflow: auto;
   overflow-x: hidden;
   overflow-y: scroll;
   box-sizing: border-box;
   height: calc(100% - 86px);
   color:lightgray;
 }
+div.frm #rows-body-error i.fa,
 div.frm #rows-body-cargando i.fa{
   margin-left: calc(50% - 15px);
   margin-top: calc(20% - 15px);
@@ -1044,6 +1053,12 @@ div.frm #rows-body .cell.dia.green{
 div.frm #rows-body .cell.dia.red{
   color:#ea465a;
 }
+div.frm #rows-body .cell.dia.transparent{
+  color:transparent;
+}
+div.frm #rows-body .cell.dia.transparent:focus{
+  color:transparent;
+}
 div.frm #rows-head .colm.last16,
 div.frm #rows-body .cell.last16{
   padding-left:8px;
@@ -1052,6 +1067,13 @@ div.frm #rows-body .cell.last16{
   text-align: left;
 }
 
+div.frm #rows-head .colm.last13,
+div.frm #rows-body .cell.last13{
+  padding-left:8px;
+  padding-right: 8px;
+  width: calc(70% - 495px - 60px - 24px + 34px + 34px);
+  text-align: left;
+}
 
 div.frm #rows-body .cell.ico{
 
@@ -2356,9 +2378,7 @@ div.frm #frm-tabs .input:hover span{
   outline: none;
   border:none;
   height: 25px;
-
   width: calc(100% - 20px);
-
   background-color: white;
 }
 .frm-employees #frm-table #frm-info{
@@ -2795,6 +2815,11 @@ div.frm #frm-tabs .input:hover span{
   line-height: 25px;
   border-bottom: 1px lightgray dashed;
   cursor: default;
+  cursor: pointer;
+}
+#dia-wrapper-content .data-item .le-causa{
+  background-color: #acea46;
+  height: 25px;
 }
 #dia-wrapper-content .data-item .g div.tipoB{
   width: 10%;
@@ -2802,6 +2827,11 @@ div.frm #frm-tabs .input:hover span{
 }
 #dia-wrapper-content .data-item .g div.tipoA{
   width: calc(30% - 10px);
+  padding-left: 10px;
+  text-align: Left;
+}
+#dia-wrapper-content .data-item .g div.causa{
+  width: calc(40% - 10px);
   padding-left: 10px;
   text-align: Left;
 }
@@ -3478,4 +3508,42 @@ opacity: .8;
 .capturas-completa .contenedor-50per #options .option:hover,
 .capturas-completa .contenedor #options .option:hover{
   background-color:lightgray;
+}
+
+.frm-lista #rows-body .cell-tooltip{
+  position: absolute;
+  z-index: 9999;
+  width: auto;
+}
+.frm-lista #rows-body .cell-tooltip .flecha-cont-down,
+.frm-lista #rows-body .cell-tooltip .flecha-cont-up{
+  width: 100%;
+  height: 5px;
+  line-height: 5px;
+  color: rgba(80,80,80, .9);
+}
+.frm-lista #rows-body .cell-tooltip .flecha-cont-down i.fa{
+  vertical-align: top;
+}
+.frm-lista #rows-body .cell-tooltip .flecha-cont-up i.fa{
+  vertical-align: bottom;
+}
+.frm-lista #rows-body .cell-tooltip .flecha-cont-down i.fa,
+.frm-lista #rows-body .cell-tooltip .flecha-cont-up i.fa{
+  position: absolute;
+  height: 4px;
+  line-height: 4px;
+  right: 15px;
+}
+.frm-lista #rows-body .cell-tooltip .txt{
+  width: auto;
+  background-color: rgba(80,80,80, .9);
+  color: white;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  vertical-align: middle;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 25px;
 }
