@@ -310,7 +310,7 @@ $(document).ready(function() {
 			console.log('procesando');
 			return false;
 		}//end if
-		console.log(_which);
+		//console.log(_which);
 		switch(_which){
 			case 13:case 27:
 				return false;
@@ -339,44 +339,58 @@ $(document).ready(function() {
 				var _cn = _cell.attr('data-cn');
 				if (_cn !== undefined){
 					_cell.addClass('procesando');
-					var _letra = String.fromCharCode(_which);
-					var _per = $('#set-periodo').attr('data-periodo');
-					//console.log(_per);
-					var _emp = _cell.attr('data-employee');
-					var _params = { action: 'delete::letra'
-												, letra: _letra
-												, emp: _emp
-												, per: _per
-												, cn: _cn};
-					_jlista_post_proc(_params, function(data){
-						if (data.status === 'ok') {
-							if(data.result === 1){
-								_cell.children('i').remove();
-								_cell.children('span').html(data.letra);
-								_cell.children('span').show();
-								var _color = _cell.attr('data-color');
-								_cell.attr('data-color', data.color);
-								_cell.removeClass(_color).addClass(data.color);
-								var _row = $('#rows-body .empl.row.selected');
-								_set_focus(_row ,1);
-								_cell.children('i').remove();
-								_cell.removeClass('procesando');
-							}else{
-								_cell.children('i').remove();
-								_cell.removeClass('procesando');
-								_cell.children('span').html(_valor_anterior);
-								_cell.children('span').show();
-								console.log(data.msg);
-							}//end if
+
+					_validar_atras(_cell, function(data){
+						//console.log(data);
+						if(data.result === 1){
+							var _letra = String.fromCharCode(_which);
+							var _per = $('#set-periodo').attr('data-periodo');
+							//console.log(_per);
+							var _emp = _cell.attr('data-employee');
+							var _params = { action: 'delete::letra'
+														, letra: _letra
+														, emp: _emp
+														, per: _per
+														, cn: _cn};
+							_jlista_post_proc(_params, function(data){
+								if (data.status === 'ok') {
+									if(data.result === 1){
+										_cell.children('i').remove();
+										_cell.children('span').html(data.letra);
+										_cell.children('span').show();
+										var _color = _cell.attr('data-color');
+										_cell.attr('data-color', data.color);
+										_cell.removeClass(_color).addClass(data.color);
+										var _row = $('#rows-body .empl.row.selected');
+										_set_focus(_row ,1);
+										_cell.children('i').remove();
+										_cell.removeClass('procesando');
+									}else{
+										_cell.children('i').remove();
+										_cell.removeClass('procesando');
+										_cell.children('span').html(_valor_anterior);
+										_cell.children('span').show();
+										console.log(data.msg);
+									}//end if
+								}else{
+									_cell.children('i').remove();
+									_cell.removeClass('procesando');
+									_cell.children('span').html(_valor_anterior);
+									_cell.children('span').show();
+									_lista_callback_not_ok(data);
+								}//end if
+
+							});
 						}else{
+							_show_dialog_error('Límite de días hacia atras alcanzado ...');
 							_cell.children('i').remove();
 							_cell.removeClass('procesando');
 							_cell.children('span').html(_valor_anterior);
 							_cell.children('span').show();
-							_lista_callback_not_ok(data);
+							return false;
 						}//end if
-
 					});
+
 				}else return;
 				break;
 
@@ -618,10 +632,10 @@ $(document).ready(function() {
 		}//end if
 	});
 
-	$(document).on('click', '#frm-lista #frm_employees #rows-body .empl .cell.dia',function(e){
-
+	/*$(document).on('click', '#frm-lista #frm_employees #rows-body .empl .cell.dia',function(e){
+		console.log('aqui');
 		e.preventDefault();
-		console.log(1);
+		//console.log(1);
 		var act = $(this);
 		var row = parseInt(act.parent().attr('id'));
 		var ind = parseInt(act.attr('tabindex'));
@@ -631,7 +645,7 @@ $(document).ready(function() {
 		act = null;
 		row = null;
 		ind = null;
-	});
+	});*/
 
 	$(document).on('click','#frm-lista #frm-tools div.tool',function(e){
 		e.preventDefault();
@@ -1696,6 +1710,27 @@ function _validar_letra(_cell, _which, _callback){
 		,cn: _cn
 		,anterior: _anterior
 		,letra: _letra
+		,emp: _emp
+	};
+	_jlista_post_proc(_params, function(data){
+		//console.log(data);
+		if(_callback) _callback(data);
+	});
+}// end function
+function _validar_atras(_cell, _callback){
+	var _ope = $('.frm-lista').attr('data-op');
+	var _per = $('#set-periodo').attr('data-periodo');
+	var _cn = _cell.attr('data-cn');
+	var _emp = _cell.parent().attr('data-employee');
+	//console.log(_cell);
+	var _anterior = _cell.find('span.border-interno').html().substring(0,1);
+	//var _letra = String.fromCharCode(_which);
+	_params = {
+		action: 'validar::atras::lista'
+		,ope: _ope
+		,per: _per
+		,cn: _cn
+		,anterior: _anterior
 		,emp: _emp
 	};
 	_jlista_post_proc(_params, function(data){

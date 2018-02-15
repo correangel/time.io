@@ -264,6 +264,41 @@
         $resp['msg'] = $msg;
         $resp['result'] = $result;
       }//end if
+
+    }elseif(isset($_POST['action'],$_POST['ope'],$_POST['anterior'], $_POST['emp'], $_POST['per'], $_POST['cn'])&& $_POST['action'] === 'validar::atras::lista') {
+      $id_operator = $_SESSION['id_operator'];
+      $ope = $_POST['ope'];
+      $anterior = $_POST['anterior'];
+      $emp = $_POST['emp'];
+      $per = $_POST['per'];
+      $cn = $_POST['cn'];
+      $result = 0;
+      $query = 'exec [tra].[proc_validar_dias_atras]   @emp = ?
+                                                    	,@per = ?
+                                                    	,@ope = ?
+                                                    	,@cn = ?
+                                                    	,@letra = ?
+                                                    	,@res = ?';
+
+      $params = array(array(&$emp, SQLSRV_PARAM_IN)
+                    , array(&$per, SQLSRV_PARAM_IN)
+                    , array(&$ope, SQLSRV_PARAM_IN)
+                    , array(&$cn, SQLSRV_PARAM_IN)
+                    , array(&$anterior, SQLSRV_PARAM_IN)
+                    , array(&$result, SQLSRV_PARAM_OUT));
+      //$stmt = $com->_create_stmt($cnn, $query, $params);
+      $stmt= sqlsrv_query($cnn, $query, $params);
+      if( $stmt === false ) {
+        $resp['status'] = 'error';
+        $resp['errores'] = sqlsrv_errors();
+        $resp['msg'] = '1. Error de Programación contacte al administrador del Sistema';
+        $resp['post'] = $_POST;
+      }else{
+        sqlsrv_next_result($stmt);
+        sqlsrv_free_stmt($stmt);
+        $resp['status'] = 'ok';
+        $resp['result'] = $result;
+      }//end if
     }elseif(isset($_POST['action'],$_POST['ope'],$_POST['anterior'],$_POST['letra'], $_POST['emp'], $_POST['per'], $_POST['cn'])&& $_POST['action'] === 'validar::letra::lista') {
 
       $id_operator = $_SESSION['id_operator'];
