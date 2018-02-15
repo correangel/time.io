@@ -264,14 +264,61 @@
         $resp['msg'] = $msg;
         $resp['result'] = $result;
       }//end if
+    }elseif(isset($_POST['action'],$_POST['ope'],$_POST['anterior'],$_POST['letra'], $_POST['emp'], $_POST['per'], $_POST['cn'])&& $_POST['action'] === 'validar::letra::lista') {
+
+      $id_operator = $_SESSION['id_operator'];
+      $ope = $_POST['ope'];
+      $anterior = $_POST['anterior'];
+      $letra = $_POST['letra'];
+      $emp = $_POST['emp'];
+      $per = $_POST['per'];
+      $cn = $_POST['cn'];
+      $result = 0;
+      $aus = '';
+      $msg = '';
+      $query = 'exec [tra].[proc_validar_candados_letra]   @letra_anterior = ?
+                                                        	,@per = ?
+                                                        	,@emp = ?
+                                                        	,@cn = ?
+                                                        	,@letra = ?
+                                                        	,@ope = ?
+                                                        	,@aus = ?
+                                                        	,@result = ?
+                                                        	,@msg = ?';
+
+      $params = array(array(&$anterior, SQLSRV_PARAM_IN)
+										, array(&$per, SQLSRV_PARAM_IN)
+                    , array(&$emp, SQLSRV_PARAM_IN)
+                    , array(&$cn, SQLSRV_PARAM_IN)
+                    , array(&$letra, SQLSRV_PARAM_IN)
+                    , array(&$ope, SQLSRV_PARAM_IN)
+                    , array(&$aus, SQLSRV_PARAM_OUT)
+                    , array(&$result, SQLSRV_PARAM_OUT)
+                    , array(&$msg, SQLSRV_PARAM_OUT));
+      //$stmt = $com->_create_stmt($cnn, $query, $params);
+      $stmt= sqlsrv_query($cnn, $query, $params);
+      if( $stmt === false ) {
+        $resp['status'] = 'error';
+        $resp['errores'] = sqlsrv_errors();
+        $resp['msg'] = '1. Error de Programación contacte al administrador del Sistema';
+        $resp['post'] = $_POST;
+      }else{
+        sqlsrv_next_result($stmt);
+        sqlsrv_free_stmt($stmt);
+        $resp['status'] = 'ok';
+        $resp['aus'] = $aus;
+        $resp['msg'] = $msg;
+        $resp['result'] = $result;
+      }//end if
+
     }elseif(isset($_POST['action'],$_POST['letra'], $_POST['emp'], $_POST['per'], $_POST['cn'])&& $_POST['action'] === 'insert::letra') {
       $id_operator = $_SESSION['id_operator'];
       $letra = $_POST['letra'];
       $emp = $_POST['emp'];
       $per = $_POST['per'];
       $cn = $_POST['cn'];
-      $result = 0;
-      $query = 'exec cat.proc_get_permiso_by_letra ?, ? ,?';
+
+      /*$query = 'exec cat.proc_get_permiso_by_letra ?, ? ,?';
 
       $params = array(array(&$letra, SQLSRV_PARAM_IN)
 										, array(&$id_operator, SQLSRV_PARAM_IN)
@@ -283,7 +330,7 @@
         $resp['status'] = 'error';
         $resp['errores'] = sqlsrv_errors();
         $resp['msg'] = '1. Error de Programación contacte al administrador del Sistema';
-
+        $resp['post'] = $_POST;
       }else{
         sqlsrv_next_result($stmt);
         sqlsrv_free_stmt($stmt);
@@ -304,7 +351,7 @@
           }else{
             sqlsrv_next_result($stmt);
             sqlsrv_free_stmt($stmt);
-            if($result == 1){
+            if($result == 1){*/
               $result = 0;
               $color = '';
               $msg = '';
@@ -356,7 +403,7 @@
                 $resp['msg'] = $msg;
                 $resp['result'] = $result;
               }//end if
-            }else{
+        /*    }else{
               $resp['status'] = 'error';
               $resp['letra'] = $letra;
               $resp['msg'] = 'Ha llegado al limite de calificaciones permitidas con la letra. ';
@@ -369,7 +416,7 @@
           $resp['post'] = $_POST;
         }//end if
 
-      }//end if
+      }//end if*/
     }elseif(isset($_POST['action'],$_POST['ope'])&&$_POST['action']==='get_departamentos_for_set'){
       $ope = $_POST['ope'];
       $query = 'exec cat.proc_get_departamentos_for_lista @ope = ?';

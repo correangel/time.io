@@ -287,7 +287,7 @@
 																class='fm bloque empl row'>
 															<div class='floL fm cell alter enlinea elli id'>".$value['_alter_id']."</div>
 															<div class='floL fm cell nombre enlinea elli name'>".$value['_nombres']." ". $value['_apellido_paterno']." ". $value['_apellido_materno'] ."</div>
-															<div class='floL fm cell posicion enlinea ".($c > 15 ? 'last16': ($c === 13? 'last13': 'last'))."'>".$value['_posicion_name']."</div>
+															<div class='floL fm cell posicion enlinea elli  ".($c > 15 ? 'last16': ($c === 13? 'last13': 'last'))."'>".$value['_posicion_name']."</div>
 															<div tabindex='1' class='der floL fm cell dia enlinea work waves-effect'><span class='fm tran-bez-5s border-interno'>". $value['_days'] ."</span></div>
 															<div tabindex='2'
 															 									data-color='".($create->_color_from_letra($cnn, $com, $value['_c01']))."' data-cn='_c01'

@@ -7,19 +7,9 @@ $(document).ready(function() {
 		//if (e.which > 57 || e.which < 47 || e.which === 8) return false;
 
 		switch (tecla) {
-			case 46:
-			case 47:
-			case 48:
-			case 49:
-			case 50:
-			case 51:
-			case 52:
-			case 53:
-			case 54:
-			case 55:
-			case 56:
-			case 57:
-			case 8:
+			case 48:case 49:case 50:case 51:case 52:case 53:case 54:case 55:case 56:case 57:
+			case 96:case 97:case 98:case 99:case 100:case 101:case 102:case 103:case 104:case 105:
+			case 46:case 8:
 				var _cell = $(this);
 				var _dad = _cell.parent();
 				var _ope = $('.frm-lista').attr('data-op');
@@ -54,31 +44,7 @@ $(document).ready(function() {
 					}//end if
 					if(data.status === "ok" && data.res === 0){
 						//alert(data.msg);
-						var _dialog;
-						var _option = {
-								autoOpen: false,
-								resizable: false,
-								height: 'auto',
-								maxHeight: 175,
-								width: 300,
-								modal: true,
-								show: { effect: 'drop', direction: 'up' },
-								hide: { effect: 'drop', direction: 'up' },
-								buttons: {
-									'Aceptar': function() {
-										_dialog.dialog( 'close');
-							}},close: function(){
-								_dialog.dialog('destroy').remove();
-								_dialog = 0;
-								_dialog = null;
-							}};
-							var _div = "<div title='Mov. no permitido' class='fn'>";
-										_div+= "<i style='width: 60px; text-align:center; height: 40px; line-height:40px; vertical-align:middle;' class='enlinea rojo floL fa fa-2x fa-exclamation-triangle'></i>";
-										_div+= "<div style='height: 40px; line-height:40px; vertical-align:middle;' class='enlinea floL fn'>"+data.msg+"</div>";
-									_div+= "</div>";
-							var $div = $(_div);
-							_dialog = $div.dialog(_option);
-							_dialog.dialog('open');
+						_show_dialog_error(data.msg);
 					}//
 					if(data.status === "error"){
 						_lista_callback_not_ok(data);
@@ -344,8 +310,11 @@ $(document).ready(function() {
 			console.log('procesando');
 			return false;
 		}//end if
-		//console.log(e.which);
+		console.log(_which);
 		switch(_which){
+			case 13:case 27:
+				return false;
+				break;
 			case 37: //left
 				move_cell_dia(row, ind-1);
 				break;
@@ -421,193 +390,207 @@ $(document).ready(function() {
 				_cell.children('span').hide();
 				_cell.append(_pulse);
 				//----------------------------------
-				var _cn = _cell.attr('data-cn');
-				if (_cn !== undefined){
-					_cell.addClass('procesando');
-					var _letra = String.fromCharCode(_which);
-					var _per = $('#set-periodo').attr('data-periodo');
-					var _params = { action: 'causa::letra'
-												, per : _per
-												, letra: _letra};
-					_jlista_post_proc(_params, function(data){
-						if (data.status ==='ok'){
-							if(data.result === 1){
-								//console.log(data);
-								var _dialog;
-						    var _option = {
-						        autoOpen: false,
-						        resizable: false,
-						        height: 'auto',
-										maxHeight: 175,
-						        width: 300,
-						        modal: true,
-						        show: { effect: 'drop', direction: 'up' },
-						        hide: { effect: 'drop', direction: 'up' },
-						        buttons: {
-						          'Cancelar': function() {
-						            _dialog.dialog( 'close');
+
+				_validar_letra(_cell, _which, function(data){
+					if(data.result === 0 ){
+						_show_dialog_error(data.msg);
+						_cell.children('i').remove();
+						_cell.removeClass('procesando');
+						_cell.children('span').html(_valor_anterior);
+						_cell.children('span').show();
+						return false;
+					}//end if
+
+					if(data.result === 1){
+						var _cn = _cell.attr('data-cn');
+						if (_cn !== undefined){
+							_cell.addClass('procesando');
+							var _letra = String.fromCharCode(_which);
+							var _per = $('#set-periodo').attr('data-periodo');
+							var _params = { action: 'causa::letra'
+														, per : _per
+														, letra: _letra};
+							_jlista_post_proc(_params, function(data){
+								if (data.status ==='ok'){
+									if(data.result === 1){
+										//console.log(data);
+										var _dialog;
+								    var _option = {
+								        autoOpen: false,
+								        resizable: false,
+								        height: 'auto',
+												maxHeight: 175,
+								        width: 300,
+								        modal: true,
+								        show: { effect: 'drop', direction: 'up' },
+								        hide: { effect: 'drop', direction: 'up' },
+								        buttons: {
+								          'Cancelar': function() {
+								            _dialog.dialog( 'close');
+														_cell.children('i').remove();
+														_cell.removeClass('procesando');
+														_cell.children('span').html(_valor_anterior);
+														_cell.children('span').show();
+								          },
+													'Aceptar': function() {
+														var _valid = true;
+														var _need_com = $('#sel-causa').children('option:selected').attr('data-comentarios');
+														var _need_fec = $('#sel-causa').children('option:selected').attr('data-requiere-fecha');
+														var _cau = $('select#sel-causa').val();
+														var _com = $('#causa-comentarios').val();
+														var _fec = $('#causa-fecha').val();
+														//--------------------------------------
+														// Descomentar para validar test
+														//--------------------------------------
+														//console.log(_fec); return false;
+														//--------------------------------------
+														if(_cau === undefined || _cau == 0 || _cau == '' ){
+															_valid = false;
+														}//end if
+														if (_need_com == 1 && _com.length == 0 ){
+															_valid = false;
+														}//end if
+														if (_need_fec == 1 && _fec.length == 0 ){
+															_valid = false;
+														}//end if
+
+
+														if(_valid === true){
+															var _per = $('#set-periodo').attr('data-periodo');
+															var _emp = _cell.attr('data-employee');
+
+															if(_need_com == 1 && _need_fec == 0){
+																var _params = { action: 'insert::letra'
+																							, letra: _letra
+																							, emp: _emp
+																							, per: _per
+																							, cn:  _cn
+																							, cau: _cau
+																							, coment: _com};
+															}//end if
+															if(_need_com == 0 && _need_fec == 1){
+																var _params = { action: 'insert::letra'
+																							, letra: _letra
+																							, emp: _emp
+																							, per: _per
+																							, cn:  _cn
+																							, cau: _cau
+																							, fec: _fec};
+															}//end if
+															if(_need_com == 1 && _need_fec == 1){
+																var _params = { action: 'insert::letra'
+																							, letra: _letra
+																							, emp: _emp
+																							, per: _per
+																							, cn:  _cn
+																							, cau: _cau
+																							, coment: _com
+																							, fec: _fec};
+															}//end if
+															if(_need_com == 0 && _need_fec == 0){
+																var _params = { action: 'insert::letra'
+																							, letra: _letra
+																							, emp: _emp
+																							, per: _per
+																							, cn:  _cn
+																							, cau: _cau };
+															}//end if
+															//console.log(_params);
+															_jlista_post_proc(_params, function(data){
+																if (data.status === 'ok') {
+																	if(data.result === 1){
+																		_cell.children('span').html(data.letra);
+																		_cell.children('i').remove();
+																		_cell.children('span').show();
+																		var _color = _cell.attr('data-color');
+																		_cell.attr('data-color', data.color);
+																		_cell.removeClass(_color).addClass(data.color);
+																		var _row = $('#rows-body .empl.row.selected');
+																		_set_focus(_row,1);
+																		_cell.removeClass('procesando');
+																	}else{
+																		_cell.children('i').remove();
+																		_cell.removeClass('procesando');
+																		_cell.children('span').html(_valor_anterior);
+																		_cell.children('span').show();
+																		console.log(data.msg);
+																	}//end if
+																}else{
+																	_cell.children('i').remove();
+																	_cell.removeClass('procesando');
+																	_cell.children('span').html(_valor_anterior);
+																	_cell.children('span').show();
+																	_lista_callback_not_ok(data);
+																}//end if
+															});
+								            	_dialog.dialog( 'close');
+														}else{
+															if (_cau === '') $('#sel-causa').css('border-color','crimson');
+															if (_com === '') $('#causa-comentarios').css('border-color','crimson');
+															if (_fec === '') $('#causa-fecha').css('border-color','crimson');
+														}//end if
+								          }//end Aceptar
+								        },
+								        close: function(){
+													_cell.children('i').remove();
+													_cell.removeClass('procesando');
+													//_cell.children('span').html(_valor_anterior);
+													_cell.children('span').show();
+													_dialog.dialog('destroy').remove();
+								          _dialog = 0;
+													_dialog = null;
+												}//end close
+								    };
+								    _dialog = $(data.html).dialog(_option);
+										_dialog.dialog('open');
+									}else{
+										var _per = $('#set-periodo').attr('data-periodo');
+										var _emp = _cell.attr('data-employee');
+										var _params = { action: 'insert::letra'
+																	, letra: _letra
+																	, emp: _emp
+																	, per: _per
+																	, cn: _cn};
+										_jlista_post_proc(_params, function(data){
+											if (data.status === 'ok') {
+												if(data.result === 1){
+													_cell.children('span').html(data.letra);
+													_cell.children('i').remove();
+													_cell.children('span').show();
+													var _color = _cell.attr('data-color');
+													_cell.attr('data-color', data.color);
+													_cell.removeClass(_color).addClass(data.color);
+													var _row = $('#rows-body .empl.row.selected');
+													_set_focus(_row,1);
+													_cell.removeClass('procesando');
+												}else{
+													_cell.children('i').remove();
+													_cell.removeClass('procesando');
+													_cell.children('span').html(_valor_anterior);
+													_cell.children('span').show();
+													console.log(data.msg);
+												}//end if
+											}else{
 												_cell.children('i').remove();
 												_cell.removeClass('procesando');
 												_cell.children('span').html(_valor_anterior);
 												_cell.children('span').show();
-						          },
-											'Aceptar': function() {
-												var _valid = true;
-												var _need_com = $('#sel-causa').children('option:selected').attr('data-comentarios');
-												var _need_fec = $('#sel-causa').children('option:selected').attr('data-requiere-fecha');
-												var _cau = $('select#sel-causa').val();
-												var _com = $('#causa-comentarios').val();
-												var _fec = $('#causa-fecha').val();
-												//--------------------------------------
-												// Descomentar para validar test
-												//--------------------------------------
-												//console.log(_fec); return false;
-												//--------------------------------------
-												if(_cau === undefined || _cau == 0 || _cau == '' ){
-													_valid = false;
-												}//end if
-												if (_need_com == 1 && _com.length == 0 ){
-													_valid = false;
-												}//end if
-												if (_need_fec == 1 && _fec.length == 0 ){
-													_valid = false;
-												}//end if
-
-
-												if(_valid === true){
-													var _per = $('#set-periodo').attr('data-periodo');
-													var _emp = _cell.attr('data-employee');
-
-													if(_need_com == 1 && _need_fec == 0){
-														var _params = { action: 'insert::letra'
-																					, letra: _letra
-																					, emp: _emp
-																					, per: _per
-																					, cn:  _cn
-																					, cau: _cau
-																					, coment: _com};
-													}//end if
-													if(_need_com == 0 && _need_fec == 1){
-														var _params = { action: 'insert::letra'
-																					, letra: _letra
-																					, emp: _emp
-																					, per: _per
-																					, cn:  _cn
-																					, cau: _cau
-																					, fec: _fec};
-													}//end if
-													if(_need_com == 1 && _need_fec == 1){
-														var _params = { action: 'insert::letra'
-																					, letra: _letra
-																					, emp: _emp
-																					, per: _per
-																					, cn:  _cn
-																					, cau: _cau
-																					, coment: _com
-																					, fec: _fec};
-													}//end if
-													if(_need_com == 0 && _need_fec == 0){
-														var _params = { action: 'insert::letra'
-																					, letra: _letra
-																					, emp: _emp
-																					, per: _per
-																					, cn:  _cn
-																					, cau: _cau };
-													}//end if
-													//console.log(_params);
-													_jlista_post_proc(_params, function(data){
-														if (data.status === 'ok') {
-															if(data.result === 1){
-																_cell.children('span').html(data.letra);
-																_cell.children('i').remove();
-																_cell.children('span').show();
-																var _color = _cell.attr('data-color');
-																_cell.attr('data-color', data.color);
-																_cell.removeClass(_color).addClass(data.color);
-																var _row = $('#rows-body .empl.row.selected');
-																_set_focus(_row,1);
-																_cell.removeClass('procesando');
-															}else{
-																_cell.children('i').remove();
-																_cell.removeClass('procesando');
-																_cell.children('span').html(_valor_anterior);
-																_cell.children('span').show();
-																console.log(data.msg);
-															}//end if
-														}else{
-															_cell.children('i').remove();
-															_cell.removeClass('procesando');
-															_cell.children('span').html(_valor_anterior);
-															_cell.children('span').show();
-															_lista_callback_not_ok(data);
-														}//end if
-													});
-						            	_dialog.dialog( 'close');
-												}else{
-													if (_cau === '') $('#sel-causa').css('border-color','crimson');
-													if (_com === '') $('#causa-comentarios').css('border-color','crimson');
-													if (_fec === '') $('#causa-fecha').css('border-color','crimson');
-												}//end if
-						          }//end Aceptar
-						        },
-						        close: function(){
-											_cell.children('i').remove();
-											_cell.removeClass('procesando');
-											//_cell.children('span').html(_valor_anterior);
-											_cell.children('span').show();
-											_dialog.dialog('destroy').remove();
-						          _dialog = 0;
-											_dialog = null;
-										}//end close
-						    };
-						    _dialog = $(data.html).dialog(_option);
-								_dialog.dialog('open');
-							}else{
-								var _per = $('#set-periodo').attr('data-periodo');
-								var _emp = _cell.attr('data-employee');
-								var _params = { action: 'insert::letra'
-															, letra: _letra
-															, emp: _emp
-															, per: _per
-															, cn: _cn};
-								_jlista_post_proc(_params, function(data){
-									if (data.status === 'ok') {
-										if(data.result === 1){
-											_cell.children('span').html(data.letra);
-											_cell.children('i').remove();
-											_cell.children('span').show();
-											var _color = _cell.attr('data-color');
-											_cell.attr('data-color', data.color);
-											_cell.removeClass(_color).addClass(data.color);
-											var _row = $('#rows-body .empl.row.selected');
-											_set_focus(_row,1);
-											_cell.removeClass('procesando');
-										}else{
-											_cell.children('i').remove();
-											_cell.removeClass('procesando');
-											_cell.children('span').html(_valor_anterior);
-											_cell.children('span').show();
-											console.log(data.msg);
-										}//end if
-									}else{
-										_cell.children('i').remove();
-										_cell.removeClass('procesando');
-										_cell.children('span').html(_valor_anterior);
-										_cell.children('span').show();
-										_lista_callback_not_ok(data);
+												_lista_callback_not_ok(data);
+											}//end if
+										});
 									}//end if
-								});
-							}//end if
-						}else{
-							_cell.children('i').remove();
-							_cell.removeClass('procesando');
-							_cell.children('span').html(_valor_anterior);
-							_cell.children('span').show();
-							_lista_callback_not_ok(data);
-						}//end if
-					});
-				}else	return;
-				break;
+								}else{
+									_cell.children('i').remove();
+									_cell.removeClass('procesando');
+									_cell.children('span').html(_valor_anterior);
+									_cell.children('span').show();
+									_lista_callback_not_ok(data);
+								}//end if
+							});
+						}else	return;
+					}//end if
+			});
+			break;
 		}//end switch
 
 		act = null;
@@ -1697,3 +1680,54 @@ function _move_tooltip(_tooltip){
 		return false;
 	}//end if
 }//end function
+
+function _validar_letra(_cell, _which, _callback){
+	var _ope = $('.frm-lista').attr('data-op');
+	var _per = $('#set-periodo').attr('data-periodo');
+	var _cn = _cell.attr('data-cn');
+	var _emp = _cell.parent().attr('data-employee');
+	//console.log(_cell);
+	var _anterior = _cell.find('span.border-interno').html().substring(0,1);
+	var _letra = String.fromCharCode(_which);
+	_params = {
+		action: 'validar::letra::lista'
+		,ope: _ope
+		,per: _per
+		,cn: _cn
+		,anterior: _anterior
+		,letra: _letra
+		,emp: _emp
+	};
+	_jlista_post_proc(_params, function(data){
+		//console.log(data);
+		if(_callback) _callback(data);
+	});
+}// end function
+
+function _show_dialog_error(_msg){
+	var _dialog;
+	var _option = {
+			autoOpen: false,
+			resizable: false,
+			height: 'auto',
+			maxHeight: 175,
+			width: 450,
+			modal: true,
+			show: { effect: 'drop', direction: 'up' },
+			hide: { effect: 'drop', direction: 'up' },
+			buttons: {
+				'Aceptar': function() {
+					_dialog.dialog( 'close');
+		}},close: function(){
+			_dialog.dialog('destroy').remove();
+			_dialog = 0;
+			_dialog = null;
+		}};
+		var _div = "<div title='Mov. no permitido' class='fn'>";
+					_div+= "<i style='width: 60px; text-align:center; height: 40px; line-height:40px; vertical-align:middle;' class='enlinea rojo floL fa fa-2x fa-exclamation-triangle'></i>";
+					_div+= "<div style='height: 40px; line-height:40px; vertical-align:middle;' class='enlinea floL fn'>"+_msg+"</div>";
+				_div+= "</div>";
+		var $div = $(_div);
+		_dialog = $div.dialog(_option);
+		_dialog.dialog('open');
+}
