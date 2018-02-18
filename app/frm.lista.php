@@ -425,6 +425,7 @@
 															</div>
 															<div class='fn head'>
 																	<div class='fm floL enlinea tab active'>Ausentismos</div>
+																	<div class='fm floL enlinea btn active'><i class='fa fa-1x fa-plus-circle'></i></div>
 															</div>
 														</div>
 													</div>

@@ -274,7 +274,7 @@ $(document).ready(function() {
 					var _row = _cell.parent();
 					var _id = _row.attr('data-employee');
 					_load_img_col(_id, function(){
-						var _pos = _row.children('div.last').html() || _row.children('div.last16').html();
+						var _pos = _row.children('div.last').html() || _row.children('div.last13').html()|| _row.children('div.last16').html();
 						var _col = _row.children('div.id').html() + ' - ' + _row.children('div.name').html()  + ' - ' + _pos;
 						$('#dia-wrapper-head #dia-wrapper-title').html(_col);
 						_set_focus(_row);
@@ -1003,7 +1003,7 @@ $(document).ready(function() {
 					var _row = $('#rows-body').children('.empl.row').first();
 					var _id = _row.data('employee');
 					_load_img_col(_id, function(){
-						var _pos = _row.children('div.last').html() || _row.children('div.last16').html();
+						var _pos = _row.children('div.last').html()|| _row.children('div.last13').html() || _row.children('div.last16').html();
 						var _col = _row.children('div.id').html() + ' - ' + _row.children('div.name').html()  + ' - ' + _pos;
 						$('#dia-wrapper-head #dia-wrapper-title').html(_col);
 						_set_focus(_row);
