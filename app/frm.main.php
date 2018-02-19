@@ -45,6 +45,7 @@
 			<title>Time.io - Main</title>
 			<link rel="shortcut icon" href="/favicon.ico?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/favicon.ico');?>" />
 			<link rel="icon" href="/favicon.ico?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/favicon.ico');?>" />
+
 			<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css"/>
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/animaciones.css" />
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/jquery-ui.css">
@@ -55,9 +56,11 @@
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/waves.css">
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/jstree/style.min.css">
 
+
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/style.tarjeta.css?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/css/style.tarjeta.css');?>"/>
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/style.rep-generales.css?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/css/style.rep-generales.css');?>"/>
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/style.has-options.css?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/css/style.has-options.css');?>"/>
+
 
 			<script src="/scripts/jquery.min.js"></script>
 			<script src="/scripts/particles.min.js"></script>
@@ -69,6 +72,7 @@
 			<script src="/scripts/libs/FileSaver.min.js"></script>
 			<script src="/scripts/libs/jspdf.min.js"></script>
 
+
 			<script src="/scripts/jquery.main.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.main.js');?>"></script>
 			<script src="/scripts/jquery.list.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.list.js');?>"></script>
 			<script src="/scripts/jquery.usuarios.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.usuarios.js');?>"></script>
@@ -79,6 +83,9 @@
 			<script src="/scripts/jquery.rep-generales.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.rep-generales.js');?>"></script>
 			<script src="/scripts/jquery.has-options.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.has-options.js');?>"></script>
 
+			<link rel="stylesheet" type="text/css" media="screen" href="/scripts/jquery.bootgrid.css">
+			<script src="/scripts/jquery.bootgrid.js"></script>
+			<script src="/scripts/jquery.bootgrid.fa.js"></script>
 		</head>
 		<body class='main oculto' data-lifetime='<?php echo $lifetime * 60000; ?>'>
 			<div id="wrapper" class="completo">
