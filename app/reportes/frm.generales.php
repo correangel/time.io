@@ -88,6 +88,41 @@
 
               $html.= "<div id='select-opt' class='fn enlinea floL boxshadow'>";
 								$html.= "<div id='filters-cont' class='fn bloque'>";
+
+								//---------------------------------------------
+								$html.= "<div class='gpo fn bloque'>";
+									$html.= "<div class='ico fn enlinea floL'>
+														<i class='fa fa-1x fa-bar-chart'></i>
+													</div>";
+									$html.= "<div class='inp fn enlinea floL'>";
+										$html.="<div id='cont-tipo' class='fn floL has-options contenedor enlinea closed'>";
+											$html.="<div tabindex='0' id='cont-roles-title' class='fn title bloque' data-parent='#cont-tipo'>";
+											 $html.="<div id='txt' class='fn floL enlinea' data-parent='#cont-tipo'>
+																<input id='id-tipo' data-id=''  type='text' class='toupper fn integrado' data-parent='#cont-tipo' />
+															</div>";
+											 $html.="<div tabindex='0' id='ico' class='fn floL enlinea' data-parent='#cont-tipo'><i class='fa fa-1x fa-ellipsis-h' data-parent='#cont-tipo'></i></div>";
+											$html.="</div>";
+											$html.="<div id='options' class='fn select bloque thin-scroll oculto' data-parent='#cont-tipo'>";
+
+
+													$html.= "<div data-id='rep-ausentismos'
+																					class='fn option bloque'
+																					data-label='Ausentismos'
+																					data-parent='#cont-tipo'>REPORTE AUSENTISMOS</div>";
+													$html.= "<div data-id='rep-horas-extras'
+																					class='fn option bloque'
+																					data-label='HorasExtras'
+																					data-parent='#cont-tipo'>REPORTE HORAS EXTRAS</div>";
+													$html.= "<div data-id='rep-jornadas'
+																					class='fn option bloque'
+																					data-label='Jornadas'
+																					data-parent='#cont-tipo'>REPORTE JORNADAS</div>";
+
+											$html.="</div>";
+										$html.="</div>";
+
+									$html.= "</div>";
+							$html.= "</div>"; //gpo
 										//---------------------------------------------
 										$html.= "<div class='gpo fn bloque'>";
 											$html.= "<div class='ico fn enlinea floL'>
@@ -168,7 +203,7 @@
 
 								//---------------------------------------------
 								//[cat].[proc_get_ausentismos_rep]
-								$html.= "<div class='gpo fn bloque'>";
+								$html.= "<div class='gpo fn bloque ausentismos oculto'>";
 									$html.= "<div class='ico fn enlinea floL'>
 														<i class='fa fa-1x fa-calendar-check-o'></i>
 													</div>";
@@ -289,11 +324,11 @@
 							$html.= "<div id='select-datos' class='fn enlinea floL boxshadow '>";
 								$html.= "<div id='results-cont' class='fn bloque'>";
 
-									
+
 								$html.= "</div>";//btn-cont
 								$html.= "<div id='btn-cont' class='fn bloque'>";
-									$html.= "<div id='status-bar' class='fn enlinea floL'>Registros:</div>";
-									$html.= "<button id='btn-excel' class='fn btn enlinea floL waves-effect'> <i class='fa fa-1x fa-file-excel-o'></i> Exportar Excel</button>";
+									$html.= "<div id='status-bar' class='fn enlinea floL'><span class='label fn'>Registros: </span><span class='count fn'></span> </div>";
+									$html.= "<button id='btn-excel' data-filename='Reporte-General' data-target='rep-grid' class='fn btn enlinea floL waves-effect'> <i class='fa fa-1x fa-file-excel-o'></i> Exportar Excel</button>";
 									$html.= "<button id='btn-pdf' class='fn btn enlinea floL waves-effect'> <i class='fa fa-1x fa-file-pdf-o'></i> Exportar PDF</button>";
 								$html.= "</div>";//btn-cont
               $html.= "</div>";//select-datos

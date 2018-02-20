@@ -62,14 +62,15 @@ $(document).ready(function(){
 
 
   $(document).on('click', '#btn-cont > #btn-generar', function(){
-
-
     var _btn = $(this);
     if (_btn.hasClass('procesando')) return false;
     _btn.find('i.fa').removeClass('fa-bolt').addClass('fa-spinner fa-pulse');
     _btn.addClass('procesando');
     $('.frm-rep-generales #results-cont').html('');
+    if($('input#_alter_id').val() === '') $('input#_alter_id').attr('data-id','*');
+
     var _ope = $('.frm-rep-generales').attr('data-ope');
+    var _tip = $('#cont-tipo input#id-tipo').attr('data-id');
     var _aus = $('#cont-ausentismo input#id-ausentismo').attr('data-id');
     var _dep = $('#cont-deptos input#id-depto').attr('data-id');
     var _ini = $('#combo-fechas #inp-ini').val();
@@ -91,6 +92,7 @@ $(document).ready(function(){
     //console.log(_ope);
     var _params = {
       action : 'rep-generales::exec::report'
+      ,tip: _tip
       ,ope: _ope
       ,aus: _aus
       ,dep: _dep
@@ -103,15 +105,40 @@ $(document).ready(function(){
       if(data.status === 'ok'){
 
         $('.frm-rep-generales #results-cont').html(data.table);
+        $('.frm-rep-generales #status-bar span.count').html(data.count);
+
         // $('table#rep-grid').bootgrid();
         //$('.frm-rep-generales #results-cont #last-cont').append(data.head);
         //$('.frm-rep-generales #results-cont #last-cont').append(data.body);
         _btn.find('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-bolt');
         _btn.removeClass('procesando');
       }else{
+        $('.frm-rep-generales #results-cont').html('');
+        $('.frm-rep-generales #status-bar span.count').html('0');
+        _btn.find('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-bolt');
+        _btn.removeClass('procesando');
         _rep_procedure_error(data);
-      }
+      }//end if
+
     });
+  });
+  $(document).on('click', '.frm-rep-generales #btn-excel', function(){
+    //----------------------------------------------
+    //if(_is_not_tarjeta())return false;
+    //----------------------------------------------
+    var _btn = $(this);
+    var _target = _btn.attr('data-target');
+
+    if($("#"+_target).length===0) return false;
+
+    var _filename = _btn.attr('data-filename');
+    excel = new ExcelGen({
+        "src_id": _target,
+        "show_header": true
+    });
+    excel.generate(_filename);
+    excel = null;
+    return false;
   });
   $(document).on('click', '.frm-rep-generales button#buscar-emp',function(e){
     //----------------------------------------------
@@ -186,6 +213,15 @@ $(document).ready(function(){
     _rep_set_employee(_row);
     //$('.frm-rep-generales #tarjeta-data').fadeOut(300).removeClass('visible').addClass('oculto');
   });
+  $(document).on('click', '.frm-rep-generales #cont-tipo #options .option', function(){
+    var _id = $(this).attr('data-id');
+    if(_id === 'rep-ausentismos'){
+      $('.gpo.ausentismos.oculto').removeClass('oculto').addClass('visible');
+    }else{
+      $('.gpo.ausentismos.visible').removeClass('visible').addClass('oculto');
+    }//end if
+  });
+
 //end ready document
 });
 function _rep_set_employee(_row){
