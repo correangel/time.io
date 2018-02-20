@@ -106,10 +106,6 @@ $(document).ready(function(){
 
         $('.frm-rep-generales #results-cont').html(data.table);
         $('.frm-rep-generales #status-bar span.count').html(data.count);
-
-        // $('table#rep-grid').bootgrid();
-        //$('.frm-rep-generales #results-cont #last-cont').append(data.head);
-        //$('.frm-rep-generales #results-cont #last-cont').append(data.body);
         _btn.find('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-bolt');
         _btn.removeClass('procesando');
       }else{
