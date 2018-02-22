@@ -113,7 +113,7 @@
 					//print_r($sam);
 					//$members = $sam;
 					$info['sama'] = $sam[0]['samaccountname'][0];
-					$info['name'] = $sam[0]['givenname'][0].' '.$sam[0]['sn'][0];
+					//$info['name'] = $sam[0]['givenname'][0].' '.$sam[0]['sn'][0];
 					$info['dn'] = $sam[0]['dn'];
 
 					array_push($members['info'] ,$info);

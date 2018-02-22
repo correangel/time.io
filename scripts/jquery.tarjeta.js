@@ -254,7 +254,7 @@ $(document).ready(function(){
       //----------------------------------------------
       if(_is_not_tarjeta())return false;
       //----------------------------------------------
-      console.log(1);
+      //console.log(1);
       var _btn = $(this);
 
       var _clon = $('.frm-tarjeta').clone();
@@ -266,7 +266,7 @@ $(document).ready(function(){
       // _clon.find('i.fa').remove();
       _clon.find('#tarjeta-data-tabs').remove();
       _clon.find('#tarjeta-data-rows').css("width"," calc(100% - 20px)");
-      _clon.find('#select-datos').css("width", "calc(100% - 401px");
+      _clon.find('#select-datos').css("width", "calc(100% - 401px)");
       _clon.find('button').remove();
       _clon.find('#select-pic').remove();
 
@@ -274,6 +274,7 @@ $(document).ready(function(){
         importCSS: true,
         importStyle: false,
         loadCSS:[ "css/style.tarjeta.css" , "css/main.css", "css/style.has-options.css"]
+        ,printDelay:1000
       });
 
       //∫console.log($("#"+_target)[0]);

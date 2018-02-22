@@ -182,6 +182,25 @@ $(document).ready(function(){
     excel = null;
     return false;
   });
+
+  $(document).on('click', '.frm-rep-generales #btn-pdf', function(){
+    //----------------------------------------------
+    //if(_is_not_tarjeta())return false;
+    //----------------------------------------------
+    var _btn = $(this);
+    var _clon = $('#rep-grid').clone();
+
+    _clon.find('thead tr').css('background-color', 'blue');
+    _clon.find('thead tr').css('color', 'white');
+    _clon.find('tbody tr').css('background-color', 'white');
+    _clon.find('tbody tr').css('color', 'black');
+    _clon.printThis({
+      importCSS: true,
+      importStyle: true,
+      loadCSS:[ "css/style.rep-generales.css" , "css/main.css", "css/style.has-options.css"]
+      ,printDelay:1000
+    });
+  });
   $(document).on('click', '.frm-rep-generales button#buscar-emp',function(e){
     //----------------------------------------------
     //if(_is_not_tarjeta())return false;
