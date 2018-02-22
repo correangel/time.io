@@ -398,7 +398,7 @@
 																<div class='datos fs oculto'></div>
 															</div>
 															<div class='fn head'>
-																	<div data-action='informacion' class='fm btn-more floL enlinea'><i class='fa fa-1x fa-plus'></i></div>
+																	<!--<div data-action='informacion' class='fm btn-more floL enlinea'><i class='fa fa-1x fa-plus'></i></div>!-->
 																	<div class='fm floL enlinea'>Información</div>
 															</div>
 														</div>
@@ -425,7 +425,7 @@
 															</div>
 															<div class='fn head'>
 																	<div class='fm floL enlinea tab active'>Ausentismos</div>
-																	<div class='fm floL enlinea btn active'><i class='fa fa-1x fa-plus-circle'></i></div>
+																	<div id='btn-ausentismos-expand' class='fm floL enlinea btn active'><i class='fa fa-1x fa-expand'></i></div>
 															</div>
 														</div>
 													</div>

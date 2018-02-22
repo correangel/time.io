@@ -136,6 +136,58 @@
         $resp['errores'] = sqlsrv_errors();
         $resp['msg'] = '1. Error de Programación contacte al administrador del Sistema';
       }//end if
+    }elseif (isset($_POST['action'],$_POST['emp'],$_POST['per'],$_POST['alter'] )&& $_POST['action'] === 'lista::expand::ausentismos') {
+      $emp = $_POST['emp'];
+      $per = $_POST['per'];
+      $alter = $_POST['alter'];
+      $query = 'exec tra.proc_get_ausentismos_by_employee_expand @per = ?, @emp = ?';
+      $params = array(array(&$per,SQLSRV_PARAM_IN),array(&$emp,SQLSRV_PARAM_IN));
+      if($stmt = sqlsrv_query($cnn, $query, $params)){
+        $c=0;
+        $table= "<table title='Detalle Ausentismos [$alter]' id='rep-grid-ausentismos' class='fs table table-condensed table-hover table-striped'>
+                        <thead class='fs'><tr>
+                          <th class='fs oculto' data-column-id='IDTraAusentismo' >IDTraAusentismo</th>
+                          <th class='fs' data-column-id='Codigo' data-type='numeric' data-order='asc'>Codigo</th>
+                          <th class='fs' data-column-id='FechaAusentismo' >FechaAusentismo</th>
+                          <th class='fs' data-column-id='Letra' >Letra</th>
+                          <th class='fs' data-column-id='DescripcionAusentismo' >DescripcionAusentismo</th>
+                          <th class='fs' data-column-id='Causa' >Causa</th>
+                          <th class='fs' data-column-id='FechaCaptura' >FechaCaptura</th>
+                          <th class='fs' data-column-id='UsuarioCaptura' >UsuarioCaptura</th>
+                          <th class='fs' data-column-id='Comentarios' >Comentarios</th>
+                          <th class='fs' data-column-id='FechaTomada' >FechaTomada</th>
+                     </tr></thead>
+                  <tbody class='fs'>";
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+          $c++;
+          $table.= "<tr class='fs' >
+                    <td class='fs oculto'>".$row['IDTraAusentismo']."</td>
+                    <td class='fs'>".$row['Codigo']."</td>
+                    <td class='fs'>".$row['FechaAusentismo']."</td>
+                    <td class='fs'>".$row['Letra']."</td>
+                    <td class='fs'>".$row['DescripcionAusentismo']."</td>
+                    <td class='fs'>".$row['Causa']."</td>
+                    <td class='fs'>".$row['FechaCaptura']."</td>
+                    <td class='fs'>".$row['UsuarioCaptura']."</td>
+                    <td class='fs'>".$row['Comentarios']."</td>
+                    <td class='fs'>".$row['FechaTomada']."</td>
+                </tr>";
+        }// end while
+        $table.= "</tbody></table>";
+        sqlsrv_free_stmt($stmt);
+        $resp['status'] = 'ok';
+        $resp['table'] = $table;
+        $resp['count'] = $c;
+        //$resp['body'] = $body;
+        //$resp['head'] = $head;
+        $resp['post'] = $_POST;
+      }else{
+        $resp['status'] = 'error';
+        $resp['errores'] = sqlsrv_errors();
+        $resp['post'] = $_POST;
+        $resp['msg'] = '1. Error de Programación contacte al administrador del Sistema';
+      }//end if
+
     }elseif (isset($_POST['action'],$_POST['emp'],$_POST['per'],$_POST['cn'] )&& $_POST['action'] === 'get::cn') {
       $emp = $_POST['emp'];
       $per = $_POST['per'];

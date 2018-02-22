@@ -48,7 +48,7 @@
           $resp['error'] = sqlsrv_errors();
           $resp['msg'] = 'error sql...';
           $resp['post'] = $_POST;
-      
+
       };
     }elseif(isset($_POST['action'],$_POST['emp'],$_POST['per'])&&$_POST['action']==='get::data::asistencia'){
       $emp = $_POST['emp'];
@@ -65,7 +65,7 @@
       $resp['hora_head'] = '';
       //---------------------------------
       $tablas='';
-      $pdfs='';
+      //$pdfs='';
       $resp['post'] = $_POST;
       $query = "exec tra.proc_get_info_employee_for_tarjeta @per = ?, @emp = ? ";
       $params= array(array(&$per, SQLSRV_PARAM_IN)
@@ -145,7 +145,7 @@
                     ,array(&$emp, SQLSRV_PARAM_IN));
       if($stmt = $com->_create_stmt($cnn, $query, $params)){
 
-        $pdfs .= "<div id='pdf-asis'>" . $header_pdf. "</div>";
+        //$pdfs .= "<div id='pdf-asis'>" . $header_pdf. "</div>";
         $tablas.= "<table id='tabla-asis'>
                     <thead><tr>
                       <th>Periodo</th>
@@ -348,10 +348,80 @@
           echo json_encode($resp);
           return;
         }//end if
+      }//end if
 
-      }//endif
+      $query = "exec tra.proc_get_horas_extras_tarjeta @emp = ?, @per = ?";
+      $params= array(array(&$emp, SQLSRV_PARAM_IN)
+                    ,array(&$per, SQLSRV_PARAM_IN));
+      if($stmt = $com->_create_stmt($cnn, $query, $params)){
+        $tablas.= "<table id='tabla-hora'>
+                    <thead><tr>
+                      <th>Periodo</th>
+                      <th>Codigo</th>
+                      <th>Nombre</th>
+                      <th>Ingreso</th>
+                      <th>Clase</th>
+                      <th>Posicion</th>
+                      <th>PosicionDesc</th>
+                      <th>Departamento</th>
+                      <th>DepartamentoDesc</th>
+                      <th>Fecha</th>
+                      <th>Horas</th>
+                      <th>FechaCaptura</th>
+                      <th>UsuarioCaptura</th>
+                    </tr></thead>";
+
+        $resp['hora_head'].= "<div class='fn head'>
+                                <div class='fn enlinea oculto to-excel'>Periodo</div>
+                                <div class='fn enlinea oculto to-excel'>Codigo</div>
+                                <div class='fn enlinea oculto to-excel'>Nombre</div>
+                                <div class='fn enlinea oculto to-excel'>Ingreso</div>
+                                <div class='fn enlinea oculto to-excel'>Clase</div>
+                                <div class='fn enlinea oculto to-excel'>Posicion</div>
+                                <div class='fn enlinea oculto to-excel'>PosicionDesc</div>
+                                <div class='fn enlinea oculto to-excel'>Departamento</div>
+                                <div class='fn enlinea oculto to-excel'>DepartamentoDesc</div>
+                                <div style='width:calc(20% - 40px);' class='fn cell enlinea floL to-excel'>Fecha</div>
+                                <div style='width:calc(20% - 40px);' class='fn cell enlinea floL to-excel'>Horas</div>
+                                <div style='width:calc(30% - 40px);' class='fn cell enlinea floL to-excel'>FechaCaptura</div>
+                                <div style='width:calc(30% - 40px);' class='fn cell enlinea floL to-excel'>UsuarioCaptura</div>
+                              </div>";
+        $tablas.= "<tbody>";
+        while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+          $tablas.= "<tr>
+                        ".$ocultos_tabla."
+                        <td>".$row['Fecha']."</td>
+                        <td>".$row['Horas']."</td>
+                        <td>".$row['FechaCaptura']."</td>
+                        <td>".$row['UsuarioCaptura']."</td>
+
+                      </tr>";
+          $resp['hora_rows'].= "<div class='fn row'>
+                                  ".$ocultos."
+                                  <div style='width:calc(20% - 40px);' class='fn cell floL enlinea to-excel'>".$row['Fecha']."</div>
+                                  <div style='width:calc(20% - 40px);' class='fn cell floL enlinea to-excel'>".$row['Horas']."</div>
+                                  <div style='width:calc(30% - 40px);' class='fn cell floL enlinea to-excel'>".$row['FechaCaptura']."</div>
+                                  <div style='width:calc(30% - 40px);' class='fn cell floL enlinea to-excel'>".$row['UsuarioCaptura']."</div>
+                                </div>";
+        }//end while
+        $tablas.= "</tbody></table>";
+        sqlsrv_free_stmt($stmt);
+      }else{
+         if(sqlsrv_errors()){
+            $resp['status'] = 'error';
+            $resp['error'] = sqlsrv_errors();
+            $resp['msg'] = 'error sql...';
+            $resp['post'] = $_POST;
+            $com->_desconectar($cnn);
+            echo json_encode($resp);
+            return;
+          }//end if
+
+      }//end if
+
+
       $resp['tablas'] = $tablas;
-      $resp['pdfs'] = $pdfs;
+      //$resp['pdfs'] = $pdfs;
       $resp['status'] = 'ok';
     }elseif(isset($_POST['action'],$_POST['ope'],$_POST['alter'])&&$_POST['action']==='get::employee::by::enter'){
         $query='exec cat.proc_get_employees_by_ope_by_alter @ope = ?, @alter = ? , @result= ?, @msg = ?';

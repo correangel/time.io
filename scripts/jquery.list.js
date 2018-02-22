@@ -1,6 +1,50 @@
 $(document).ready(function() {
 	var _shift = false;
 
+	$(document).on('click','.frm-lista .data-item.ausentismos #btn-ausentismos-expand', function(){
+		var _row = $('.frm-lista .empl.row.selected');
+		var _emp = _row.attr('data-employee');
+		var _per = _row.attr('data-periodo');
+		var _alter = _row.attr('data-_alter_id');
+		var _params ={
+			action: 'lista::expand::ausentismos'
+			,emp: _emp
+			,per: _per
+			,alter : _alter
+		};
+		_jlista_post_proc(_params, function(data){
+			//console.log(data);
+			if(data.status==='ok'){
+				var _dialog;
+				var _option = {
+						autoOpen: false,
+						resizable: false,
+						height: 'auto',
+						maxHeight: 1000,
+						width: 'auto',
+						modal: true,
+						show: { effect: 'drop', direction: 'up' },
+						hide: { effect: 'drop', direction: 'up' },
+						buttons: {
+							'Cerrar': function() {
+								_dialog.dialog( 'close');
+
+							}},
+						close: function(){
+							_row = null;
+							_dialog = 0;
+							_dialog = null;
+						}//end close
+						};
+				_dialog = $(data.table).dialog(_option);
+				_dialog.dialog('open');
+			}else{
+				_lista_callback_not_ok(data);
+			}//end if
+		});
+	});
+
+
 	$(document).on('keyup','#rows-body.modo-horas-extras .empl.row .cell.dia',function(e){
 		//console.log(e.which);
 		var tecla = e.which

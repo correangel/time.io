@@ -48,7 +48,9 @@ $(document).ready(function(){
                       ,emp: _emp
                       ,per: _per};
         _procedure(_params, function(data){
+          console.log(data);
           if(data.status === 'ok'){
+
             $('.frm-tarjeta #tarjeta-data').fadeIn(300).removeClass('oculto').addClass('visible');
             _btn.removeClass('active').addClass('unactive');
             _btn.children('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-bolt');
@@ -74,7 +76,7 @@ $(document).ready(function(){
             $('#tarjeta-data-tabs #tab-jornadas #btn-pdf').attr('data-filename', data.emp_data._periodo +'-'+ data.emp_data._alter_id +'-Jornadas');
             $('#tarjeta-data-tabs #tab-horas #btn-pdf').attr('data-filename', data.emp_data._periodo +'-'+ data.emp_data._alter_id +'-Horas');
 
-            $('.frm-tarjeta #tablas-ocultas-for-docs').html(data.tablas + data.pdfs);
+            $('.frm-tarjeta #tablas-ocultas-for-docs').html(data.tablas );
 
             _btn = null;
             return false;
@@ -252,14 +254,30 @@ $(document).ready(function(){
       //----------------------------------------------
       if(_is_not_tarjeta())return false;
       //----------------------------------------------
+      console.log(1);
       var _btn = $(this);
-      var _target = _btn.attr('data-target');
 
-      if($("#"+_target).length===0) return false;
+      var _clon = $('.frm-tarjeta').clone();
 
-      var _filename = _btn.attr('data-filename');
+      //var _target = _btn.attr('data-target');
+      //if($("#"+_target).length===0) return false;
+      //var _filename = _btn.attr('data-filename');
+      _clon.find('.oculto').remove();
+      // _clon.find('i.fa').remove();
+      _clon.find('#tarjeta-data-tabs').remove();
+      _clon.find('#tarjeta-data-rows').css("width"," calc(100% - 20px)");
+      _clon.find('#select-datos').css("width", "calc(100% - 401px");
+      _clon.find('button').remove();
+      _clon.find('#select-pic').remove();
+
+      _clon.printThis({
+        importCSS: true,
+        importStyle: false,
+        loadCSS:[ "css/style.tarjeta.css" , "css/main.css", "css/style.has-options.css"]
+      });
+
       //∫console.log($("#"+_target)[0]);
-      _generate_pdf($("#"+_target)[0],_filename)
+      //_generate_pdf($("#"+_target)[0],_filename)
     });
 });
 function _set_employee_by_enter(_alter, _callback){

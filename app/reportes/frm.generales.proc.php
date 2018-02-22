@@ -78,6 +78,36 @@
              $resp['msg'] = 'error sql...';
              $resp['post'] = $_POST;
          }//end if
+     }elseif(isset($_POST['action'],$_POST['ope'],$_POST['alter'])&&$_POST['action']==='get::employee::by::enter'){
+         $query='exec cat.proc_get_employees_by_ope_by_alter @ope = ?, @alter = ? , @result= ?, @msg = ?';
+         $ope = $_POST['ope'];
+         $alter = $_POST['alter'];
+         $msg='';
+         $result=0;
+         $params= array(array(&$ope, SQLSRV_PARAM_IN)
+                       ,array(&$alter, SQLSRV_PARAM_IN)
+                       ,array(&$result, SQLSRV_PARAM_OUT)
+                       ,array(&$msg, SQLSRV_PARAM_OUT));
+         //$html='';
+
+         if($stmt = $com->_create_stmt($cnn, $query, $params)){
+
+           while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+             $resp['row'] = $row;
+           }//end while
+           sqlsrv_next_result($stmt);
+           $resp['result'] = $result;
+           $resp['msg'] = $msg;
+           $resp['status'] = 'ok';
+           $resp['post'] = $_POST;
+           sqlsrv_free_stmt($stmt);
+         }else{
+           $resp['result'] = 0;
+           $resp['msg'] = 'Inexistente...';
+           $resp['status'] = 'error';
+           $resp['error'] = sqlsrv_errors();
+           $resp['post'] = $_POST;
+         };
     }elseif(isset($_POST['action'],$_POST['tip'],$_POST['ope'],$_POST['aus'],$_POST['dep'],$_POST['emp'])&& $_POST['action']==='rep-generales::exec::report'
                                                                                                          && $_POST['tip']==='rep-ausentismos'){
       $ope = $_POST['ope'];
