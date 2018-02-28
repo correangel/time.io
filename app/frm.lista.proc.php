@@ -222,7 +222,7 @@
         $resp['errores'] = sqlsrv_errors();
         $resp['msg'] = '1. Error de Programación contacte al administrador del Sistema';
       }
-    }elseif (isset($_POST['action'],$_POST['letra'],$_POST['per'])&& $_POST['action'] === 'causa::letra') {
+    }elseif (isset($_POST['action'],$_POST['letra'],$_POST['per'], $_POST['ope'])&& $_POST['action'] === 'causa::letra') {
       $letra = $_POST['letra'];
       $per = $_POST['per'];
       $query = "exec cat.proc_letra_need_causa @letra = ?, @per = ?, @result = ?";
@@ -235,8 +235,9 @@
         sqlsrv_next_result($stmt);
         sqlsrv_free_stmt($stmt);
         if ($result === 1){
-          $query = "exec cat.proc_get_causas_by_letra @letra = ?";
-          $params = array(array(&$letra, SQLSRV_PARAM_IN));
+          $query = "exec cat.proc_get_causas_by_letra @letra = ?, @ope = ?";
+          $params = array(array(&$letra, SQLSRV_PARAM_IN)
+                          ,array(&$ope, SQLSRV_PARAM_IN));
           $stmt= sqlsrv_query($cnn, $query, $params);
           if( $stmt !== false ) {
             $html="<div id='causas-cont' class='fn noselect' title='Selecciona la Causa'>";

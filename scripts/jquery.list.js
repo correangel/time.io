@@ -465,9 +465,11 @@ $(document).ready(function() {
 							_cell.addClass('procesando');
 							var _letra = String.fromCharCode(_which);
 							var _per = $('#set-periodo').attr('data-periodo');
+							var _ope = $('.frm-lista').attr('data-op');
 							var _params = { action: 'causa::letra'
 														, per : _per
-														, letra: _letra};
+														, letra: _letra
+														, ope: _ope};
 							_jlista_post_proc(_params, function(data){
 								if (data.status ==='ok'){
 									if(data.result === 1){
