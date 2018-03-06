@@ -122,6 +122,9 @@
 												class='fn tab panel bloque waves-effect unactive '>
 										<i class='fa fa-1x fa-info'></i>
 									</div>
+									<div id='btn-lista-excel' data-title='Exportar lista a Excel' data-tab='frm-lista-excel' class='fn tab  bloque waves-effect set-carga'>
+										<i class='fa fa-1x fa-file-excel-o'></i>
+									</div>
 
 
 									<div id='frm-pagination' data-actual='1' data-pages='$pages' class='fn tab panel bottom bloque waves-effect ".($pages> 1? 'pages':'')." '>

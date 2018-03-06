@@ -573,6 +573,7 @@ $(document).ready(function() {
 																		_cell.removeClass('procesando');
 																		_cell.children('span').html(_valor_anterior);
 																		_cell.children('span').show();
+																		_show_dialog_error(data.msg);
 																		console.log(data.msg);
 																	}//end if
 																}else{
@@ -628,6 +629,7 @@ $(document).ready(function() {
 													_cell.removeClass('procesando');
 													_cell.children('span').html(_valor_anterior);
 													_cell.children('span').show();
+													_show_dialog_error(data.msg);
 													console.log(data.msg);
 												}//end if
 											}else{
@@ -763,9 +765,41 @@ $(document).ready(function() {
 		}//endif
 	});
 
+	$(document).on('click','#frm-tabs #btn-lista-excel',function(){
+		var _btn = $(this);
+		_btn.addClass('active').removeClass('unactive');
+		_btn.find('i.fa').removeClass('fa-file-excel-o').addClass('fa-spinner fa-pulse');
+
+		var _ope = $('.frm-lista').attr('data-op');
+		var _per = $('#set-periodo').attr('data-periodo');
+		var _params = {
+			action: 'get::lista::toexcel'
+			,ope: _ope ,per: _per
+		}
+		_jlista_post_proc( _params ,function(data){
+			if(data.status === 'ok'){
+				var _table = $(data.table);
+				$('.frm-lista #lista-grid').remove();
+				$('.frm-lista').append(_table);
+
+				var _filename = 'Lista-Asistencia';
+				excel = new ExcelGen({
+						"src_id": 'lista-grid',
+						"show_header": true
+				});
+				excel.generate(_filename);
+				_btn.addClass('unactive').removeClass('active');
+				_btn.find('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-file-excel-o');
+				excel = null;
+				return false;
+				//console.log(data);
+			}else{
+				_lista_callback_not_ok(data);
+			}//endif
+		});
+	});
+
 	$(document).on('click','#frm-tabs #btn-refresh-lista', function(){
-
-
 		if ($('#rows-body').hasClass('modo-checadas')){
 			_get_checadas( 1);
 		}//end if
