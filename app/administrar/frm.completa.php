@@ -153,10 +153,10 @@
 
 									$html.="<div id='cont-ldap' class='fs floL has-options contenedor enlinea closed'>";
 									 $html.="<div tabindex='0' id='cont-roles-title' class='fs title bloque' data-parent='#cont-ldap'>";
-										 $html.="<div id='txt' class='fs floL enlinea' data-parent='#cont-roles'>
+										 $html.="<div id='txt' class='fs floL enlinea' data-parent='#cont-ldap'>
 															<input id='id_ldap' data–change='#cont-usuarios' data-id='' type='text' class='fs integrado change' data-parent='#cont-ldap' />
 														</div>";
-										 $html.="<div tabindex='0' id='ico' class='fn floL enlinea' data-parent='#cont-roles'><i class='fa fa-1x fa-ellipsis-h' data-parent='#cont-ldap'></i></div>";
+										 $html.="<div tabindex='0' id='ico' class='fn floL enlinea' data-parent='#cont-ldap'><i class='fa fa-1x fa-ellipsis-h' data-parent='#cont-ldap'></i></div>";
 									 $html.="</div>";
 									 $html.="<div id='options' class='fs select bloque thin-scroll oculto' data-parent='#cont-ldap'>";
 
