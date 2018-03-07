@@ -450,6 +450,7 @@ $(document).ready(function() {
 				//----------------------------------
 
 				_validar_letra(_cell, _which, function(data){
+					//console.log(data);
 					if(data.result === 0 ){
 						_show_dialog_error(data.msg);
 						_cell.children('i').remove();

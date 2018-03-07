@@ -235,6 +235,7 @@
         sqlsrv_next_result($stmt);
         sqlsrv_free_stmt($stmt);
         if ($result === 1){
+          $ope = $_POST['ope'];
           $query = "exec cat.proc_get_causas_by_letra @letra = ?, @ope = ?";
           $params = array(array(&$letra, SQLSRV_PARAM_IN)
                           ,array(&$ope, SQLSRV_PARAM_IN));
