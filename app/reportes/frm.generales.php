@@ -84,9 +84,12 @@
                       data-table='".boolval($tabla)."'
                       class='frm add-has-options frm-rep-generales fn boxshadow mar10 oculto'>";
 			    $html.= "<div id='frm-cont-rep-generales' class='fn  bloque'>";
-            $html.= "<div id='rep-select' class='fn  bloque '>";
+            $html.= "<div id='rep-select' class='fn bloque '>";
 
               $html.= "<div id='select-opt' class='fn enlinea floL boxshadow'>";
+								$html.= "<div id='filters-collapse' class='fn bloque'>";
+									$html.= "<div id='btn-collapse' class='fn opened'><i class='fa fa-1x fa-chevron-left'></i></div>";
+								$html.= "</div>";
 								$html.= "<div id='filters-cont' class='fn bloque'>";
 
 								//---------------------------------------------
