@@ -241,12 +241,14 @@ $(document).ready(function(){
 
       if($("#"+_target).length===0) return false;
 
-      var _filename = _btn.attr('data-filename');
+      var _filename = _btn.attr('data-filename')+".xlsx";
       excel = new ExcelGen({
           "src_id": _target,
-          "show_header": true
+          "show_header": true,
+          "format": "xlsx",
+          "file_name" : _filename
       });
-      excel.generate(_filename);
+      excel.generate();
       excel = null;
       return false;
     });

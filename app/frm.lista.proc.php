@@ -288,67 +288,67 @@
         $resp['post'] = $_POST;
       }else{
         $c = 0;
-        $table= "<table id='lista-grid' class='fs oculto table table-condensed table-hover table-striped'>
-                        <thead class='fs'><tr>
-                          <th class='fs' data-column-id='Codigo' data-type='numeric' data-order='asc' >Codigo</th>
-                          <th class='fs' data-column-id='Nombres' >Nombre</th>
-                          <th class='fs' data-column-id='ApellidoPaterno' >ApellidoPaterno</th>
-                          <th class='fs' data-column-id='ApellidoMaterno' >ApellidoMaterno</th>
-                          <th class='fs' data-column-id='Periodo' >Periodo</th>
-                          <th class='fs' data-column-id='CodigoLocacion' >CodigoLocacion</th>
-                          <th class='fs' data-column-id='Locacion' >Locacion</th>
-                          <th class='fs' data-column-id='CodigoDepto' >CodigoDepto</th>
-                          <th class='fs' data-column-id='Departamento' >Departamento</th>
-                          <th class='fs' data-column-id='CodigoPosicion' >CodigoPosicion</th>
-                          <th class='fs' data-column-id='Posicion' >Posicion</th>
-                          <th class='fs' >_c01 </th>
-                          <th class='fs' >_c02 </th>
-                          <th class='fs' >_c03 </th>
-                          <th class='fs' >_c04 </th>
-                          <th class='fs' >_c05 </th>
-                          <th class='fs' >_c06 </th>
-                          <th class='fs' >_c07 </th>
-                          <th class='fs' >_c08 </th>
-                          <th class='fs' >_c09 </th>
-                          <th class='fs' >_c10 </th>
-                          <th class='fs' >_c11 </th>
-                          <th class='fs' >_c12 </th>
-                          <th class='fs' >_c13 </th>
-                          <th class='fs' >_c14 </th>
-                          <th class='fs' >_c15 </th>
-                          <th class='fs' >_c16 </th>
+        $table= "<table id='lista-grid' class='fs oculto'>
+                        <thead ><tr>
+                          <th>Codigo</th>
+                          <th>Nombre</th>
+                          <th>ApellidoPaterno</th>
+                          <th>ApellidoMaterno</th>
+                          <th>Periodo</th>
+                          <th>CodigoLocacion</th>
+                          <th>Locacion</th>
+                          <th>CodigoDepto</th>
+                          <th>Departamento</th>
+                          <th>CodigoPosicion</th>
+                          <th>Posicion</th>
+                          <th>_c01 </th>
+                          <th>_c02 </th>
+                          <th>_c03 </th>
+                          <th>_c04 </th>
+                          <th>_c05 </th>
+                          <th>_c06 </th>
+                          <th>_c07 </th>
+                          <th>_c08 </th>
+                          <th>_c09 </th>
+                          <th>_c10 </th>
+                          <th>_c11 </th>
+                          <th>_c12 </th>
+                          <th>_c13 </th>
+                          <th>_c14 </th>
+                          <th>_c15 </th>
+                          <th>_c16 </th>
                      </tr></thead>
-                  <tbody class='fs'>";
+                  <tbody>";
         while( $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)){
           $c++;
-          $table.= "<tr class='fs' >
-                    <td class='fs'>".$row['Codigo']."</td>
-                    <td class='fs'>".$row['Nombre']."</td>
-                    <td class='fs'>".$row['ApellidoPaterno']."</td>
-                    <td class='fs'>".$row['ApellidoMaterno']."</td>
-                    <td class='fs'>".$row['Periodo']."</td>
-                    <td class='fs'>".$row['CodigoLocacion']."</td>
-                    <td class='fs'>".$row['Locacion']."</td>
-                    <td class='fs'>".$row['CodigoDepto']."</td>
-                    <td class='fs'>".$row['Departamento']."</td>
-                    <td class='fs'>".$row['CodigoPosicion']."</td>
-                    <td class='fs'>".$row['Posicion']."</td>
-                    <td class='fs'>".$row['_c01']."</td>
-                    <td class='fs'>".$row['_c02']."</td>
-                    <td class='fs'>".$row['_c03']."</td>
-                    <td class='fs'>".$row['_c04']."</td>
-                    <td class='fs'>".$row['_c05']."</td>
-                    <td class='fs'>".$row['_c06']."</td>
-                    <td class='fs'>".$row['_c07']."</td>
-                    <td class='fs'>".$row['_c08']."</td>
-                    <td class='fs'>".$row['_c09']."</td>
-                    <td class='fs'>".$row['_c10']."</td>
-                    <td class='fs'>".$row['_c11']."</td>
-                    <td class='fs'>".$row['_c12']."</td>
-                    <td class='fs'>".$row['_c13']."</td>
-                    <td class='fs'>".$row['_c14']."</td>
-                    <td class='fs'>".$row['_c15']."</td>
-                    <td class='fs'>".$row['_c16']."</td>
+          $table.= "<tr>
+                    <td>".$row['Codigo']."</td>
+                    <td>".$row['Nombre']."</td>
+                    <td>".$row['ApellidoPaterno']."</td>
+                    <td>".$row['ApellidoMaterno']."</td>
+                    <td>".$row['Periodo']."</td>
+                    <td>".$row['CodigoLocacion']."</td>
+                    <td>".$row['Locacion']."</td>
+                    <td>".$row['CodigoDepto']."</td>
+                    <td>".$row['Departamento']."</td>
+                    <td>".$row['CodigoPosicion']."</td>
+                    <td>".$row['Posicion']."</td>
+                    <td>".$row['_c01']."</td>
+                    <td>".$row['_c02']."</td>
+                    <td>".$row['_c03']."</td>
+                    <td>".$row['_c04']."</td>
+                    <td>".$row['_c05']."</td>
+                    <td>".$row['_c06']."</td>
+                    <td>".$row['_c07']."</td>
+                    <td>".$row['_c08']."</td>
+                    <td>".$row['_c09']."</td>
+                    <td>".$row['_c10']."</td>
+                    <td>".$row['_c11']."</td>
+                    <td>".$row['_c12']."</td>
+                    <td>".$row['_c13']."</td>
+                    <td>".$row['_c14']."</td>
+                    <td>".$row['_c15']."</td>
+                    <td>".$row['_c16']."</td>
                 </tr>";
         }//end while
         sqlsrv_free_stmt($stmt);

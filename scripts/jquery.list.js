@@ -779,21 +779,27 @@ $(document).ready(function() {
 		}
 		_jlista_post_proc( _params ,function(data){
 			if(data.status === 'ok'){
+				//console.log(data.table);
 				var _table = $(data.table);
 				$('.frm-lista #lista-grid').remove();
-				$('.frm-lista').append(_table);
+				$('.frm-lista').append(_table).parent();
 
-				var _filename = 'Lista-Asistencia';
-				excel = new ExcelGen({
-						"src_id": 'lista-grid',
-						"show_header": true
-				});
-				excel.generate(_filename);
-				_btn.addClass('unactive').removeClass('active');
-				_btn.find('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-file-excel-o');
-				excel = null;
-				return false;
-				//console.log(data);
+				setTimeout(function(){
+					//var _filename = ;
+					excel = new ExcelGen({
+							"src_id": 'lista-grid',
+							"show_header": true,
+							"format":"xlsx",
+							"file_name": "Lista-Asistencia.xlsx"
+					});
+					excel.generate();
+
+					_btn.addClass('unactive').removeClass('active');
+					_btn.find('i.fa').removeClass('fa-spinner fa-pulse').addClass('fa-file-excel-o');
+					excel = null;
+					return false;
+					//console.log(data);
+				},0);
 			}else{
 				_lista_callback_not_ok(data);
 			}//endif
