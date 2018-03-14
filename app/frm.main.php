@@ -59,6 +59,7 @@
 
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/style.tarjeta.css?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/css/style.tarjeta.css');?>"/>
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/style.rep-generales.css?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/css/style.rep-generales.css');?>"/>
+			<link rel="stylesheet" type="text/css" media="screen" href="/css/style.contingencia.css?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/css/style.contingencia.css');?>"/>
 			<link rel="stylesheet" type="text/css" media="screen" href="/css/style.has-options.css?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/css/style.has-options.css');?>"/>
 
 
@@ -80,6 +81,7 @@
 			<script src="/scripts/jquery.solicitud.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.solicitud.js');?>"></script>
 			<script src="/scripts/jquery.tarjeta.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.tarjeta.js');?>"></script>
 			<script src="/scripts/jquery.rep-generales.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.rep-generales.js');?>"></script>
+			<script src="/scripts/jquery.contingencia.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.contingencia.js');?>"></script>
 			<script src="/scripts/jquery.has-options.js?v=<?php echo md5_file($_SERVER['DOCUMENT_ROOT'].'/scripts/jquery.has-options.js');?>"></script>
 
 			<link rel="stylesheet" type="text/css" media="screen" href="/scripts/jquery.bootgrid.css">

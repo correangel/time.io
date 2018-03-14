@@ -58,7 +58,9 @@ canvas {
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
 }
-
+.row-bloqueado *{
+	text-decoration: line-through crimson !important;
+}
 .red-border{
   border: 1px solid crimson;
 }

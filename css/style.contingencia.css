@@ -1,0 +1,605 @@
+
+.frm-contingencia {
+  box-shadow: none !important;
+  border: none !important;
+  background-color: #d6d8da !important;
+  *background-color: red;
+  min-width: 1010px !important;
+}
+.frm-contingencia
+.tar-cargando{
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  color: gray;
+}
+.frm-contingencia
+.tar-cargando i.fa{
+  background-color: transparent;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  top: 40%;
+  left: calc(50% - 20px);
+  color: gray;
+}
+.frm-contingencia  input{
+  outline: none;
+  padding-left: 10px;
+  border-radius: 2px;
+  background-color: rgb(240,240,240);
+  border: 1px solid rgb(240,240,240);
+  transition: all 250ms ease-in-out;
+  height: 30px;
+  line-height: 30px;
+  width: calc(100% - 7px);
+}
+
+.frm-contingencia#filters-cont .gpo .ico{
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px;
+  margin-left: 0;
+}
+.frm-contingencia  #filters-cont .gpo .inp{
+  width: calc(100% - 36px) !important;
+  height: 36px !important;
+  line-height: 36px;
+  margin-left: 0;
+}
+.frm-contingencia  #filters-cont .gpo .contenedor{
+  height: 36px !important;
+  line-height: 36px;
+  margin-left: 0;
+}
+.frm-contingencia  #filters-cont .gpo .contenedor-50per{
+  height: 36px !important;
+  line-height: 36px;
+  margin-left: 0;
+}
+.frm-contingencia  #filters-cont .contenedor input.integrado,
+.frm-contingencia  #filters-cont .contenedor-50per input.integrado{
+  height: 34px !important;
+  line-height: 34px;
+}
+
+
+.frm-contingencia  button{
+  border: 1px solid transparent;
+  color:gray;
+  height: 36px;
+  width: 36px;
+  outline: none;
+  margin-left: 10px;
+  border-radius: 34px;
+  transition: all 250ms ease-in-out;
+}
+.frm-contingencia  button#btn-run{
+  width:82px !important;
+}
+.frm-contingencia  button#btn-generar{
+  width:100% !important;
+  margin-left: 0;
+  border-radius: 0;
+}
+.frm-contingencia  button#btn-generar:hover{
+  background-color: #acea46;
+  color: rgb(80,80,80);
+}
+.frm-contingencia  .bottom{
+  position: absolute;
+  bottom: 0;
+}
+.frm-contingencia  button:hover{
+  background-color: rgb(240,240,240);
+  border: 1px solid rgb(240,240,240);
+}
+.frm-contingencia  button.active{
+  background-color:#46acea;
+  color:white;
+}
+.frm-contingencia  button.active:hover{
+  opacity: .8;
+}
+.frm-contingencia  input:focus{
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border: solid 1px #ea46ac;
+  background-color: white;
+}
+.frm-contingencia  input.error:focus,
+.frm-contingencia  input.correct:focus{
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.frm-contingencia  input.error{
+  box-shadow: none;
+  border: solid 1px crimson;
+  background-color: crimson;
+  color:white
+}
+
+.frm-contingencia  input.correct{
+  box-shadow: none;
+  border: solid 1px #46ea84;
+  background-color: #46ea84;
+  color:white
+}
+
+.frm-contingencia  #frm-cont-contingencia #rep-select .gpo{
+  vertical-align: middle;
+  line-height: 35px !important;
+  height: 35px !important;
+  padding-top: 10px;
+}
+.frm-contingencia  .gpo{
+  width: 100%;
+  padding-bottom:5px;
+  height: 35px;
+}
+.frm-contingencia  #frm-cont-contingencia{
+  width: 100%;
+  height: 100%;
+
+}
+.frm-contingencia
+#frm-cont-contingencia #rep-select{
+  width: calc(100% - 2px);
+  height: 100%;
+  border-bottom: 1px solid lightgray;
+  *background-color: red;
+  border: 1px solid ligthgray;
+}
+
+#frm-cont-contingencia #rep-select #select-opt{
+  background-color: white;
+  width: 380px;
+  height: calc(100%);
+  *padding: 10px;
+  border-right: 1px solid lightgray;
+  transition: all .3s ease-in-out;
+}
+#frm-cont-contingencia #rep-select #select-opt #btn-cont{
+  width: 380px;
+  position: relative;
+
+  border-top: 1px solid lightgray;
+}
+
+.frm-contingencia  .escondido{
+  visibility: hidden;
+}
+#frm-cont-contingencia #rep-select #select-datos #btn-cont{
+  width: calc(100%);
+  border-top: 1px solid lightgray;
+  position: relative;
+
+}
+#frm-cont-contingencia #rep-select #filters-collapse{
+
+  height: calc(36px);
+  width: calc(100% - 20px);
+}
+
+
+#frm-cont-contingencia #rep-select #filters-collapse #btn-collapse{
+
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  vertical-align: middle;
+  text-align: center;
+  color:gray;
+  transition: all .3s ease-in-out;
+  cursor: pointer;
+}
+
+#frm-cont-contingencia #rep-select #filters-collapse #btn-collapse:hover{
+
+  background-color: rgb(240,240,240);
+  color: black;
+}
+#frm-cont-contingencia #rep-select #filters-cont{
+  padding: 10px;
+  height: calc(100% - 57px - 36px);
+  width: calc(100% - 20px);
+}
+#frm-cont-contingencia #rep-select #select-datos #btn-cont .btn{
+  width: 25%;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+}
+#frm-cont-contingencia #rep-select #select-datos #btn-cont #status-bar{
+  width: calc(50% - 10px);
+  border-radius: 0;
+  margin: 0;
+  height: 36px;
+  line-height: 36px;
+  color: gray;
+  padding-left: 10px;
+}
+
+#frm-cont-contingencia #rep-select #select-datos #btn-cont .btn:hover{
+  background-color: #586aec;
+  color:white;
+}
+
+
+#frm-cont-contingencia #rep-select #select-opt .ico{
+  position: relative;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  vertical-align: middle;
+  text-align: center;
+  color: gray;
+}
+
+#frm-cont-contingencia #rep-select #select-opt .inp{
+  position: relative;
+  width: calc(100% - 34px);
+  height: 30px;
+  line-height: 30px;
+  vertical-align: middle;
+
+}
+#frm-cont-contingencia #rep-select #select-opt .inp input#_alter_id{
+  width: calc(60% - 34px);
+}
+
+#frm-cont-contingencia #tarjeta-data{
+  background-color: transparent;
+  width:calc(100% - 2px);
+  height: calc(100% - 111px);
+}
+#frm-cont-contingencia #tarjeta-data #tarjeta-data-tabs{
+  background-color: transparent;
+  width:300px;
+  height: calc(100% - 50px);
+  padding-top: 50px;
+}
+
+#frm-cont-contingencia #tarjeta-data #tarjeta-data-tabs .eti-tab{
+  *margin-top: 2px;
+  background-color: transparent;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+  *transition: all .3s ease-in-out;
+  cursor: pointer;
+  border-radius:4px;
+  color: rgb(80,80,80);
+  text-shadow: 2px 2px 2px rgba(200, 200, 200, .8);
+}
+
+#frm-cont-contingencia #tarjeta-data #tarjeta-data-tabs .eti-tab:hover{
+  background-color: lightgray;
+}
+#frm-cont-contingencia #tarjeta-data #tarjeta-data-tabs .eti-tab.active{
+  background-color:#46acea;
+  color:white;
+  text-shadow: none;
+  cursor: default;
+}
+#frm-cont-contingencia #tarjeta-data #tarjeta-data-tabs .eti-tab
+.ico{
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+  text-align: center;
+}
+#frm-cont-contingencia #tarjeta-data #tarjeta-data-tabs .eti-tab.active
+.fil{
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+}
+#frm-cont-contingencia #tarjeta-data #tarjeta-data-tabs .eti-tab.active
+.fil:hover{
+  background-color: #1a97e3;
+}
+#frm-cont-contingencia #tarjeta-data #tarjeta-data-tabs .eti-tab.unactive
+.fil{
+  display: none;
+}
+#frm-cont-contingencia #tarjeta-data #tarjeta-data-tabs .eti-tab
+.txt{
+  width: calc(100% - 150px);
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+}
+
+.frm-contingencia  #win-buscar-emp{
+  position: fixed;
+  background-color: white;
+  z-index: 99;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+  width: 320px;
+  height: 400px;
+  border:1px solid rgb(120,120,120);
+  transition: all .5s ease-in-out;
+}
+
+.frm-contingencia  #win-buscar-emp .win-title{
+  background-color: #465aea ;
+  height: 36px;
+}
+.frm-contingencia  #win-buscar-emp .win-data{
+  background-color: white ;
+  height: calc(100% - 36px);
+}
+
+.frm-contingencia  #win-buscar-emp .win-title .inp-cont{
+  width: calc(100% - 36px);
+  height: 36px;
+  line-height: 36px;
+  vertical-align: middle;
+  text-align: center;
+}
+.frm-contingencia  #win-buscar-emp .win-title .inp-cont
+input#inp-filter{
+  width: calc(90% - 10px);
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 22px !important;;
+  height: 22px !important;
+  border-radius: 30px;
+  background-color: white;
+  border:1px solid white;
+  transition: all .3s ease-in-out;
+}
+.frm-contingencia  #win-buscar-emp .win-title .inp-cont
+input#inp-filter:focus{
+
+  -moz-box-shadow:    inset 0 0 2px rgb(100,100,100);
+  -webkit-box-shadow: inset 0 0 2px rgb(100,100,100);
+  box-shadow:         inset 0 0 2px rgb(100,100,100);
+}
+.frm-contingencia  #win-buscar-emp .win-title .ico-cont{
+  width:36px;
+  height: 36px;
+  line-height: 36px;
+  vertical-align: middle;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+.frm-contingencia  #win-buscar-emp .win-title .ico-cont:hover{
+  background-color: #586aec;
+}
+
+.frm-contingencia  #win-buscar-emp #win-rows-body{
+  width: 100%;
+  height:100%;
+  overflow-x:hidden;
+  overflow-y: auto;
+}
+
+.frm-contingencia  #win-buscar-emp #win-rows-body .row{
+  height: 30px;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+}
+.frm-contingencia  #win-buscar-emp #win-rows-body .row:hover{
+  background-color: #586aec;
+  color:white;
+}
+
+.frm-contingencia  #win-buscar-emp #win-rows-body .row ._alter_id{
+  width:50px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: right;
+}
+.frm-contingencia  #win-buscar-emp #win-rows-body .row ._nombre{
+  width: calc(100% - 80px);
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.frm-contingencia
+#frm-cont-contingencia #rep-select #select-datos{
+  min-width: 600px;
+  background-color: white;
+  width: calc(100% - 0px);
+  height: calc(100% - 0px);
+  transition: all .3s ease-in-out;
+}
+.frm-contingencia
+#frm-cont-contingencia #rep-select #select-datos .datos-box{
+  background-color: transparent;
+  width: 50%;
+
+}
+.frm-contingencia
+#frm-cont-contingencia #rep-select #select-datos .datos-box
+input{
+  margin-left: auto;
+  margin-right: auto;
+  width: calc(100% - 20px) !important;
+  margin-top: 2px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.frm-contingencia  #select-opt #cont-periodo{
+  *width: 320px !important;
+}
+
+.frm-contingencia  #tarjeta-data-rows{
+  width: calc(100% - 310px);
+  margin-left: 10px;
+  height: 100%;
+  background-color: transparent;
+}
+
+.frm-contingencia  #tarjeta-data-rows #data-rows-head {
+  height: 50px;
+  width: 100%;
+  background-color: transparent;
+}
+.frm-contingencia  #tarjeta-data-rows #data-rows-body {
+  height: calc(100% - 50px);
+  width: 100%;
+  background-color: white;
+}
+.frm-contingencia  #tarjeta-data-rows #data-rows-body .eti-tab-rows{
+  height: 100%;
+  width: 100%;
+  transition: all .3s ease-in-out;
+  overflow-x:hidden;
+  overflow-y: auto;
+}
+.frm-contingencia  #tarjeta-data-rows #data-rows-body .eti-tab-rows .row{
+  height: 34px;
+  line-height: 34px;
+  vertical-align: middle;
+  border-bottom: 1px dotted lightgray;
+}
+.frm-contingencia  #tarjeta-data-rows #data-rows-body .eti-tab-rows .row:hover{
+  background-color: rgb(240,240,240);
+}
+.frm-contingencia  #tarjeta-data-rows #data-rows-head .eti-tab-head .head{
+  height: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+  text-decoration: bold;
+  color: rgb(80,80,80);
+  text-shadow: 2px 2px 2px rgba(200, 200, 200, .8);
+}
+.frm-contingencia  #tarjeta-data-rows #data-rows-head .eti-tab-head .head .cell{
+  padding-left: 40px;
+}
+.frm-contingencia  #tarjeta-data-rows #data-rows-body .eti-tab-rows .row .cell{
+  padding-left: 40px;
+}
+.frm-contingencia  #tarjeta-data-rows #data-rows-head .eti-tab-head .head .cell-min{
+  padding-left: 10px;
+}
+.frm-contingencia  #tarjeta-data-rows #data-rows-body .eti-tab-rows .row .cell-min{
+  padding-left: 10px;
+}
+
+
+#combo-fechas{
+  width: 100%;
+  height: 92px;
+
+}
+#combo-fechas .gpo-fec{
+  height: 36px;
+  margin-top: 10px;
+  width: 100%;
+}
+#combo-fechas .gpo-fec input{
+  height: 36px;
+  line-height: 36px;
+  -webkit-appearance: none ;
+  width: calc(180px - 12px);
+
+}
+#combo-fechas .gpo-fec input[type="date"]::-webkit-clear-button{
+  -webkit-appearance: none ;
+}
+#combo-fechas .gpo-fec input[type="date"]::-webkit-inner-spin-button{
+  -webkit-appearance: none ;
+}
+#combo-fechas .gpo-fec input[type="date"]::-webkit-calendar-picker-indicator{
+  display: none;
+  -webkit-appearance: none ;
+}
+#combo-fechas .gpo-fec .ico{
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+}
+.frm-contingencia  #results-cont{
+
+  padding: 0 !important;
+  height: calc(100% - 37px);
+  width: calc(100%);
+  overflow-x: auto;
+  overflow-y: auto;
+  white-space: nowrap;
+}
+.frm-contingencia  #results-cont #rep-grid{
+  border-collapse:collapse;
+}
+.frm-contingencia  #results-cont #rep-grid tr{
+  height: 30px;
+}
+.frm-contingencia  #results-cont #rep-grid th,
+.frm-contingencia  #results-cont #rep-grid td {
+  padding-left: 10px
+}
+.frm-contingencia  #results-cont #rep-grid thead tr{
+  border-bottom: 1px solid gray;
+}
+
+.frm-contingencia  #results-cont #rep-grid tbody tr{
+  border-bottom: 1px dotted gray;
+}
+
+
+.frm-contingencia  #results-cont #last-cont{
+  height: 100%;
+  width: calc(180px * 15);
+  padding: 0 !important;
+
+}
+.frm-contingencia  #results-cont #last-cont #rep-header{
+  height: 30px;
+  width: calc(100%);
+  line-height: 30px;
+  border-bottom: 1px solid gray;
+}
+.frm-contingencia  #results-cont #last-cont #rep-header .rep-culumna{
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  padding-right: 5px;
+  color: gray;
+  border-right: 1px solid gray;
+  width: 164px;
+}
+
+.frm-contingencia  #results-cont #last-cont #rep-body{
+  height: calc(100% - 30px);
+  width: calc(100%);
+  overflow-y: auto;
+  white-space: nowrap;
+
+}
+.frm-contingencia  #results-cont #last-cont #rep-body .rep-row{
+  height: 30px;
+  line-height: 30px;
+  border-bottom: 1px dotted lightgray;
+}
+
+.frm-contingencia  #results-cont #last-cont #rep-body .rep-row .rep-cell{
+  height: 30px;
+  padding-left: 10px;
+  padding-right: 5px;
+  color: gray;
+  width: 165px;
+}
